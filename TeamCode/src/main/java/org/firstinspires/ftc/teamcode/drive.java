@@ -129,10 +129,10 @@ public class drive extends LinearOpMode {
             max = Math.max(max, Math.abs(rightBackPower));
 
             if (max > 1.0) {
-                leftFrontPower  = max;
-                rightFrontPower = max;
-                leftBackPower   = max;
-                rightBackPower  = max;
+                leftFrontPower  /= max;
+                rightFrontPower /= max;
+                leftBackPower   /= max;
+                rightBackPower  /= max;
             }
 
             // This is test code:
