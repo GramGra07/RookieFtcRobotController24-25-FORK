@@ -130,7 +130,7 @@ public class drive extends LinearOpMode {
 
             if (max > 1.0) {
                 leftFrontPower  = max;
-                rightFrontPower = /max;
+                rightFrontPower = max;
                 leftBackPower   = max;
                 rightBackPower  = max;
             }
