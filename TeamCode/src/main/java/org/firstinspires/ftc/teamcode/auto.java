@@ -355,6 +355,7 @@ public class auto extends LinearOpMode {
      * @param straight  Set to true if we are driving straight, and the encoder positions should be included in the telemetry.
      */
     private void sendTelemetry(boolean straight) {
+        //test
 
         if (straight) {
             telemetry.addData("Motion", "Drive Straight");
