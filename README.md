@@ -137,7 +137,7 @@ The readme.md file located in the [/TeamCode/src/main/java/org/firstinspires/ftc
 * Fixes a problem with Blocks: if the user closes a Block's warning balloon, it will still be closed next time the project is opened in the Blocks editor.
 * In the Blocks editor, an alert concerning missing hardware devices is not shown if all the Blocks that use the missing hardware devices are disabled.
 * Adds Blocks to support comparing property values CRServo.Direction, DCMotor.Direction, DCMotor.Mode, DCMotor.ZeroPowerBehavior, DigitalChannel.Mode, GyroSensor.HeadingMode, IrSeekerSensor.Mode, and Servo.Direction, to the corresponding enum Block.
-* Improves OnBotJava auto-import to correctly import classes when used in certain situations.
+* Improves OnBotJava org.firstinspires.ftc.teamcode.auto-import to correctly import classes when used in certain situations.
 * Improves OnBotJava autocomplete to provide better completion options in most cases.
   * This fixes an issue where autocomplete would fail if a method with two or more formal parameters was defined.
 * In OnBotJava, code folding support was added to expand and collapse code sections
@@ -355,7 +355,7 @@ This is a bug fix only release to address the following four issues.
 ### Bug Fixes
 * Fixes accessing the "Manage TensorFlow Lite Models" and "Manage Sounds" links and performing
   Blocks and OnBotJava OpMode downloads from the REV Hardware Client.
-* Fixes issue where an I2C device driver would be auto-initialized using the parameters assigned in
+* Fixes issue where an I2C device driver would be org.firstinspires.ftc.teamcode.auto-initialized using the parameters assigned in
   a previous OpMode run.
 * Improves Driver Station popup menu placement in the landscape layout.
 * Fixes NullPointerException when attempting to get a non-configured BNO055 IMU in a Blocks OpMode on an RC phone.
@@ -505,7 +505,7 @@ This is a bug fix only release to address the following four issues.
 * Adds support for REV Robotics Driver Hub.
 * Adds fully custom userspace USB gamepad driver to Driver Station (see "Advanced Gamepad Features" menu in DS settings).
     * Allows gamepads to work on devices without native Linux kernel support (e.g. some Romanian Motorola devices).
-    * Allows the DS to read the unique serial number of each gamepad, enabling auto-recovery of dropped gamepads even if two gamepads of the same model drop. *(NOTE: unfortunately this does not apply to Etpark gamepads, because they do not have a unique serial)*.
+    * Allows the DS to read the unique serial number of each gamepad, enabling org.firstinspires.ftc.teamcode.auto-recovery of dropped gamepads even if two gamepads of the same model drop. *(NOTE: unfortunately this does not apply to Etpark gamepads, because they do not have a unique serial)*.
     * Reading the unique serial number also provides the ability to configure the DS to assign gamepads to a certain position by default (so no need to do start+a/b at all).
     * The LED ring on the Xbox360 gamepad and the RGB LED bar on the PS4 gamepad is used to indicate the driver position the gamepad is bound to.
     * The rumble motors on the Xbox360, PS4, and Etpark gamepads can be controlled from OpModes.
@@ -676,7 +676,7 @@ Version 5.5 requires Android Studio 4.0 or later.
     * REV Hub is running outdated firmware (older than version 1.8.2)
 * Adds support for Sony PS4 gamepad, and reworks how gamepads work on the Driver Station
     * Removes preference which sets gamepad type based on driver position. Replaced with menu which allows specifying type for gamepads with unknown VID and PID
-	* Attempts to auto-detect gamepad type based on USB VID and PID
+	* Attempts to org.firstinspires.ftc.teamcode.auto-detect gamepad type based on USB VID and PID
 	* If gamepad VID and PID is not known, use type specified by user for that VID and PID
 	* If gamepad VID and PID is not known AND the user has not specified a type for that VID and PID, an educated guess is made about how to map the gamepad
 * Driver Station will now attempt to automatically recover from a gamepad disconnecting, and re-assign it to the position it was assigned to when it dropped
@@ -938,7 +938,7 @@ Known issues:
 
 Changes include:
  * Fix to prevent crash when deprecated configuration annotations are used.
- * Change to allow FTC Robot Controller APK to be auto-updated using FIRST Global Control Hub update scripts.
+ * Change to allow FTC Robot Controller APK to be org.firstinspires.ftc.teamcode.auto-updated using FIRST Global Control Hub update scripts.
  * Removed samples for non supported / non legal hardware.
  * Improvements to Telemetry.addData block with "text" socket.
  * Updated Blocks sample OpMode list to include Rover Ruckus Vuforia example.
@@ -1028,7 +1028,7 @@ Changes include:
     - Added an external sample OpMode that demonstrates localization using 2018-2019 (Rover Ruckus presented by QualComm) Vuforia targets.
     - Added an external sample OpMode that demonstrates how to use the REV Robotics 2m Laser Distance Sensor.
     - Added an external sample OpMode that demonstrates how to use the REV Robotics Blinkin LED Controller.
-    - Re-categorized external Java sample OpModes to "TeleOp" instead of "Autonomous".
+    - Re-categorized external Java sample OpModes to "TeleOp" instead of "org.firstinspires.ftc.teamcode.auto".
 
 Known issues:
  * Initial support for UVC compatible cameras
@@ -1054,7 +1054,7 @@ Changes include:
  * Blocks Changes
      - Uses updated Google Blockly software to allow users to edit their OpModes on Apple iOS devices (including iPad and iPhone).
      - Improvement in Blocks tool to handle corrupt OpMode files.
-     - Autonomous OpModes should no longer get switched back to tele-op after re-opening them to be edited.
+     - org.firstinspires.ftc.teamcode.auto OpModes should no longer get switched back to tele-op after re-opening them to be edited.
      - The system can now detect type mismatches during runtime and alert the user with a message on the Driver Station.
  * Updated javadoc documentation for setPower() method to reflect correct range of values (-1 to +1).
  * Modified VuforiaLocalizerImpl to allow for user rendering of frames
@@ -1190,7 +1190,7 @@ Please note, however, that version 3.00 is considered "alpha" code.  This code i
 
 Changes include:
  * Major rework of sensor-related infrastructure.  Includes rewriting sensor classes to implement synchronous I2C communication.
- * Fix to reset Autonomous timer back to 30 seconds.
+ * Fix to reset org.firstinspires.ftc.teamcode.auto timer back to 30 seconds.
  * Implementation of specific motor profiles for approved 12V motors (includes Tetrix, AndyMark, Matrix and REV models).
  * Modest improvements to enhance Wi-Fi P2P pairing.
  * Fixes telemetry log addition race.
@@ -1294,12 +1294,12 @@ Changes include:
      - Added default variable blocks to navigation and matrix blocks.
      - Fixed toolbox entry for openGLMatrix_rotation_withAxesArgs.
      - When user downloads Blocks-generated OpMode, only the .blk file is downloaded.
-     - When user uploads Blocks-generated OpMode (.blk file), Javascript code is auto generated.
+     - When user uploads Blocks-generated OpMode (.blk file), Javascript code is org.firstinspires.ftc.teamcode.auto generated.
      - Added DbgLog support.
      - Added logging when a blocks file is read/written.
      - Fixed bug to properly render blocks even if missing devices from configuration file.
      - Added support for additional characters (not just alphanumeric) for the block file names (for download and upload).
-     - Added support for OpMode flavor (“Autonomous” or “TeleOp”) and group.
+     - Added support for OpMode flavor (“org.firstinspires.ftc.teamcode.auto” or “TeleOp”) and group.
   * Changes to Samples to prevent tutorial issues.
   * Incorporated suggested changes from public pull 216 (“Replace .. paths”).
   * Remove Servo Glitches when robot stopped.
@@ -1394,7 +1394,7 @@ Changes include:
  * Improvements made to fix resiliency and responsiveness of the system.
  * For LinearOpMode the user now must for a telemetry.update() to update the telemetry data on the driver station.  This update() mechanism ensures that the driver station gets the updated data properly and at the same time.
  * The Auto Configure function of the Robot Controller is now template based.  If there is a commonly used robot configuration, a template can be created so that the Auto Configure mechanism can be used to quickly configure a robot of this type.
- * The logic to detect a runaway OpMode (both in the LinearOpMode and OpMode types) and to abort the run, then auto recover has been improved/implemented.
+ * The logic to detect a runaway OpMode (both in the LinearOpMode and OpMode types) and to abort the run, then org.firstinspires.ftc.teamcode.auto recover has been improved/implemented.
  * Fix has been incorporated so that Logitech F310 gamepad mappings will be correct for Marshmallow users.
 
 ## Release 16.07.08
@@ -1423,7 +1423,7 @@ Changes include:
  * Firmware version information for Modern Robotics modules are now logged.
  * Changes made to improve USB comm reliability and robustness.
  * Added support for voltage indicator for legacy (NXT-compatible) motor controllers.
- * Changes made to provide auto stop capabilities for OpModes.
+ * Changes made to provide org.firstinspires.ftc.teamcode.auto stop capabilities for OpModes.
     - A LinearOpMode class will stop when the statements in runOpMode() are complete.  User does not have to push the stop button on the driver station.
     - If an OpMode is stopped by the driver station, but there is a run away/uninterruptible thread persisting, the app will log an error message then force itself to crash to stop the runaway thread.
  * Driver Station UI modified to display lowest measured voltage below current voltage (12V battery).
@@ -1446,7 +1446,7 @@ Changes include:
  * Improved software so that Robot Controller (RC) is much more resilient and “self-healing” to USB disconnects:
     - If user attempts to start/restart RC with one or more module missing, it will display a warning but still start up.
     - When running an OpMode, if one or more modules gets disconnected, the RC & DS will display warnings,and robot will keep on working in spite of the missing module(s).
-    - If a disconnected module gets physically reconnected the RC will auto detect the module and the user will regain control of the recently connected module.
+    - If a disconnected module gets physically reconnected the RC will org.firstinspires.ftc.teamcode.auto detect the module and the user will regain control of the recently connected module.
     - Warning messages are more helpful (identifies the type of module that’s missing plus its USB serial number).
  * Code changes to fix the null gamepad reference when users try to reference the gamepads in the init() portion of their OpMode.
  * NXT light sensor output is now properly scaled.  Note that teams might have to readjust their light threshold values in their OpModes.
