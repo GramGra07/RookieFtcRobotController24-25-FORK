@@ -1,12 +1,22 @@
 package org.firstinspires.ftc.teamcode;
 
+import static org.firstinspires.ftc.teamcode.util.setpose;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.Range;
 
 @TeleOp
 public class mecanum_test extends LinearOpMode {
+    boolean touchpadpressed = false;
+    boolean slowmode = false;
+    boolean touchpadwpressed = false;
+    boolean clawclose = false;
+    boolean clawopen = false;
+
     @Override
     public void runOpMode() throws InterruptedException {
         // Declare our motors
@@ -15,6 +25,8 @@ public class mecanum_test extends LinearOpMode {
         DcMotor backLeftMotor = hardwareMap.dcMotor.get("backLeftMotor");
         DcMotor frontRightMotor = hardwareMap.dcMotor.get("frontRightMotor");
         DcMotor backRightMotor = hardwareMap.dcMotor.get("backRightMotor");
+        Servo clawServo = hardwareMap.servo.get("clawServo");
+        DcMotor armMotor1 = hardwareMap.dcMotor.get("armMotor1");
 
         // Reverse the right side motors. This may be wrong for your setup.
         // If your robot moves backwards when commanded to go forwards,
@@ -24,6 +36,8 @@ public class mecanum_test extends LinearOpMode {
         backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        armMotor1.setDirection(DcMotorSimple.Direction.REVERSE);
+
 
         waitForStart();
 
@@ -33,21 +47,46 @@ public class mecanum_test extends LinearOpMode {
             double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
             double x = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
             double rx = gamepad1.right_stick_x;
+            clawclose = gamepad1.right_bumper;
+            clawopen = gamepad1.left_bumper;
+            touchpadpressed = gamepad1.touchpad;
+            if (touchpadpressed && ! touchpadwpressed) {
+                slowmode = ! slowmode;
+            }
+            double slowmodemultiplier = 0.5;
 
             // Denominator is the largest motor power (absolute value) or 1
             // This ensures all the powers maintain the same ratio,
             // but only if at least one is out of the range [-1, 1]
             double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
-            double frontLeftPower = (y - x + rx) / denominator;
-            double backLeftPower = (y + x + rx) / denominator;
-            double frontRightPower = (y - x - rx) / denominator;
-            double backRightPower = (y + x - rx) / denominator;
+            double multiplier = 1; if (slowmode){multiplier = slowmodemultiplier;};
+            double frontLeftPower = ((y - x + rx) / denominator) * multiplier;
+            double backLeftPower = ((y + x + rx) / denominator) * multiplier;
+            double frontRightPower = ((y - x - rx) / denominator) * multiplier;
+            double backRightPower = ((y + x - rx) / denominator) * multiplier;
+            if (clawopen) {
+                setpose(clawServo,120);//2/3 of what is wanted EX: 180 degrees wanted use 120
+            }
+           if (clawclose) {
+               setpose(clawServo, 0);
+           }
+           double armpower = 0;
+           if (gamepad1.right_trigger > 0) {
+               armpower = gamepad1.right_trigger;
+           } else if (gamepad1.left_trigger > 0) {
+               armpower = -gamepad1.left_trigger;
+           }
+            armpower = Range.clip(armpower, -0.5,0.5);
 
 
             frontLeftMotor.setPower(frontLeftPower);
             backLeftMotor.setPower(backLeftPower);
             frontRightMotor.setPower(frontRightPower);
             backRightMotor.setPower(backRightPower);
+            armMotor1.setPower(armpower);
+            touchpadwpressed = touchpadpressed;
+            telemetry.addData("slowmode",slowmode);
+            telemetry.update();
         }
     }
 }

@@ -355,7 +355,7 @@ public class auto extends LinearOpMode {
      * @param straight  Set to true if we are driving straight, and the encoder positions should be included in the telemetry.
      */
     private void sendTelemetry(boolean straight) {
-        //test retest
+
 
         if (straight) {
             telemetry.addData("Motion", "Drive Straight");
@@ -368,10 +368,10 @@ public class auto extends LinearOpMode {
 
         telemetry.addData("Heading- Target : Current", "%5.2f : %5.0f", targetHeading, getHeading());
         telemetry.addData("Error  : Steer Pwr",  "%5.1f : %5.1f", headingError, turnSpeed);
-        telemetry.addData("Wheel Speeds L : R", "%5.2f : %5.2f", leftfrontSpeed, rightfrontSpeed);
+        telemetry.addData("Wheel Speeds FLW : FRW", "%5.2f : %5.2f", leftfrontSpeed, rightfrontSpeed);
+        telemetry.addData("Wheel Speeds BLW : BRW", "%5.2f : %5.2f", leftbackSpeed, rightbackSpeed);
         telemetry.update();
     }
-
     /**
      * read the Robot heading directly from the IMU (in degrees)
      */
