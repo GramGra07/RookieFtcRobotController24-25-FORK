@@ -122,7 +122,7 @@ public class auto extends LinearOpMode {
         //          holdHeading() is used after turns to let the heading stabilize
         //          Add a sleep(2000) after any step to keep the telemetry data visible for review
 
-        driveStraight(DRIVE_SPEED, 24.0, 0.0);      // Drive Forward 24"
+        driveStraight(DRIVE_SPEED, 24.0, 0.0);      // Drive Forward 24"kk
         turnToHeading( TURN_SPEED, -90.0);               // Turn  CW to -45 Degrees
         //holdHeading( TURN_SPEED, -45.0, 0.5);   // Hold -45 Deg heading for a 1/2 second
         driveStraight(DRIVE_SPEED, 22,-90.0);
