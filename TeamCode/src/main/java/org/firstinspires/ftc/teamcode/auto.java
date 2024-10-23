@@ -52,7 +52,7 @@ public class auto extends LinearOpMode {
 
     // These constants define the desired driving/control characteristics
     // They can/should be tweaked to suit the specific robot drive train.
-    static final double     DRIVE_SPEED             = 1.0;     // Max driving speed for better distance accuracy.
+    static final double     DRIVE_SPEED             = 1.0;      // Max driving speed for better distance accuracy.
     static final double     TURN_SPEED              = 0.2;     // Max turn speed to limit turn rate.
     static final double     HEADING_THRESHOLD       = 1.0 ;    // How close must the heading get to the target before moving to next step.
     // Requiring more accuracy (a smaller number) will often make the turn take longer to get into the final position.
