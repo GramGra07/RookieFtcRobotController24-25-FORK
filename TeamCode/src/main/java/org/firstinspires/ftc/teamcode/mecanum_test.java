@@ -33,6 +33,7 @@ public class mecanum_test extends LinearOpMode {
         DcMotor backRightMotor = hardwareMap.dcMotor.get("backRightMotor");
         Servo clawServo = hardwareMap.servo.get("clawServo");
         Servo primeServo = hardwareMap.servo.get("primeServo");
+        primeServo.setDirection(Servo.Direction.FORWARD);
         DcMotor armMotor1 = hardwareMap.dcMotor.get("armMotor1");
         DcMotor hangmotor = hardwareMap.dcMotor.get("hangmotor");
         DcMotor hangmotor1 = hardwareMap.dcMotor.get("hangmotor1");
@@ -109,9 +110,9 @@ public class mecanum_test extends LinearOpMode {
                setpose(clawServo,  80);  // opening degree keep positive otherwise will hit edges
             }
            if (gamepad1.b) {
-               setpose(primeServo,  0);//positive degrees spins down. keep set at 0 for straight up.
+               setpose(primeServo,  50);//positive degrees spins down. keep set at 0 for straight up when plugged in make sure wires are straight up at 90 degrees adjacent to the claw.
            } else if (gamepad1.x) {
-               setpose(primeServo, 100);//change degrees
+               setpose(primeServo, 0);//change degrees in small increments.
            }
 
             frontLeftMotor.setPower(frontLeftPower);
