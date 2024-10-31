@@ -18,6 +18,8 @@ public class mecanum_test extends LinearOpMode {
     boolean clawopen = false;
     boolean hangup = false;
     boolean hangdown = false;
+    boolean hangdown_new = false;
+    boolean hangup_new = false;
     boolean unloaded = false;
     boolean loaded = false;
 
@@ -33,6 +35,7 @@ public class mecanum_test extends LinearOpMode {
         Servo primeServo = hardwareMap.servo.get("primeServo");
         DcMotor armMotor1 = hardwareMap.dcMotor.get("armMotor1");
         DcMotor hangmotor = hardwareMap.dcMotor.get("hangmotor");
+        DcMotor hangmotor1 = hardwareMap.dcMotor.get("hangmotor1");
 
         // Reverse the right side motors. This may be wrong for your setup.
         // If your robot moves backwards when commanded to go forwards,
@@ -44,6 +47,7 @@ public class mecanum_test extends LinearOpMode {
         frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         armMotor1.setDirection(DcMotorSimple.Direction.REVERSE);
         hangmotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        hangmotor1.setDirection(DcMotorSimple.Direction.FORWARD);
 
 
         waitForStart();
@@ -57,9 +61,11 @@ public class mecanum_test extends LinearOpMode {
             clawclose = gamepad1.right_bumper;
             clawopen = gamepad1.left_bumper;
             loaded = gamepad1.b;//Set these differently
-            unloaded = gamepad1.a;//Set these differently
+            unloaded = gamepad1.x;//Set these differently
             hangup = gamepad1.dpad_up;
             hangdown = gamepad1.dpad_down;
+            hangup_new = gamepad1.dpad_up;
+            hangdown_new = gamepad1.dpad_down;
             touchpadpressed = gamepad1.touchpad;
             if (touchpadpressed && ! touchpadwpressed) {
                 slowmode = ! slowmode;
@@ -90,16 +96,22 @@ public class mecanum_test extends LinearOpMode {
            } else if (gamepad1.dpad_down) {
                hangpower = -1;
            }
+            double hangpower1 = 0;
+            if (gamepad1.dpad_up) {
+                hangpower1 = 1;
+            } else if (gamepad1.dpad_down) {
+                hangpower1 = -1;
+            }
 //           double clawpower = 0.5;
            if (gamepad1.right_bumper) {
                setpose(clawServo, 110);   // closing degree (grip force)
            }   else if (gamepad1.left_bumper) {
-               setpose(clawServo,  60);  // opening degree keep positive otherwise will hit edges
+               setpose(clawServo,  80);  // opening degree keep positive otherwise will hit edges
             }
            if (gamepad1.b) {
-               setpose(primeServo, 110);//change degrees.
-           } else if (gamepad1.a) {
-               setpose(primeServo, 60);//change degrees
+               setpose(primeServo,  0);//positive degrees spins down. keep set at 0 for straight up.
+           } else if (gamepad1.x) {
+               setpose(primeServo, 100);//change degrees
            }
 
             frontLeftMotor.setPower(frontLeftPower);
@@ -108,8 +120,13 @@ public class mecanum_test extends LinearOpMode {
             backRightMotor.setPower(backRightPower);
             armMotor1.setPower(armpower);
             hangmotor.setPower(hangpower);
+            hangmotor1.setPower(hangpower1);
             touchpadwpressed = touchpadpressed;
             telemetry.addData("slowmode",slowmode);
+            unloaded = loaded;
+            hangup_new = hangup;
+            telemetry.addData("b",gamepad1.b);
+            telemetry.addData("up", gamepad1.dpad_up);
             telemetry.update();
         }
     }
