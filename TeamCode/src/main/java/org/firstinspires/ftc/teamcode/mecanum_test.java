@@ -33,7 +33,8 @@ public class mecanum_test extends LinearOpMode {
         DcMotor backRightMotor = hardwareMap.dcMotor.get("backRightMotor");
         Servo clawServo = hardwareMap.servo.get("clawServo");
         Servo primeServo = hardwareMap.servo.get("primeServo");
-        primeServo.setDirection(Servo.Direction.FORWARD);
+        primeServo.setDirection(Servo.Direction.REVERSE);
+        clawServo.setDirection(Servo.Direction.FORWARD);
         DcMotor armMotor1 = hardwareMap.dcMotor.get("armMotor1");
         DcMotor hangmotor = hardwareMap.dcMotor.get("hangmotor");
         DcMotor hangmotor1 = hardwareMap.dcMotor.get("hangmotor1");
@@ -105,14 +106,14 @@ public class mecanum_test extends LinearOpMode {
             }
 //           double clawpower = 0.5;
            if (gamepad1.right_bumper) {
-               setpose(clawServo, 110);   // closing degree (grip force)
+               setpose(clawServo, 90);   // keep 90 always
            }   else if (gamepad1.left_bumper) {
-               setpose(clawServo,  80);  // opening degree keep positive otherwise will hit edges
+               setpose(clawServo,  70);  //  keep at 70 increase to open less
             }
            if (gamepad1.b) {
-               setpose(primeServo,  50);//positive degrees spins down. keep set at 0 for straight up when plugged in make sure wires are straight up at 90 degrees adjacent to the claw.
+               setpose(primeServo,  120);// press b first ALWAYS.
            } else if (gamepad1.x) {
-               setpose(primeServo, -50);//change degrees in small increments.
+               setpose(primeServo, 0);//change degrees in small increments.
            }
 
             frontLeftMotor.setPower(frontLeftPower);
@@ -126,6 +127,8 @@ public class mecanum_test extends LinearOpMode {
             telemetry.addData("slowmode",slowmode);
             unloaded = loaded;
             hangup_new = hangup;
+            clawopen = clawclose;
+            telemetry.addData("claw",gamepad1.right_bumper);
             telemetry.addData("b",gamepad1.b);
             telemetry.addData("up", gamepad1.dpad_up);
             telemetry.update();
