@@ -112,7 +112,7 @@ public class mecanum_test extends LinearOpMode {
            if (gamepad1.b) {
                setpose(primeServo,  50);//positive degrees spins down. keep set at 0 for straight up when plugged in make sure wires are straight up at 90 degrees adjacent to the claw.
            } else if (gamepad1.x) {
-               setpose(primeServo, 0);//change degrees in small increments.
+               setpose(primeServo, -50);//change degrees in small increments.
            }
 
             frontLeftMotor.setPower(frontLeftPower);
