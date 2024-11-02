@@ -108,12 +108,14 @@ public class mecanum_test extends LinearOpMode {
            if (gamepad1.right_bumper) {
                setpose(clawServo, 90);   // keep 90 always
            }   else if (gamepad1.left_bumper) {
-               setpose(clawServo,  70);  //  keep at 70 increase  to open less
+               setpose(clawServo,  60);  //  keep at 70 increase  to open less
             }
-           if (gamepad1.b) {
-               setpose(primeServo,  120);// press b first ALWAYS.
-           } else if (gamepad1.x) {
+           if (gamepad1.y) {
+               setpose(primeServo,  115);// press b first ALWAYS.
+           } else if (gamepad1.a) {
                setpose(primeServo, 0);//change degrees in small increments.
+           } else if (gamepad1.b) {
+               setpose(primeServo, 57.5);
            }
 
             frontLeftMotor.setPower(frontLeftPower);
