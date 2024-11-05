@@ -115,7 +115,7 @@ public class mecanum_test extends LinearOpMode {
            } else if (gamepad1.a) {
                setpose(primeServo, 0);//change degrees in small increments.
            } else if (gamepad1.b) {
-               setpose(primeServo, 57.5);//
+               setpose(primeServo, 57.5);// keep for halfway
            }
 
             frontLeftMotor.setPower(frontLeftPower);
