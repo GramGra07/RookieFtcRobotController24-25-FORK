@@ -22,6 +22,7 @@ public class mecanum_test extends LinearOpMode {
     boolean hangup_new = false;
     boolean unloaded = false;
     boolean loaded = false;
+    boolean armout = false;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -116,6 +117,11 @@ public class mecanum_test extends LinearOpMode {
                setpose(primeServo, 0);//change degrees in small increments.
            } else if (gamepad1.b) {
                setpose(primeServo, 57.5);// keep for halfway
+           } //drive forward down and open simultaniously
+           if (gamepad1.x) {
+              // armout(armout, degrees);
+               setpose(primeServo, 0);
+               setpose(clawServo, 70);
            }
 
             frontLeftMotor.setPower(frontLeftPower);
