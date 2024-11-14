@@ -107,7 +107,7 @@ public class mecanum_test extends LinearOpMode {
             }
 //           double clawpower = 0.5;
            if (gamepad1.right_bumper) {
-               setpose(clawServo, 100);   // keep 90 always
+               setpose(clawServo, 110);   // keep 90 always
            }   else if (gamepad1.left_bumper) {
                setpose(clawServo,  70);  //  keep at 60 increase  to open less
             }
