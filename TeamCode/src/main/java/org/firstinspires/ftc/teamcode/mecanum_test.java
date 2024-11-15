@@ -126,7 +126,7 @@ public class mecanum_test extends LinearOpMode {
 
             frontLeftMotor.setPower(frontLeftPower);
             backLeftMotor.setPower(backLeftPower);
-            frontRightMotor.setPower(frontRightPower);
+            frontRightMotor.setPower(frontRightPower); //hi
             backRightMotor.setPower(backRightPower);
             armMotor1.setPower(armpower);
             hangmotor.setPower(hangpower);
