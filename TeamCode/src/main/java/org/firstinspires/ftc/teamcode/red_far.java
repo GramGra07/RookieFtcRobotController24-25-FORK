@@ -42,6 +42,7 @@ public class red_far extends LinearOpMode {
     private int     backleftTarget  = 0;
     private double  armMotorTarget        = 0;
 
+
     // Calculate the COUNTS_PER_INCH for your specific drive train.
     // Go to your motor vendor website to determine your motor's COUNTS_PER_MOTOR_REV
     // For external drive gearing, set DRIVE_GEAR_REDUCTION as needed.
@@ -134,14 +135,15 @@ public class red_far extends LinearOpMode {
         // Notes:   Reverse movement is obtained by setting a negative distance (not speed)
         //          holdHeading() is used after turns to let the heading stabilize
         //          Add a sleep(2000) after any step to keep the telemetry data visible for review
-        turnToHeading(TURN_SPEED, 0);
-        driveStraight(DRIVE_SPEED, 12.0,0);
-        armextend(ARM_EXTEND,5,1);
+        //turnToHeading(TURN_SPEED, 0);
+        //driveStraight(DRIVE_SPEED, 1.0,0);
+        armextend(ARM_EXTEND,5,0);
         //parking code
-        turnToHeading( TURN_SPEED, -90.0);
-        driveStraight(DRIVE_SPEED, 32.5, -90.0);      // Drive Forward 24"kk
-        turnToHeading( TURN_SPEED,  0.0);// Turn  CW to -45 Degrees
-        driveStraight(DRIVE_SPEED, -1.0, 0.0);
+       // turnToHeading( TURN_SPEED, -90.0);
+        //driveStraight(DRIVE_SPEED, 32.5, -90.0);      // Drive Forward 24"kk
+        //turnToHeading( TURN_SPEED,  0.0);// Turn  CW to -45 Degrees
+        //driveStraight(DRIVE_SPEED, -1.0, 0.0);
+        //end of parking
         //holdHeading( TURN_SPEED, -45.0, 0.5);   // Hold -45 Deg heading for a 1/2 second
         //driveStraight(DRIVE_SPEED, 22,-90.0);
         // driveStraight(DRIVE_SPEED, 17.0, -45.0);  // Drive Forward 17" at -45 degrees (12"x and 12"y)
@@ -238,13 +240,11 @@ public class red_far extends LinearOpMode {
             frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             backLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            backRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         }
     }
     public void armextend(double maxDriveSpeed,
-                              double distance,
-                              double heading) {
+                              double distance, double heading) {
 
         // Ensure that the OpMode is still active
         if (opModeIsActive()) {
@@ -254,7 +254,7 @@ public class red_far extends LinearOpMode {
             armMotorTarget = armMotor1.getCurrentPosition() + moveCounts;
 
             // Set Target FIRST, then turn on RUN_TO_POSITION
-            armMotor1.setTargetPosition((int) armMotorTarget);
+            armMotor1.setTargetPosition((int)armMotorTarget);
 
             armMotor1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
