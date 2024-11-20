@@ -139,7 +139,7 @@ public class red_far extends LinearOpMode {
         //Add a sleep(2000) after any step to keep the telemetry data visible for review
         //turnToHeading(TURN_SPEED, 0);
         //driveStraight(DRIVE_SPEED, 1.0,0);
-        armextend(ARM_EXTEND,3,0); // not in inches not final either
+        armextend(ARM_EXTEND,3,0); // not in inches not final either jj
         //parking code
        // turnToHeading( TURN_SPEED, -90.0);
         //driveStraight(DRIVE_SPEED, 32.5, -90.0);      // Drive Forward 24"kk
