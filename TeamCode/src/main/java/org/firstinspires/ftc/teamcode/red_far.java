@@ -55,6 +55,8 @@ public class red_far extends LinearOpMode {
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
 
+    static final double COUNT_PER_INCH_ARM = 384.5 ;
+
     // These constants define the desired driving/control characteristics
     // They can/should be tweaked to suit the specific robot drive train.
     static double     DRIVE_SPEED             = 1.0;      // Max driving speed for better distance accuracy.
@@ -132,12 +134,12 @@ public class red_far extends LinearOpMode {
         imu.resetYaw();
 
         // Step through each leg of the path,
-        // Notes:   Reverse movement is obtained by setting a negative distance (not speed)
-        //          holdHeading() is used after turns to let the heading stabilize
-        //          Add a sleep(2000) after any step to keep the telemetry data visible for review
+        //Notes:   Reverse movement is obtained by setting a negative distance (not speed)
+        //holdHeading() is used after turns to let the heading stabilize
+        //Add a sleep(2000) after any step to keep the telemetry data visible for review
         //turnToHeading(TURN_SPEED, 0);
         //driveStraight(DRIVE_SPEED, 1.0,0);
-        armextend(ARM_EXTEND,5,0);
+        armextend(ARM_EXTEND,3,0); // not in inches not final either
         //parking code
        // turnToHeading( TURN_SPEED, -90.0);
         //driveStraight(DRIVE_SPEED, 32.5, -90.0);      // Drive Forward 24"kk
@@ -250,7 +252,7 @@ public class red_far extends LinearOpMode {
         if (opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            int moveCounts = (int)(distance * COUNTS_PER_INCH);
+            int moveCounts = (int)(distance * COUNT_PER_INCH_ARM);
             armMotorTarget = armMotor1.getCurrentPosition() + moveCounts;
 
             // Set Target FIRST, then turn on RUN_TO_POSITION
@@ -265,6 +267,9 @@ public class red_far extends LinearOpMode {
             // keep looping while we are still active, and BOTH motors are running.
             while (opModeIsActive() &&
                     (armMotor1.isBusy() )) {
+                telemetry.addData("current pose",  armMotor1.getCurrentPosition());
+                telemetry.addData("targetPose",armMotorTarget);
+                telemetry.update();
             }
 
             // Stop all motion & Turn off RUN_TO_POSITION
@@ -460,7 +465,6 @@ public class red_far extends LinearOpMode {
         frontRightMotor.setPower(rightfrontSpeed);
         backRightMotor.setPower(rightbackSpeed);
         backLeftMotor.setPower(leftbackSpeed);
-        armMotor1.setPower(armMotorSpeed);
     }
 
     /**
