@@ -21,6 +21,7 @@ public class red_far extends LinearOpMode {
     private DcMotor frontRightMotor = null;
     private DcMotor backRightMotor = null;
     private DcMotor backLeftMotor = null;
+    private DcMotor armMotor1 = null;
     private IMU imu         = null;      // Control/Expansion Hub IMU
 
     private double          headingError  = 0;
@@ -34,10 +35,12 @@ public class red_far extends LinearOpMode {
     private double  rightfrontSpeed    = 0;
     private double  rightbackSpeed    = 0;
     private double  leftbackSpeed    = 0;
+    private double  armMotorSpeed    = 0;
     private int     leftfrontTarget    = 0;
     private int     rightfrontTarget   = 0;
     private int     backrightTarget = 0;
     private int     backleftTarget  = 0;
+    private double  armMotorTarget        = 0;
 
     // Calculate the COUNTS_PER_INCH for your specific drive train.
     // Go to your motor vendor website to determine your motor's COUNTS_PER_MOTOR_REV
@@ -63,16 +66,18 @@ public class red_far extends LinearOpMode {
     // Decrease these numbers if the heading does not settle on the correct value (eg: very agile robot with omni wheels)
     static final double     P_TURN_GAIN            = 0.02;     // Larger is more responsive, but also less stable.
     static final double     P_DRIVE_GAIN           = 0.03;     // Larger is more responsive, but also less stable.
+    static final double     ARM_EXTEND             = 1.0;
 
 
     @Override
-    public void runOpMode() {
+    public void runOpMode() throws InterruptedException {
 
         // Initialize the drive system variables.
         frontLeftMotor = hardwareMap.get(DcMotor.class, "frontLeftMotor");
         frontRightMotor = hardwareMap.get(DcMotor.class, "frontRightMotor");
         backRightMotor = hardwareMap.get(DcMotor.class, "backRightMotor");
         backLeftMotor = hardwareMap.get(DcMotor.class, "backLeftMotor");
+        armMotor1 = hardwareMap.get(DcMotor.class, "armMotor1");
         Servo clawServo = hardwareMap.servo.get("clawServo");
         Servo primeServo = hardwareMap.servo.get("primeServo");
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
@@ -83,6 +88,7 @@ public class red_far extends LinearOpMode {
         backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        armMotor1.setDirection(DcMotorSimple.Direction.REVERSE);
         primeServo.setDirection(Servo.Direction.REVERSE);
         clawServo.setDirection(Servo.Direction.FORWARD);
         /* The next two lines define Hub orientation.
@@ -104,6 +110,7 @@ public class red_far extends LinearOpMode {
         frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        armMotor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         //leftdrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //rightdrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //backdrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -120,12 +127,17 @@ public class red_far extends LinearOpMode {
         frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        armMotor1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         imu.resetYaw();
 
         // Step through each leg of the path,
         // Notes:   Reverse movement is obtained by setting a negative distance (not speed)
         //          holdHeading() is used after turns to let the heading stabilize
         //          Add a sleep(2000) after any step to keep the telemetry data visible for review
+        turnToHeading(TURN_SPEED, 0);
+        driveStraight(DRIVE_SPEED, 12.0,0);
+        armextend(ARM_EXTEND,5,1);
+        //parking code
         turnToHeading( TURN_SPEED, -90.0);
         driveStraight(DRIVE_SPEED, 32.5, -90.0);      // Drive Forward 24"kk
         turnToHeading( TURN_SPEED,  0.0);// Turn  CW to -45 Degrees
@@ -159,16 +171,16 @@ public class red_far extends LinearOpMode {
     // **********  HIGH Level driving functions.  ********************
 
     /**
-     *  Drive in a straight line, on a fixed compass heading (angle), based on encoder counts.
-     *  Move will stop if either of these conditions occur:
-     *  1) Move gets to the desired position
-     *  2) Driver stops the OpMode running.
+     * Drive in a straight line, on a fixed compass heading (angle), based on encoder counts.
+     * Move will stop if either of these conditions occur:
+     * 1) Move gets to the desired position
+     * 2) Driver stops the OpMode running.
      *
      * @param maxDriveSpeed MAX Speed for forward/rev motion (range 0 to +1.0) .
-     * @param distance   Distance (in inches) to move from current position.  Negative distance means move backward.
-     * @param heading      Absolute Heading Angle (in Degrees) relative to last gyro reset.
-     *                   0 = fwd. +ve is CCW from fwd. -ve is CW from forward.
-     *                   If a relative angle is required, add/subtract from the current robotHeading.
+     * @param distance      Distance (in inches) to move from current position.  Negative distance means move backward.
+     * @param heading       Absolute Heading Angle (in Degrees) relative to last gyro reset.
+     *                      0 = fwd. +ve is CCW from fwd. -ve is CW from forward.
+     *                      If a relative angle is required, add/subtract from the current robotHeading.
      */
     public void driveStraight(double maxDriveSpeed,
                               double distance,
@@ -184,16 +196,19 @@ public class red_far extends LinearOpMode {
             backrightTarget = backRightMotor.getCurrentPosition() + moveCounts;
             backleftTarget = backLeftMotor.getCurrentPosition() + moveCounts;
 
+
             // Set Target FIRST, then turn on RUN_TO_POSITION
             frontLeftMotor.setTargetPosition(leftfrontTarget);
             frontRightMotor.setTargetPosition(rightfrontTarget);
             backRightMotor.setTargetPosition(backrightTarget);
             backLeftMotor.setTargetPosition(backleftTarget);
 
+
             frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
 
             // Set the required driving speed  (must be positive for RUN_TO_POSITION)
             // Start driving straight, and then enter the control loop
@@ -224,6 +239,37 @@ public class red_far extends LinearOpMode {
             frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             backLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             backRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        }
+    }
+    public void armextend(double maxDriveSpeed,
+                              double distance,
+                              double heading) {
+
+        // Ensure that the OpMode is still active
+        if (opModeIsActive()) {
+
+            // Determine new target position, and pass to motor controller
+            int moveCounts = (int)(distance * COUNTS_PER_INCH);
+            armMotorTarget = armMotor1.getCurrentPosition() + moveCounts;
+
+            // Set Target FIRST, then turn on RUN_TO_POSITION
+            armMotor1.setTargetPosition((int) armMotorTarget);
+
+            armMotor1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            // Set the required driving speed  (must be positive for RUN_TO_POSITION)
+            // Start driving straight, and then enter the control loop
+            armMotor1.setPower(1);
+
+            // keep looping while we are still active, and BOTH motors are running.
+            while (opModeIsActive() &&
+                    (armMotor1.isBusy() )) {
+            }
+
+            // Stop all motion & Turn off RUN_TO_POSITION
+            armMotor1.setPower(0);
+            armMotor1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
     }
     public void drivetosub(double maxDriveSpeed,
@@ -239,17 +285,20 @@ public class red_far extends LinearOpMode {
             rightfrontTarget = frontRightMotor.getCurrentPosition() + moveCounts;
             backrightTarget = backRightMotor.getCurrentPosition() + moveCounts;
             backleftTarget = backLeftMotor.getCurrentPosition() + moveCounts;
+            armMotorTarget = armMotor1.getCurrentPosition() + moveCounts;
 
             // Set Target FIRST, then turn on RUN_TO_POSITION
             frontLeftMotor.setTargetPosition(leftfrontTarget);
             frontRightMotor.setTargetPosition(rightfrontTarget);
             backRightMotor.setTargetPosition(backrightTarget);
             backLeftMotor.setTargetPosition(backleftTarget);
+            armMotor1.setTargetPosition((int) armMotorTarget);
 
             frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            armMotor1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // Set the required driving speed  (must be positive for RUN_TO_POSITION)
             // Start driving straight, and then enter the control loop
@@ -280,6 +329,7 @@ public class red_far extends LinearOpMode {
             frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             backLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             backRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            armMotor1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
     }
     /**
@@ -390,7 +440,6 @@ public class red_far extends LinearOpMode {
     public void moveRobot(double drive, double turn) {
         driveSpeed = drive;     // save this value as a class member so it can be used by telemetry.
         turnSpeed  = turn;      // save this value as a class member so it can be used by telemetry.
-
         leftfrontSpeed  = drive - turn;
         rightfrontSpeed = drive + turn;
         rightbackSpeed = drive + turn;
@@ -411,6 +460,7 @@ public class red_far extends LinearOpMode {
         frontRightMotor.setPower(rightfrontSpeed);
         backRightMotor.setPower(rightbackSpeed);
         backLeftMotor.setPower(leftbackSpeed);
+        armMotor1.setPower(armMotorSpeed);
     }
 
     /**
