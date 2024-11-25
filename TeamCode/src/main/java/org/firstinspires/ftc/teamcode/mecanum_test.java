@@ -121,6 +121,7 @@ public class mecanum_test extends LinearOpMode {
            if (gamepad1.x) {
               // armout(armout, degrees);
                setpose(primeServo, 0);
+               sleep(350);
                setpose(clawServo, 70);
            }
 

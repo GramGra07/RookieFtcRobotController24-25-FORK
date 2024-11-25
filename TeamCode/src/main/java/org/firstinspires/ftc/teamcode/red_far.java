@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import static org.firstinspires.ftc.teamcode.util.setpose;
+
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -137,14 +139,27 @@ public class red_far extends LinearOpMode {
         //Notes:   Reverse movement is obtained by setting a negative distance (not speed)
         //holdHeading() is used after turns to let the heading stabilize
         //Add a sleep(2000) after any step to keep the telemetry data visible for review
-        //turnToHeading(TURN_SPEED, 0);
-        //driveStraight(DRIVE_SPEED, 1.0,0);
-        armextend(ARM_EXTEND,3,0); // not in inches not final either jj
+        setpose(clawServo,120);
+        sleep(500);
+        setpose(primeServo,115);
+        sleep(1000);
+        turnToHeading(TURN_SPEED, 0);
+        driveStraight(DRIVE_SPEED, 14.0,0);
+        armextend(ARM_EXTEND,3.5,0); // not in inches not final either
+        setpose(clawServo,70);
+        sleep(1000);
+        setpose(primeServo,57.5);
+        sleep(1000);
+        armextend(ARM_EXTEND,-3.25,0);
+        setpose(primeServo,115);
         //parking code
-       // turnToHeading( TURN_SPEED, -90.0);
-        //driveStraight(DRIVE_SPEED, 32.5, -90.0);      // Drive Forward 24"kk
-        //turnToHeading( TURN_SPEED,  0.0);// Turn  CW to -45 Degrees
-        //driveStraight(DRIVE_SPEED, -1.0, 0.0);
+        driveStraight(DRIVE_SPEED,-13,0);
+        turnToHeading( TURN_SPEED, -90.0);
+        driveStraight(DRIVE_SPEED, 32.5, -90.0);      // Drive Forward 24"kk
+        turnToHeading( TURN_SPEED,  0.0);// Turn  CW to -45 Degrees
+        //driveStraight(DRIVE_SPEED,10,0);
+        //armextend(ARM_EXTEND,2,0);
+        driveStraight(DRIVE_SPEED, -1.0, 0.0);
         //end of parking
         //holdHeading( TURN_SPEED, -45.0, 0.5);   // Hold -45 Deg heading for a 1/2 second
         //driveStraight(DRIVE_SPEED, 22,-90.0);
