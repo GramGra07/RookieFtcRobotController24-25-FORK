@@ -16,7 +16,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 
 @Autonomous
-public class red_far extends LinearOpMode {
+public class goodauto extends LinearOpMode {
 
     /* Declare OpMode members. */
     private DcMotor frontLeftMotor = null;
@@ -27,6 +27,7 @@ public class red_far extends LinearOpMode {
     private IMU imu         = null;      // Control/Expansion Hub IMU
 
     private double          headingError  = 0;
+    public static final double COUNTS_PER_INCH_Side = -100 * 0.50;
 
     // These variable are declared here (as class members) so they can be updated in various methods,
     // but still be displayed by sendTelemetry()
@@ -62,7 +63,7 @@ public class red_far extends LinearOpMode {
     // These constants define the desired driving/control characteristics
     // They can/should be tweaked to suit the specific robot drive train.
     static double     DRIVE_SPEED             = 1.0;      // Max driving speed for better distance accuracy.
-    static final double     TURN_SPEED              = 0.2;     // Max turn speed to limit turn rate.
+    static final double     TURN_SPEED              = 0.5;     // Max turn speed to limit turn rate.
     static final double     HEADING_THRESHOLD       = 1.0 ;    // How close must the heading get to the target before moving to next step.
     // Requiring more accuracy (a smaller number) will often make the turn take longer to get into the final position.
     // Define the Proportional control coefficient (or GAIN) for "heading control".
@@ -135,6 +136,8 @@ public class red_far extends LinearOpMode {
         armMotor1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         imu.resetYaw();
 
+       // sideWaysEncoderDrive(1,30);
+        //sideWaysEncoderDrive(1,-30);
         // Step through each leg of the path,
         //Notes:   Reverse movement is obtained by setting a negative distance (not speed)
         //holdHeading() is used after turns to let the heading stabilize
@@ -142,24 +145,64 @@ public class red_far extends LinearOpMode {
         setpose(clawServo,120);
         sleep(500);
         setpose(primeServo,115);
-        sleep(1000);
+        sleep(500);
         turnToHeading(TURN_SPEED, 0);
-        driveStraight(DRIVE_SPEED, 14.0,0);
-        armextend(ARM_EXTEND,3.5,0); // not in inches not final either
+        sideWaysEncoderDrive(1,9);
+        driveStraight(DRIVE_SPEED, 15,0);
+        armextend(ARM_EXTEND,3.75,0); // not in inches not final either
+        setpose(clawServo,70);
+        sleep(750);
+        setpose(primeServo,57.5);
+        sleep(750);
+        armextend(ARM_EXTEND,-3.5,0);
+        setpose(primeServo,115);
+        setpose(clawServo,120);
+//        //parking code
+        driveStraight(DRIVE_SPEED,-5,0);
+        frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        sideWaysEncoderDrive(1,48);
+        sleep(1000);
+        turnToHeading(TURN_SPEED,0);
+        driveStraight(DRIVE_SPEED,8,0);
+        armextend(ARM_EXTEND,2,0);
+        sleep(500);
         setpose(clawServo,70);
         sleep(1000);
-        setpose(primeServo,57.5);
+        setpose(primeServo,0);
         sleep(1000);
-        armextend(ARM_EXTEND,-3.25,0);
+        setpose(clawServo,120);
+        sleep(1000);
         setpose(primeServo,115);
-        //parking code
-        driveStraight(DRIVE_SPEED,-13,0);
-        turnToHeading( TURN_SPEED, -90.0);
-        driveStraight(DRIVE_SPEED, 32.5, -90.0);      // Drive Forward 24"kk
-        turnToHeading( TURN_SPEED,  0.0);// Turn  CW to -45 Degrees
-        //driveStraight(DRIVE_SPEED,10,0);
-        //armextend(ARM_EXTEND,2,0);
-        driveStraight(DRIVE_SPEED, -1.0, 0.0);
+        sleep(500);
+        armextend(ARM_EXTEND,-1.5,0);
+        turnToHeading(TURN_SPEED,180);
+        setpose(primeServo,57.5);
+        sleep(500);
+        setpose(clawServo,70);
+        sleep(500);
+        driveStraight(DRIVE_SPEED,-10,180);
+        sideWaysEncoderDrive(1,-5);
+        sleep(10000);
+        driveStraight(DRIVE_SPEED,10,180);
+        setpose(primeServo,0);
+        sleep(500);
+        setpose(clawServo,120);
+        sleep(500);
+        setpose(primeServo,115);
+        sleep(500);
+        turnToHeading(TURN_SPEED,0);
+        sideWaysEncoderDrive(1,-64.5);
+
+
+//        turnToHeading( TURN_SPEED, -90.0);
+//        driveStraight(DRIVE_SPEED, 32.5, -90.0);      // Drive Forward 24"kk
+//        turnToHeading( TURN_SPEED,  0.0);// Turn  CW to -45 Degrees
+//        //driveStraight(DRIVE_SPEED,10,0);
+//        //armextend(ARM_EXTEND,2,0);
+//        driveStraight(DRIVE_SPEED, -1.0, 0.0);
         //end of parking
         //holdHeading( TURN_SPEED, -45.0, 0.5);   // Hold -45 Deg heading for a 1/2 second
         //driveStraight(DRIVE_SPEED, 22,-90.0);
@@ -174,10 +217,6 @@ public class red_far extends LinearOpMode {
         //driveStraight(DRIVE_SPEED,-48.0, 0.0);  // Drive in Reverse 48" (should return to approx. staring position)
 
         //drivetosub(DRIVE_SPEED, -48.0, 0.0); //fix the numbers in this to see what it does.
-
-        telemetry.addData("Path", "Complete");
-        telemetry.update();
-        sleep(1000);  // Pause to display last telemetry message.
     }
 
     /*
@@ -258,6 +297,87 @@ public class red_far extends LinearOpMode {
             frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             backLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+        }
+    }
+    public void strafe (double maxDriveSpeed,
+                        double distance, double heading) {
+        if (opModeIsActive()) {
+
+
+        }
+    }
+
+    public void sideWaysEncoderDrive(double speed,
+                                     double inches) {//+=right //-=left
+        int newFRTarget;
+        int newFLTarget;
+        int newBRTarget;
+        int newBLTarget;
+        if (opModeIsActive()) {
+            if (inches < 0) {
+                newFLTarget = frontLeftMotor.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH_Side);
+                newBLTarget = backLeftMotor.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH_Side);
+                newFRTarget = frontRightMotor.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH_Side);
+                newBRTarget = backRightMotor.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH_Side);
+                frontLeftMotor.setTargetPosition(newFLTarget);//actually backleft
+                backLeftMotor.setTargetPosition(-newBLTarget);//actually frontleft
+                backRightMotor.setTargetPosition(-newBRTarget);
+                frontRightMotor.setTargetPosition(newFRTarget);
+
+            }
+            if (inches > 0) {
+                newFLTarget = frontLeftMotor.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH_Side);
+                newBLTarget = backLeftMotor.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH_Side);
+                newFRTarget = frontRightMotor.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH_Side);
+                newBRTarget = backRightMotor.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH_Side);
+                frontLeftMotor.setTargetPosition(newFLTarget);//actually backleft
+                backLeftMotor.setTargetPosition(-newBLTarget);//actually frontleft
+                backRightMotor.setTargetPosition(-newBRTarget);//makes go forward
+                frontRightMotor.setTargetPosition(newFRTarget);
+            }
+
+            frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+
+            backLeftMotor.setPower(Math.abs(speed));
+            frontLeftMotor.setPower(Math.abs(speed));
+            frontRightMotor.setPower(Math.abs(speed));
+            backRightMotor.setPower(Math.abs(speed));
+            while (opModeIsActive() &&
+                     backRightMotor.isBusy()) {
+
+                // Display it for the driver.
+                telemetry.addData("Running to", "%7d:%7d", frontLeftMotor.getCurrentPosition()
+                        , backRightMotor.getCurrentPosition());
+                telemetry.addData("Running to", "%7d:%7d", backLeftMotor.getCurrentPosition()
+                        , frontLeftMotor.getCurrentPosition());
+                telemetry.addData("Currently at", "%7d:%7d",
+                        frontLeftMotor.getCurrentPosition()
+                        , backRightMotor.getCurrentPosition());
+                telemetry.addData("Currently at", "%7d:%7d",
+                        frontLeftMotor.getCurrentPosition()
+                        , backLeftMotor.getCurrentPosition());
+                telemetry.update();
+            }
+
+            // Stop all motion;
+            backLeftMotor.setPower(0);
+            frontRightMotor.setPower(0);
+            frontLeftMotor.setPower(0);
+            backRightMotor.setPower(0);
+
+            // Turn off RUN_TO_POSITION
+            frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            backLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            backRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         }
     }
     public void armextend(double maxDriveSpeed,
