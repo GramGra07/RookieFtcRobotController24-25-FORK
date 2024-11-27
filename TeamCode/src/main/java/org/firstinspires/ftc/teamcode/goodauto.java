@@ -62,7 +62,7 @@ public class goodauto extends LinearOpMode {
 
     // These constants define the desired driving/control characteristics
     // They can/should be tweaked to suit the specific robot drive train.
-    static double     DRIVE_SPEED             = 1.0;      // Max driving speed for better distance accuracy.
+    static double     DRIVE_SPEED             = 1.1;      // Max driving speed for better distance accuracy.
     static final double     TURN_SPEED              = 0.5;     // Max turn speed to limit turn rate.
     static final double     HEADING_THRESHOLD       = 1.0 ;    // How close must the heading get to the target before moving to next step.
     // Requiring more accuracy (a smaller number) will often make the turn take longer to get into the final position.
@@ -148,26 +148,42 @@ public class goodauto extends LinearOpMode {
         sleep(500);
         turnToHeading(TURN_SPEED, 0);
         sideWaysEncoderDrive(1,9);
-        driveStraight(DRIVE_SPEED, 15,0);
-        armextend(ARM_EXTEND,3.75,0); // not in inches not final either
-        setpose(clawServo,70);
-        sleep(750);
-        setpose(primeServo,57.5);
-        sleep(750);
-        armextend(ARM_EXTEND,-3.5,0);
-        setpose(primeServo,115);
-        setpose(clawServo,120);
-//        //parking code
-        driveStraight(DRIVE_SPEED,-5,0);
         frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        sideWaysEncoderDrive(1,48);
+        driveStraight(DRIVE_SPEED, 14,0);
+        frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         sleep(1000);
-        turnToHeading(TURN_SPEED,0);
-        driveStraight(DRIVE_SPEED,8,0);
-        armextend(ARM_EXTEND,2,0);
+        armextend(ARM_EXTEND,3.99,0); // not in inches not final either
+        setpose(clawServo,70);
+        sleep(750);
+        setpose(primeServo,57.5);
+        sleep(750);
+        armextend(ARM_EXTEND,-3.70,0);
+        setpose(primeServo,115);
+        setpose(clawServo,120);
+//        //parking code
+        driveStraight(DRIVE_SPEED,-5,0);
+        sleep(500);
+        frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        sleep(500);
+        sideWaysEncoderDrive(1,53);
+        frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        sleep(500);
+        //turnToHeading(TURN_SPEED,0);
+        driveStraight(DRIVE_SPEED,15,0);
+        turnToHeading(TURN_SPEED,15);
+        armextend(ARM_EXTEND,1,0);
         sleep(500);
         setpose(clawServo,70);
         sleep(1000);
@@ -177,7 +193,7 @@ public class goodauto extends LinearOpMode {
         sleep(1000);
         setpose(primeServo,115);
         sleep(500);
-        armextend(ARM_EXTEND,-1.5,0);
+        armextend(ARM_EXTEND,-0.70,0);
         turnToHeading(TURN_SPEED,180);
         setpose(primeServo,57.5);
         sleep(500);

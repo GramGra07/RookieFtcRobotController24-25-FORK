@@ -39,6 +39,8 @@ public class mecanum_test extends LinearOpMode {
         DcMotor armMotor1 = hardwareMap.dcMotor.get("armMotor1");
         DcMotor hangmotor = hardwareMap.dcMotor.get("hangmotor");
         DcMotor hangmotor1 = hardwareMap.dcMotor.get("hangmotor1");
+        Servo hangservo = hardwareMap.servo.get("hangservo");
+
 
         // Reverse the right side motors. This may be wrong for your setup.
         // If your robot moves backwards when commanded to go forwards,
@@ -120,9 +122,15 @@ public class mecanum_test extends LinearOpMode {
            } //drive forward down and open simultaniously
            if (gamepad1.x) {
               // armout(armout, degrees);
-               setpose(primeServo, 0);
+               setpose(primeServo, 57.5);
                sleep(350);
                setpose(clawServo, 70);
+           }
+           if (gamepad1.dpad_left) {
+               setpose(hangservo,180);
+           }
+           if (gamepad1.dpad_right) {
+               setpose(hangservo,0);
            }
 
             frontLeftMotor.setPower(frontLeftPower);
