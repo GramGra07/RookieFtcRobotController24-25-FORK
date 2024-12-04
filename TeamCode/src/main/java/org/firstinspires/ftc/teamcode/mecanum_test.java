@@ -40,6 +40,7 @@ public class mecanum_test extends LinearOpMode {
         DcMotor hangmotor = hardwareMap.dcMotor.get("hangmotor");
         DcMotor hangmotor1 = hardwareMap.dcMotor.get("hangmotor1");
         Servo hangservo = hardwareMap.servo.get("hangservo");
+        Servo hangservo1 = hardwareMap.servo.get("hangservo1");
 
 
         // Reverse the right side motors. This may be wrong for your setup.
@@ -53,6 +54,7 @@ public class mecanum_test extends LinearOpMode {
         armMotor1.setDirection(DcMotorSimple.Direction.REVERSE);
         hangmotor.setDirection(DcMotorSimple.Direction.FORWARD);
         hangmotor1.setDirection(DcMotorSimple.Direction.FORWARD);
+        hangservo1.setDirection(Servo.Direction.REVERSE);
 
 
         waitForStart();
@@ -128,9 +130,11 @@ public class mecanum_test extends LinearOpMode {
            }
            if (gamepad1.dpad_left) {
                setpose(hangservo,256);
+               setpose(hangservo1,180);
            }
            if (gamepad1.dpad_right) {
                setpose(hangservo,0);
+               setpose(hangservo1,0);
            }
 
             frontLeftMotor.setPower(frontLeftPower);
