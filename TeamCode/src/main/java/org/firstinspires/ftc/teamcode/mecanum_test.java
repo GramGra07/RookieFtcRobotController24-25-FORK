@@ -130,7 +130,7 @@ public class mecanum_test extends LinearOpMode {
            }
            if (gamepad1.dpad_left) {
                setpose(hangservo,256);
-               setpose(hangservo1,180);
+               setpose(hangservo1,90);
            }
            if (gamepad1.dpad_right) {
                setpose(hangservo,0);
@@ -139,7 +139,7 @@ public class mecanum_test extends LinearOpMode {
 
             frontLeftMotor.setPower(frontLeftPower);
             backLeftMotor.setPower(backLeftPower);
-            frontRightMotor.setPower(frontRightPower); //hi
+            frontRightMotor.setPower(frontRightPower);
             backRightMotor.setPower(backRightPower);
             armMotor1.setPower(armpower);
             hangmotor.setPower(hangpower);
