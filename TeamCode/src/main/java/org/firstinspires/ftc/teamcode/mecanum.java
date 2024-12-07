@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
 @TeleOp
-public class mecanum_test extends LinearOpMode {
+public class mecanum extends LinearOpMode {
     boolean touchpadpressed = false;
     boolean slowmode = false;
     boolean touchpadwpressed = false;
@@ -55,6 +55,7 @@ public class mecanum_test extends LinearOpMode {
         hangmotor.setDirection(DcMotorSimple.Direction.FORWARD);
         hangmotor1.setDirection(DcMotorSimple.Direction.FORWARD);
         hangservo1.setDirection(Servo.Direction.REVERSE);
+        hangservo.setDirection(Servo.Direction.FORWARD);
 
 
         waitForStart();
@@ -129,14 +130,15 @@ public class mecanum_test extends LinearOpMode {
                setpose(clawServo, 70);
            }
            if (gamepad1.dpad_left) {
-               setpose(hangservo,256);
-               setpose(hangservo1,90);
+               setpose(hangservo,120);
+               setpose(hangservo1,115);
            }
            if (gamepad1.dpad_right) {
                setpose(hangservo,0);
                setpose(hangservo1,0);
            }
-
+            hangmotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            hangmotor1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);//j
             frontLeftMotor.setPower(frontLeftPower);
             backLeftMotor.setPower(backLeftPower);
             frontRightMotor.setPower(frontRightPower);
