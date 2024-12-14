@@ -41,6 +41,7 @@ public class mecanum extends LinearOpMode {
         DcMotor hangmotor1 = hardwareMap.dcMotor.get("hangmotor1");
         Servo hangservo = hardwareMap.servo.get("hangservo");
         Servo hangservo1 = hardwareMap.servo.get("hangservo1");
+        Servo upclawservo = hardwareMap.servo.get("upclawservo");
 
 
         // Reverse the right side motors. This may be wrong for your setup.
@@ -70,10 +71,10 @@ public class mecanum extends LinearOpMode {
             clawopen = gamepad1.left_bumper;
             loaded = gamepad1.b;//Set these differently
             unloaded = gamepad1.x;//Set these differently
-            hangup = gamepad1.dpad_up;
-            hangdown = gamepad1.dpad_down;
-            hangup_new = gamepad1.dpad_up;
-            hangdown_new = gamepad1.dpad_down;
+            hangup = gamepad2.dpad_up;
+            hangdown = gamepad2.dpad_down;
+            hangup_new = gamepad2.dpad_up;
+            hangdown_new = gamepad2.dpad_down;
             touchpadpressed = gamepad1.touchpad;
             if (touchpadpressed && ! touchpadwpressed) {
                 slowmode = ! slowmode;
@@ -99,25 +100,25 @@ public class mecanum extends LinearOpMode {
             armpower = Range.clip(armpower, -0.5,0.5);
 
            double hangpower = 0;
-           if (gamepad1.dpad_up) {
+           if (gamepad2.dpad_up) {
                hangpower = 1;
-           } else if (gamepad1.dpad_down) {
+           } else if (gamepad2.dpad_down) {
                hangpower = -1;
            }
             double hangpower1 = 0;
-            if (gamepad1.dpad_up) {
+            if (gamepad2.dpad_up) {
                 hangpower1 = 1;
-            } else if (gamepad1.dpad_down) {
+            } else if (gamepad2.dpad_down) {
                 hangpower1 = -1;
             }
 //           double clawpower = 0.5;
            if (gamepad1.right_bumper) {
-               setpose(clawServo, 120);   // keep 90 always
+               setpose(clawServo, 140);   // keep 90 always
            }   else if (gamepad1.left_bumper) {
-               setpose(clawServo,  70);  //  keep at 60 increase  to open less
+               setpose(clawServo,  100);  //  keep at 60 increase  to open less
             }
            if (gamepad1.y) {
-               setpose(primeServo,  115);// press b first ALWAYS.
+               setpose(primeServo,  120);// press b first ALWAYS.
            } else if (gamepad1.a) {
                setpose(primeServo, 0);//change degrees in small increments.
            } else if (gamepad1.b) {
@@ -129,13 +130,22 @@ public class mecanum extends LinearOpMode {
                sleep(350);
                setpose(clawServo, 70);
            }
-           if (gamepad1.dpad_left) {
-               setpose(hangservo,120);
-               setpose(hangservo1,115);
+           if (gamepad2.a) {
+               setpose(hangservo,119);
+               setpose(hangservo1,114);
            }
-           if (gamepad1.dpad_right) {
+           if (gamepad2.b) {
                setpose(hangservo,0);
                setpose(hangservo1,0);
+           }
+           if (gamepad2.y) {
+               setpose(hangservo,-119);
+               setpose(hangservo1,-114);
+           }
+           if (gamepad2.right_bumper) {
+               setpose(upclawservo, 140);
+           }   else if (gamepad2.left_bumper)  {
+               setpose(upclawservo,70);
            }
             hangmotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             hangmotor1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);//j
@@ -153,7 +163,7 @@ public class mecanum extends LinearOpMode {
             clawopen = clawclose;
             telemetry.addData("claw",gamepad1.right_bumper);
             telemetry.addData("b",gamepad1.b);
-            telemetry.addData("up", gamepad1.dpad_up);
+            telemetry.addData("up", gamepad2.dpad_up);
             telemetry.update();
         }
     }

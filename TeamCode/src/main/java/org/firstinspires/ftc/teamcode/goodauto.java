@@ -142,7 +142,7 @@ public class goodauto extends LinearOpMode {
         //Notes:   Reverse movement is obtained by setting a negative distance (not speed)
         //holdHeading() is used after turns to let the heading stabilize
         //Add a sleep(2000) after any step to keep the telemetry data visible for review
-        setpose(clawServo,120);
+        setpose(clawServo,140);
         sleep(500);
         setpose(primeServo,115);
         sleep(500);
@@ -159,7 +159,7 @@ public class goodauto extends LinearOpMode {
         backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         sleep(1000);
         armextend(ARM_EXTEND,3.99,0); // not in inches not final either
-        setpose(clawServo,70);
+        setpose(clawServo,90);
         sleep(750);
         setpose(primeServo,57.5);
         sleep(750);
@@ -186,11 +186,11 @@ public class goodauto extends LinearOpMode {
         //turnToHeading(TURN_SPEED,15);
         armextend(ARM_EXTEND,1,0);
         sleep(500);
-        setpose(clawServo,70);
+        setpose(clawServo,90);
         sleep(1000);
         setpose(primeServo,0);
         sleep(1000);
-        setpose(clawServo,120);
+        setpose(clawServo,140);
         sleep(1000);
         setpose(primeServo,115);
         sleep(500);
@@ -198,7 +198,7 @@ public class goodauto extends LinearOpMode {
         turnToHeading(TURN_SPEED,180);
         setpose(primeServo,57.5);
         sleep(500);
-        setpose(clawServo,70);
+        setpose(clawServo,90);
         sleep(500);
         driveStraight(DRIVE_SPEED,-10,180);
         sideWaysEncoderDrive(1,-5);
@@ -206,7 +206,7 @@ public class goodauto extends LinearOpMode {
         driveStraight(DRIVE_SPEED,10,180);
         setpose(primeServo,0);
         sleep(500);
-        setpose(clawServo,120);
+        setpose(clawServo,140);
         sleep(500);
         setpose(primeServo,115);
         sleep(500);
