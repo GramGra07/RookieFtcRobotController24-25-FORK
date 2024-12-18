@@ -101,7 +101,7 @@ public class ClawSub {
 
         switch (ClawStateVar) {
             case OPEN:
-                setpose(clawservo, 140);
+                setpose(clawservo, 125);
 
                 break;
             case CLOSE:
@@ -138,16 +138,16 @@ public class ClawSub {
         }
         switch (HangStateVar) {
             case TOP:
-                setpose(hangservo,0);//keep
-                setpose(hangservo1,0);//keep
+                setpose(hangservo,11);//keep
+                setpose(hangservo1,11);
                 break;
             case MIDDLE:
-                setpose(hangservo,75);
-                setpose(hangservo1,75);//keep
+                setpose(hangservo,76);
+                setpose(hangservo1,76);//keep
                 break;
             case BOTTOM:
-                setpose(hangservo,125);
-                setpose(hangservo1,125);
+                setpose(hangservo,133);
+                setpose(hangservo1,133);
                 break;
             case IDLE:
 
