@@ -126,14 +126,14 @@ public class mecanum extends LinearOpMode {
            } else if (gamepad1.b) {
                clawsub.setPrimeMIDDLE();// keep for halfway
            } //drive forward down and open simultaniously
-           if (gamepad2.a) {
+           if (gamepad2.y) {
                clawsub.setHangBOTTOM();
                clawsub.setPrimeTOP();
            }
            if (gamepad2.b) {
                clawsub.setHangMIDDLE();
            }
-           if (gamepad2.y) {
+           if (gamepad2.a) {
                clawsub.setHangTOP();
            }
            if (gamepad2.right_bumper) {

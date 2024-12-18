@@ -85,7 +85,7 @@ public class ClawSub {
     public ClawSub(HardwareMap hwMap) {
         upclaw = hwMap.get(Servo.class, "upclawservo");
         hangservo = hwMap.get(Servo.class, "hangservo");
-        hangservo1 = hwMap.get(Servo.class, "hangservo");
+        hangservo1 = hwMap.get(Servo.class, "hangservo1");
         primeservo = hwMap.get(Servo.class, "primeServo");
         clawservo = hwMap.get(Servo.class, "clawServo");
         primeservo.setDirection(Servo.Direction.REVERSE);
@@ -138,16 +138,16 @@ public class ClawSub {
         }
         switch (HangStateVar) {
             case TOP:
-                setpose(hangservo,-119);
-                setpose(hangservo1,-114);
+                setpose(hangservo,0);//keep
+                setpose(hangservo1,0);//keep
                 break;
             case MIDDLE:
-                setpose(hangservo,0);
-                setpose(hangservo1,0);
+                setpose(hangservo,75);
+                setpose(hangservo1,75);//keep
                 break;
             case BOTTOM:
-                setpose(hangservo,119);
-                setpose(hangservo1,114);
+                setpose(hangservo,125);
+                setpose(hangservo1,125);
                 break;
             case IDLE:
 
