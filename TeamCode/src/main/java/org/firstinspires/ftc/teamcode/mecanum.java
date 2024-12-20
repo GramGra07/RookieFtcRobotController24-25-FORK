@@ -109,9 +109,9 @@ public class mecanum extends LinearOpMode {
            }
             double hangpower1 = 0;
             if (gamepad2.dpad_up) {
-                hangpower1 = 1;
+                hangpower1 = 0.5;
             } else if (gamepad2.dpad_down) {
-                hangpower1 = -1;
+                hangpower1 = -0.5;
             }
 //           double clawpower = 0.5;
            if (gamepad1.right_bumper) {

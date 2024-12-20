@@ -101,11 +101,11 @@ public class ClawSub {
 
         switch (ClawStateVar) {
             case OPEN:
-                setpose(clawservo, 125);
+                setpose(clawservo, 140);//actually close increase to close more
 
                 break;
             case CLOSE:
-                setpose(clawservo,  100);
+                setpose(clawservo,100);//actually open decrease to open more
                 break;
             case IDLE:
 
