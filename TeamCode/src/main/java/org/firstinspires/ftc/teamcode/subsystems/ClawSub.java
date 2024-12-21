@@ -1,6 +1,6 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.subsystems;
 
-import static org.firstinspires.ftc.teamcode.util.setpose;
+import static org.firstinspires.ftc.teamcode.util.util.setpose;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -101,11 +101,11 @@ public class ClawSub {
 
         switch (ClawStateVar) {
             case OPEN:
-                setpose(clawservo, 140);//actually close increase to close more
+                setpose(clawservo, 100);//actually close increase to close more
 
                 break;
             case CLOSE:
-                setpose(clawservo,100);//actually open decrease to open more
+                setpose(clawservo,140);//actually open decrease to open more
                 break;
             case IDLE:
 
