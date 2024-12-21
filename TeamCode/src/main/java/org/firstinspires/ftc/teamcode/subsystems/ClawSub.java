@@ -5,6 +5,8 @@ import static org.firstinspires.ftc.teamcode.util.util.setpose;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.Hardware.ServoUtil;
+
 public class ClawSub {
     private Servo upclaw;
     private Servo hangservo;
@@ -101,11 +103,11 @@ public class ClawSub {
 
         switch (ClawStateVar) {
             case OPEN:
-                setpose(clawservo, 100);//actually close increase to close more
+                setpose(clawservo, ServoUtil.clawopen);//actually close increase to close more
 
                 break;
             case CLOSE:
-                setpose(clawservo,140);//actually open decrease to open more
+                setpose(clawservo,ServoUtil.clawclose);//actually open decrease to open more
                 break;
             case IDLE:
 
@@ -113,13 +115,13 @@ public class ClawSub {
         }
         switch (PrimeStateVar) {
             case TOP:
-                setpose(primeservo,  120);
+                setpose(primeservo,  ServoUtil.primetop);
                 break;
             case MIDDLE:
-                setpose(primeservo, 57.5);
+                setpose(primeservo, ServoUtil.primemiddle);
                 break;
             case BOTTOM:
-                setpose(primeservo, 0);
+                setpose(primeservo, ServoUtil.primebottom);
                 break;
             case IDLE:
 
@@ -127,10 +129,10 @@ public class ClawSub {
         }
         switch (UpclawStateVar) {
             case OPEN:
-                setpose(upclaw, 140);
+                setpose(upclaw, ServoUtil.upclawopen);
                 break;
             case CLOSE:
-                setpose(upclaw,70);
+                setpose(upclaw,ServoUtil.upclawclose);
                 break;
             case IDLE:
 
@@ -138,16 +140,16 @@ public class ClawSub {
         }
         switch (HangStateVar) {
             case TOP:
-                setpose(hangservo,11);//keep
-                setpose(hangservo1,11);
+                setpose(hangservo,ServoUtil.hangtop);//keep
+                setpose(hangservo1,ServoUtil.hangtop1);
                 break;
             case MIDDLE:
-                setpose(hangservo,76);
-                setpose(hangservo1,76);//keep
+                setpose(hangservo,ServoUtil.hangmiddle);
+                setpose(hangservo1,ServoUtil.hangmiddle1);//keep
                 break;
             case BOTTOM:
-                setpose(hangservo,133);
-                setpose(hangservo1,133);
+                setpose(hangservo,ServoUtil.hangbottom);
+                setpose(hangservo1,ServoUtil.hangbottom1);
                 break;
             case IDLE:
 

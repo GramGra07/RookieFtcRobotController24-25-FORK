@@ -105,14 +105,14 @@ public class HardwareConfig {
                 clawsub.setPrimeMIDDLE();// keep for halfway
             } //drive forward down and open simultaniously
             if (opMode.gamepad2.y) {
-                clawsub.setHangBOTTOM();
+                clawsub.setHangTOP();
                 clawsub.setPrimeTOP();
             }
             if (opMode.gamepad2.b) {
                 clawsub.setHangMIDDLE();
             }
             if (opMode.gamepad2.a) {
-                clawsub.setHangTOP();
+                clawsub.setHangBOTTOM();
             }
             if (opMode.gamepad2.right_bumper) {
                 clawsub.setUClawOPEN();
