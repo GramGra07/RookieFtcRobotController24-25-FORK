@@ -124,7 +124,7 @@ public class HardwareConfig {
             if (opMode.gamepad2.dpad_up) {
                 armSub.setUptarget(2100);
             }else if (opMode.gamepad2.dpad_down) {
-                armSub.setUptarget(0);
+                armSub.setUptarget(0);//k
             }
 
 
