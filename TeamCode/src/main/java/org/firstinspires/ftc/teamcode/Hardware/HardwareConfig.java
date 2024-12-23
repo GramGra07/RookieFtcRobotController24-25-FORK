@@ -93,9 +93,9 @@ public class HardwareConfig {
 
 //           double clawpower = 0.5;
             if (opMode.gamepad1.right_bumper) {
-                clawsub.setClawOPEN();   // keep 90 always
+                clawsub.setClawCLOSE();   // keep 90 always
             }   else if (opMode.gamepad1.left_bumper) {
-                clawsub.setClawCLOSE();  //  keep at 60 increase  to open less
+                clawsub.setClawOPEN();  //  keep at 60 increase  to open less
             }
             if (opMode.gamepad1.y) {
                 clawsub.setPrimeTOP();// press b first ALWAYS.
@@ -104,27 +104,27 @@ public class HardwareConfig {
             } else if (opMode.gamepad1.b) {
                 clawsub.setPrimeMIDDLE();// keep for halfway
             } //drive forward down and open simultaniously
-            if (opMode.gamepad2.y) {
+            if (opMode.gamepad2.a) {
                 clawsub.setHangTOP();
-                clawsub.setPrimeTOP();
+
             }
             if (opMode.gamepad2.b) {
                 clawsub.setHangMIDDLE();
             }
-            if (opMode.gamepad2.a) {
+            if (opMode.gamepad2.y) {
                 clawsub.setHangBOTTOM();
             }
             if (opMode.gamepad2.right_bumper) {
                 clawsub.setUClawOPEN();
             }   else if (opMode.gamepad2.left_bumper)  {
                 clawsub.setUClawCLOSE();
-                clawsub.setClawOPEN();
+
             }
 
             if (opMode.gamepad2.dpad_up) {
                 armSub.setUptarget(2100);
             }else if (opMode.gamepad2.dpad_down) {
-                armSub.setUptarget(0);//k
+                armSub.setUptarget(100);//k
             }
 
 
