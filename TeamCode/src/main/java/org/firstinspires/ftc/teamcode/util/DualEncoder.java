@@ -17,19 +17,19 @@ public DualEncoder (DcMotor enc, DcMotor enc1) {
 }
 public double getmost() {
 
-    if (-encoder1.getCurrentPosition() > -encoder.getCurrentPosition()) {
+    if (-encoder1.getCurrentPosition() > encoder.getCurrentPosition()+80) {
         return -encoder1.getCurrentPosition();
     }else {
-        return -encoder.getCurrentPosition();
+        return encoder.getCurrentPosition()+80;
     }
     }
     public double getAverage(){
 
-    return (-encoder1.getCurrentPosition() + -encoder.getCurrentPosition())/2.0;
+    return (-encoder1.getCurrentPosition() + encoder.getCurrentPosition())/2.0;
 
     }
     public void telemetry(Telemetry telemetry) {
-    telemetry.addData("encoder",-encoder.getCurrentPosition());
+    telemetry.addData("encoder",encoder.getCurrentPosition()+80);
     telemetry.addData("encoder1", -encoder1.getCurrentPosition());
     }
 }
