@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Hardware.AutoHardware;
 
+
+
 @Autonomous
 public class goodauto extends LinearOpMode {
     AutoHardware robot = null;
@@ -16,10 +18,10 @@ public class goodauto extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        robot = new AutoHardware(this,hardwareMap);
+        robot = new AutoHardware(this, hardwareMap);
 
         // Initialize the drive system variables.
-          /* The next two lines define Hub orientation.
+        /* The next two lines define Hub orientation.
          * The Default Orientation (shown) is when a hub is mounted horizontally with the printed logo pointing UP and the USB port pointing FORWARD.
          *
          * To Do:  EDIT these two lines to match YOUR mounting configuration.
@@ -29,7 +31,7 @@ public class goodauto extends LinearOpMode {
         // This sample expects the IMU to be in a REV Hub and named "imu".
 
         // Ensure the robot is stationary.  Reset the encoders and set the motors to BRAKE mode
-       //leftdrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //leftdrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //rightdrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //backdrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //frontdrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -42,45 +44,72 @@ public class goodauto extends LinearOpMode {
 
         // Set the encoders for closed loop speed control, and reset the heading.
 
-       // sideWaysEncoderDrive(1,30);
+        // sideWaysEncoderDrive(1,30);
         //sideWaysEncoderDrive(1,-30);
         // Step through each leg of the path,
         //Notes:   Reverse movement is obtained by setting a negative distance (not speed)
         //holdHeading() is used after turns to let the heading stabilize
         //Add a sleep(2000) after any step to keep the telemetry data visible for review
-        robot.clawsub.setClawOPEN();
+        robot.clawsub.setClawCLOSE();
         robot.clawsub.update();
         sleep(500);
         robot.clawsub.setPrimeTOP();
         robot.clawsub.update();
         sleep(500);
         robot.turnToHeading(robot.TURN_SPEED, 0);
-        robot.sideWaysEncoderDrive(1,9);
-       robot.driveStraight(robot.DRIVE_SPEED, 14,0);
-       sleep(1000);
-        robot.armextend(robot.ARM_EXTEND,3.99,0); // not in inches not final either
-        robot.clawsub.setClawCLOSE();
+        robot.sideWaysEncoderDrive(1, 9);
+        robot.clawsub.setUClawCLOSE();
+        robot.clawsub.update();
+        sleep(500);
+        robot.clawsub.setHangTOP();
+        robot.clawsub.update();
+        sleep(500);
+        robot.clawsub.setUClawOPEN();
+        robot.clawsub.update();
+        sleep(500);
+        robot.clawsub.setClawOPEN();
+        robot.clawsub.update();
+        sleep(500);
+        robot.clawsub.setHangBOTTOM();
+        robot.clawsub.update();
+        sleep(1000);
+        robot.armSub.setUptarget(250);
+        while (!robot.armSub.isUpAtTarget(50)) {
+            robot.armSub.update();
+        }
+        sleep(500);
+        robot.clawsub.setHangMIDDLE();
+        robot.clawsub.update();
+        sleep(500);
+        robot.clawsub.setUClawCLOSE();
+        robot.clawsub.update();
+        sleep(50000);
+
+        robot.driveStraight(robot.DRIVE_SPEED, 14, 0);
+        sleep(1000);
+        //robot.armextend(robot.ARM_EXTEND,3.99,0); // not in inches not final either
+        //robot.clawsub.setClawCLOSE();
         robot.clawsub.update();
         sleep(750);
-        robot.clawsub.setPrimeMIDDLE();
+        // robot.clawsub.setPrimeMIDDLE();
         robot.clawsub.update();
         sleep(750);
-        robot.armextend(robot.ARM_EXTEND,-3.65,0);
+        // robot.armextend(robot.ARM_EXTEND,-3.65,0);
         robot.clawsub.setPrimeTOP();
         robot.clawsub.update();
         robot.clawsub.setClawOPEN();
         robot.clawsub.update();
 //        //parking code
-        robot.driveStraight(robot.DRIVE_SPEED,-5,0);
+        robot.driveStraight(robot.DRIVE_SPEED, -5, 0);
         sleep(500);
-        robot.turnToHeading(robot.TURN_SPEED,0);
+        robot.turnToHeading(robot.TURN_SPEED, 0);
         sleep(500);
-        robot.sideWaysEncoderDrive(1,51);
+        robot.sideWaysEncoderDrive(1, 51);
         sleep(500);
         //turnToHeading(TURN_SPEED,0);
-        robot.driveStraight(robot.DRIVE_SPEED,14,0);
+        robot.driveStraight(robot.DRIVE_SPEED, 14, 0);
         //turnToHeading(TURN_SPEED,15);
-        robot.armextend(robot.ARM_EXTEND,1,0);
+        robot.armextend(robot.ARM_EXTEND, 1, 0);
         sleep(500);
         robot.clawsub.setClawOPEN();
         robot.clawsub.update();
@@ -95,20 +124,20 @@ public class goodauto extends LinearOpMode {
         robot.clawsub.update();
 
         sleep(500);
-        robot.armextend(robot.ARM_EXTEND,-0.70,0);
-        robot.turnToHeading(robot.TURN_SPEED,180);
+        robot.armextend(robot.ARM_EXTEND, -0.70, 0);
+        robot.turnToHeading(robot.TURN_SPEED, 180);
         robot.clawsub.setPrimeMIDDLE();
         robot.clawsub.update();
         sleep(500);
         robot.clawsub.setClawOPEN();
         robot.clawsub.update();
         sleep(500);
-        robot.driveStraight(robot.DRIVE_SPEED,-10,180);
-        robot.sideWaysEncoderDrive(1,-5);
+        robot.driveStraight(robot.DRIVE_SPEED, -10, 180);
+        robot.sideWaysEncoderDrive(1, -5);
         sleep(10000);
-        robot.driveStraight(robot.DRIVE_SPEED,10,180);
-       robot.clawsub.setPrimeBOTTOM();
-       robot.clawsub.update();
+        robot.driveStraight(robot.DRIVE_SPEED, 10, 180);
+        robot.clawsub.setPrimeBOTTOM();
+        robot.clawsub.update();
         sleep(500);
         robot.clawsub.setClawCLOSE();
         robot.clawsub.update();
@@ -116,8 +145,10 @@ public class goodauto extends LinearOpMode {
         robot.clawsub.setPrimeTOP();
         robot.clawsub.update();
         sleep(500);
-        robot.turnToHeading(robot.TURN_SPEED,0);
-        robot.sideWaysEncoderDrive(1,-64.5);
+        robot.turnToHeading(robot.TURN_SPEED, 0);
+        robot.sideWaysEncoderDrive(1, -64.5);
+
+        robot.buildtelemetry();
 
 
 //        turnToHeading( TURN_SPEED, -90.0);
@@ -163,4 +194,5 @@ public class goodauto extends LinearOpMode {
      *                      0 = fwd. +ve is CCW from fwd. -ve is CW from forward.
      *                      If a relative angle is required, add/subtract from the current robotHeading.
      */
-   }
+
+}

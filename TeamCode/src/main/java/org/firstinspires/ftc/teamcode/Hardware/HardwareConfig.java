@@ -17,7 +17,7 @@ public class HardwareConfig {
     Telemetry telemetry = null;
     LinearOpMode opMode = null;
     public ClawSub clawsub = null;
-    ArmSub armSub = null;
+    public ArmSub armSub = null;
     DcMotor frontLeftMotor = null;
     DcMotor backLeftMotor = null;
     DcMotor frontRightMotor = null;
@@ -50,7 +50,7 @@ public class HardwareConfig {
         loopTimeController = new LoopTimeController(elapsedTime,null);
 
     }
-    void buildtelemetry() {
+    public void buildtelemetry() {
         telemetry.addData("slowmode",slowmode);
         telemetry.addData("claw",opMode.gamepad1.right_bumper);
         telemetry.addData("b",opMode.gamepad1.b);
@@ -104,6 +104,10 @@ public class HardwareConfig {
             } else if (opMode.gamepad1.b) {
                 clawsub.setPrimeMIDDLE();// keep for halfway
             } //drive forward down and open simultaniously
+            if (opMode.gamepad1.x) {
+                clawsub.setPrimeLOW();
+
+        }
             if (opMode.gamepad2.a) {
                 clawsub.setHangTOP();
 
@@ -124,7 +128,13 @@ public class HardwareConfig {
             if (opMode.gamepad2.dpad_up) {
                 armSub.setUptarget(2100);
             }else if (opMode.gamepad2.dpad_down) {
-                armSub.setUptarget(100);//k
+                armSub.setUptarget(125);//k
+            }
+            if (opMode.gamepad2.dpad_right) {
+                armSub.setUptarget(265);
+            }
+            if (opMode.gamepad2.dpad_left) {
+                armSub.setUptarget(550);
             }
 
 

@@ -64,4 +64,7 @@ public class ArmSub {
     private void setPowerup (double target) {
         power = calculatePID(uppidf, dualEncoder.getmost(), target);
     }
+    public boolean isUpAtTarget(double tolerance){
+        return (uptarget-tolerance<dualEncoder.getmost() && dualEncoder.getmost()<uptarget+tolerance);
+    }
 }

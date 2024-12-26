@@ -28,7 +28,7 @@ public class ClawSub {
     public void setClawIDLE() {
         ClawStateVar = ClawState.IDLE;
     }
-    public enum PrimeState {TOP, MIDDLE, BOTTOM, IDLE}
+    public enum PrimeState {TOP, MIDDLE,LOW, BOTTOM, IDLE}
 
     private PrimeState PrimeStateVar = PrimeState.IDLE;
 
@@ -40,6 +40,7 @@ public class ClawSub {
         PrimeStateVar = PrimeState.MIDDLE;
     }
 
+    public void setPrimeLOW(){PrimeStateVar = PrimeState.LOW;}
     public void setPrimeBOTTOM() {
         PrimeStateVar = PrimeState.BOTTOM;
     }
@@ -126,6 +127,9 @@ public class ClawSub {
             case IDLE:
 
                 break;
+            case LOW:
+            setpose(primeservo, ServoUtil.primelow);
+            break;
         }
         switch (UpclawStateVar) {
             case OPEN:
