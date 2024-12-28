@@ -60,7 +60,7 @@ public class BestAuto extends LinearOpMode {
                 })
                 .transition(autostates.openclaw, () -> {
                     return true;
-                }, 2)
+                }, 2)//
                 .stopRunning(autostates.stop).build();
         waitForStart();
         machine.start();
