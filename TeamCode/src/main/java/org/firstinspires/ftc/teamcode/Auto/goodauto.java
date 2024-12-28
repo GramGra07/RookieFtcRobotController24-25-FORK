@@ -50,34 +50,36 @@ public class goodauto extends LinearOpMode {
         //Notes:   Reverse movement is obtained by setting a negative distance (not speed)
         //holdHeading() is used after turns to let the heading stabilize
         //Add a sleep(2000) after any step to keep the telemetry data visible for review
-        robot.clawsub.setClawCLOSE();
-        robot.clawsub.update();
-        sleep(500);
-        robot.clawsub.setPrimeTOP();
-        robot.clawsub.update();
+//        robot.clawsub.setClawCLOSE();
+//        robot.clawsub.update();
+//        sleep(500);
+//        robot.clawsub.setPrimeTOP();
+//        robot.clawsub.update();
         sleep(500);
         robot.turnToHeading(robot.TURN_SPEED, 0);
         robot.sideWaysEncoderDrive(1, 9);
-        robot.clawsub.setUClawCLOSE();
-        robot.clawsub.update();
-        sleep(500);
-        robot.clawsub.setHangTOP();
-        robot.clawsub.update();
-        sleep(500);
         robot.clawsub.setUClawOPEN();
         robot.clawsub.update();
         sleep(500);
-        robot.clawsub.setClawOPEN();
-        robot.clawsub.update();
+//        robot.clawsub.setHangTOP();
+//        robot.clawsub.update();
+//        sleep(500);
+//        robot.clawsub.setUClawOPEN();
+//        robot.clawsub.update();
+        sleep(500);
+//        robot.clawsub.setClawOPEN();
+//        robot.clawsub.update();
         sleep(500);
         robot.clawsub.setHangBOTTOM();
         robot.clawsub.update();
         sleep(1000);
         robot.armSub.setUptarget(250);
-        while (!robot.armSub.isUpAtTarget(50)) {
+        while (!robot.armSub.isUpAtTarget(100)) {
             robot.armSub.update();
+            robot.armSub.telemetry(telemetry);
+            telemetry.update();
         }
-        sleep(500);
+        sleep(10000);
         robot.clawsub.setHangMIDDLE();
         robot.clawsub.update();
         sleep(500);

@@ -5,6 +5,6 @@ import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
 @Config
 public class PIDVals {
-    public static PIDFCoefficients upco = new PIDFCoefficients(0.01,0,0,0.00005);
+    public static PIDFCoefficients upco = new PIDFCoefficients(0.002,0,0.0007,0.000008);
 
 }
