@@ -127,14 +127,19 @@ public class HardwareConfig {
 
             if (opMode.gamepad2.dpad_up) {
                 armSub.setUptarget(2100);
+                clawsub.setHangBOTTOM();
             }else if (opMode.gamepad2.dpad_down) {
-                armSub.setUptarget(125);//k
+                armSub.setUptarget(75);//k
+                clawsub.setUClawCLOSE();
+                clawsub.setHangTOP();
             }
             if (opMode.gamepad2.dpad_right) {
-                armSub.setUptarget(265);
+                armSub.setUptarget(750);
+                clawsub.setHangBOTTOM();
             }
             if (opMode.gamepad2.dpad_left) {
                 armSub.setUptarget(550);
+                clawsub.setHangBOTTOM();
             }
 
 
