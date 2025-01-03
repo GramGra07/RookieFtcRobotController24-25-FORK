@@ -139,6 +139,12 @@ public class HardwareConfig {
                 armSub.setUptarget(550);
                 clawsub.setHangBOTTOM();
             }
+            if (opMode.gamepad2.right_trigger>0){
+                clawsub.setSwitchPrime();
+            }
+             if (opMode.gamepad2.left_trigger>0) {
+            clawsub.setSwitchLoad();
+            }
 
 
 
