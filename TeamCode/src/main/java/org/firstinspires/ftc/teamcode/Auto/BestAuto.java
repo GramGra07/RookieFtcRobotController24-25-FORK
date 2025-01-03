@@ -9,7 +9,7 @@ import org.gentrifiedApps.statemachineftc.StateMachine;
 @Autonomous
 public class BestAuto extends LinearOpMode {
     enum autostates {
-        moveright,finish, armup,reset,clawf, openclaw, stop,moveright2, moveright3,grab,armup2,transfer
+        moveright,finish, armup,reset,clawf,resetarm, openclaw, stop,moveright2, moveright3,grab,armup2,transfer
 
     }
 
@@ -24,13 +24,14 @@ public class BestAuto extends LinearOpMode {
                 .onEnter(autostates.moveright, () -> {
 //                    robot.turnToHeading(robot.TURN_SPEED, 0);
 //                    robot.sideWaysEncoderDrive(1, 9);
-                    robot.clawsub.setUClawOPEN();
+                    robot.clawsub.setUClawCLOSE();
                     robot.clawsub.update();
                 })
                 .whileState(autostates.moveright, () -> {
                     return true;
                 }, () -> {
-                    //robot.sideWaysEncoderDrive(1, 9);
+                    robot.sideWaysEncoderDrive(1, 10);
+                    robot.driveStraight(robot.DRIVE_SPEED, 16,0);//change distance val
                 }).onExit(autostates.moveright,()->{
                     robot.clawsub.setHangBOTTOM();
                     robot.clawsub.update();
@@ -40,7 +41,7 @@ public class BestAuto extends LinearOpMode {
                 }, 1)
                 .state(autostates.armup)
                 .onEnter(autostates.armup, () -> {
-                    robot.armSub.setUptarget(250);
+                    robot.armSub.setUptarget(325);
                 }).whileState(autostates.armup, () -> {
                     return robot.armSub.isUpAtTarget(50);
                 }, () -> {
@@ -67,6 +68,7 @@ public class BestAuto extends LinearOpMode {
                 .onEnter(autostates.moveright3, () -> {
 //                    robot.turnToHeading(robot.TURN_SPEED, 0);
 //                    robot.sideWaysEncoderDrive(1, 9);
+                    robot.driveStraight(robot.DRIVE_SPEED, -2,0);
                     robot.clawsub.setPrimeMIDDLE();
                     robot.clawsub.setClawOPEN();
                     robot.clawsub.update();
@@ -75,11 +77,13 @@ public class BestAuto extends LinearOpMode {
                 .whileState(autostates.moveright3, () -> {
                     return true;
                 }, () -> {
-                    //robot.sideWaysEncoderDrive(1, 20);//change inch val
+
                 }).onExit(autostates.moveright3,()->{
                     robot.clawsub.setPrimeBOTTOM();
+                    robot.sideWaysEncoderDrive(1, -20);//change inch val
                     //robot.driveStraight(robot.DRIVE_SPEED,5,0);
                     robot.clawsub.update();
+                    robot.driveStraight(robot.DRIVE_SPEED, 5,0);//change distance val
                 }).transition(autostates.moveright3, () -> {
                     return true;
                 }, 1)
@@ -101,7 +105,7 @@ public class BestAuto extends LinearOpMode {
                 .state(autostates.grab)
                 .onEnter(autostates.grab,()->{
                     robot.clawsub.setPrimeTOP();
-                   // robot.sideWaysEncoderDrive(1, -20);//change inch val to go to basket
+                    //robot.sideWaysEncoderDrive(1, -20);//change inch val to go to basket
                     robot.clawsub.update();
                 })
                 .whileState(autostates.grab, () -> {
@@ -163,11 +167,23 @@ public class BestAuto extends LinearOpMode {
                 }, 1)
                 .state(autostates.finish)
                 .onEnter(autostates.finish, () -> {
-                    robot.clawsub.setUClawOPEN();
-                })
-                .onExit(autostates.finish,()->{
                     robot.clawsub.setUClawCLOSE();
-                }) .transition(autostates.finish,() -> {
+                    robot.clawsub.update();
+                }).transition(autostates.finish,() -> {
+                    return true;
+                },1)
+                .state(autostates.resetarm)
+                .onEnter(autostates.resetarm, () -> {
+                    robot.armSub.setUptarget(100);
+                }).whileState(autostates.resetarm, () -> {
+                    return robot.armSub.isUpAtTarget(50);
+                }, () -> {
+
+                }).onExit(autostates.resetarm, () -> {
+                    robot.armSub.update();
+                    robot.armSub.telemetry(telemetry);
+                    telemetry.update();
+                }).transition(autostates.resetarm, () -> {
                     return true;
                 },1)
 
