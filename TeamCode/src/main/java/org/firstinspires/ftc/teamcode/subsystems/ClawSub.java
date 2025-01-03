@@ -13,6 +13,7 @@ public class ClawSub {
     private Servo hangservo1;
     private Servo primeservo;
     private Servo clawservo;
+    private Servo switchservo;
     public enum ClawState {OPEN, CLOSE, IDLE}
 
     private ClawState ClawStateVar = ClawState.IDLE;
@@ -83,6 +84,13 @@ public class ClawSub {
         HangStateVar = HangState.IDLE;
     }
 
+    public enum SwitchState {PRIME, LOAD, IDLE}
+    private SwitchState SwitchStateVar = SwitchState.IDLE;
+
+    public void setSwitchPrime(){SwitchStateVar = SwitchState.PRIME;}
+
+    public void setSwitchLoad(){SwitchStateVar = SwitchState.LOAD;}
+
 
     //this is where you put all enums and variables
     public ClawSub(HardwareMap hwMap) {
@@ -95,6 +103,8 @@ public class ClawSub {
         clawservo.setDirection(Servo.Direction.FORWARD);
         hangservo1.setDirection(Servo.Direction.REVERSE);
         hangservo.setDirection(Servo.Direction.FORWARD);
+        switchservo = hwMap.get(Servo.class, "switchServo");
+        switchservo.setDirection(Servo.Direction.REVERSE);
 
     }
 
@@ -113,6 +123,15 @@ public class ClawSub {
             case IDLE:
 
                 break;
+        }
+        switch (SwitchStateVar) {
+            case PRIME:
+                setpose(switchservo,ServoUtil.switchprime);
+                break;
+            case LOAD:
+                setpose(switchservo,ServoUtil.switchload);
+                break;
+
         }
         switch (PrimeStateVar) {
             case TOP:

@@ -18,5 +18,6 @@ public class ServoUtil {
     public static double hangmiddle1 = 115;//good
     public static double hangbottom = 50;//no
     public static double hangbottom1 = 50;//good
-
+    public static double switchprime = 100;
+    public static double switchload = 100;
 }
