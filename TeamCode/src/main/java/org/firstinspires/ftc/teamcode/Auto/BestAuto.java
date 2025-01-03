@@ -9,7 +9,7 @@ import org.gentrifiedApps.statemachineftc.StateMachine;
 @Autonomous
 public class BestAuto extends LinearOpMode {
     enum autostates {
-        moveright, armup, openclaw, stop,moveright2, moveright3,grab,
+        moveright,finish, armup,reset,clawf, openclaw, stop,moveright2, moveright3,grab,armup2,transfer
 
     }
 
@@ -30,7 +30,7 @@ public class BestAuto extends LinearOpMode {
                 .whileState(autostates.moveright, () -> {
                     return true;
                 }, () -> {
-                    robot.sideWaysEncoderDrive(1, 9);
+                    //robot.sideWaysEncoderDrive(1, 9);
                 }).onExit(autostates.moveright,()->{
                     robot.clawsub.setHangBOTTOM();
                     robot.clawsub.update();
@@ -75,9 +75,10 @@ public class BestAuto extends LinearOpMode {
                 .whileState(autostates.moveright3, () -> {
                     return true;
                 }, () -> {
-                    robot.sideWaysEncoderDrive(1, 20);//change inch val
+                    //robot.sideWaysEncoderDrive(1, 20);//change inch val
                 }).onExit(autostates.moveright3,()->{
                     robot.clawsub.setPrimeBOTTOM();
+                    //robot.driveStraight(robot.DRIVE_SPEED,5,0);
                     robot.clawsub.update();
                 }).transition(autostates.moveright3, () -> {
                     return true;
@@ -100,27 +101,77 @@ public class BestAuto extends LinearOpMode {
                 .state(autostates.grab)
                 .onEnter(autostates.grab,()->{
                     robot.clawsub.setPrimeTOP();
-                    robot.sideWaysEncoderDrive(1, -20);//change inch val to go to basket
-
-                    robot.clawsub.update();
-
-
+                   // robot.sideWaysEncoderDrive(1, -20);//change inch val to go to basket
                     robot.clawsub.update();
                 })
                 .whileState(autostates.grab, () -> {
-                    robot.clawsub.setUClawOPEN();
-                    robot.clawsub.setClawCLOSE();
-                    robot.clawsub.setHangBOTTOM();
                     robot.turnToHeading(robot.TURN_SPEED,-120);
-                    robot.armSub.setUptarget(2100);
-                    robot.driveStraight(robot.DRIVE_SPEED, 5,-120);//change distance val
-                    robot.clawsub.setUClawCLOSE();
+                    robot.clawsub.update();
                     return true;
                 }, () -> {
 
                 }).transition(autostates.grab, () -> {
                     return true;
                 },0)
+                .state(autostates.reset)
+                .onEnter(autostates.reset,()->{
+                    robot.armSub.setUptarget(75);
+                }).whileState(autostates.reset, () -> {
+                    return robot.armSub.isUpAtTarget(50);
+                }, () -> {
+                    robot.armSub.update();
+                    robot.armSub.telemetry(telemetry);
+                    telemetry.update();
+                }).transition(autostates.reset,()->{
+                    return true;
+                },0.5)
+                .state(autostates.transfer)
+                .onEnter(autostates.transfer, () -> {
+                    robot.clawsub.setUClawOPEN();
+                    robot.clawsub.update();
+                }).whileState(autostates.transfer,  () -> {
+
+                    return true;
+                }, () -> {
+
+                }).transition(autostates.transfer, () -> {
+                    return true;
+                },1)
+                .state(autostates.clawf)
+                .onEnter(autostates.clawf,()->{
+                    robot.clawsub.setClawOPEN();
+                    robot.clawsub.setHangBOTTOM();
+                    robot.clawsub.update();
+                }).transition(autostates.clawf,()->{
+                    return true;
+                },0.5)
+                .state(autostates.armup2)
+                .onEnter(autostates.armup2, () -> {
+
+                    robot.armSub.setUptarget(2100);
+                }).whileState(autostates.armup2, () -> {
+                    return robot.armSub.isUpAtTarget(50);
+                }, () -> {
+                    robot.armSub.update();
+                    robot.armSub.telemetry(telemetry);
+                    telemetry.update();
+                }).onExit(autostates.armup2, () -> {
+                    robot.clawsub.setHangBOTTOM();
+                    robot.driveStraight(robot.DRIVE_SPEED, 5,-120);//change distance val
+                }).transition(autostates.armup2, () -> {
+                    return true;
+                }, 1)
+                .state(autostates.finish)
+                .onEnter(autostates.finish, () -> {
+                    robot.clawsub.setUClawOPEN();
+                })
+                .onExit(autostates.finish,()->{
+                    robot.clawsub.setUClawCLOSE();
+                }) .transition(autostates.finish,() -> {
+                    return true;
+                },1)
+
+
                 //drives over to baskets and drops sample in baskets
                 .stopRunning(autostates.stop).build();
         waitForStart();
