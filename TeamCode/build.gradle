@@ -20,7 +20,7 @@ android {
 
     packagingOptions {
         jniLibs.useLegacyPackaging true
-    }
+    }//k
 }
 
 
