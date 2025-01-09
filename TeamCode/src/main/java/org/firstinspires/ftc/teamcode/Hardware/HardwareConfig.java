@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.subsystems.ArmSub;
 import org.firstinspires.ftc.teamcode.subsystems.ClawSub;
+import org.firstinspires.ftc.teamcode.util.PIDVals;
 import org.gentrifiedApps.gentrifiedAppsUtil.LoopTimeController;
 
 public class HardwareConfig {
@@ -26,15 +27,15 @@ public class HardwareConfig {
     ElapsedTime elapsedTime = null;
     LoopTimeController loopTimeController = null;
 
-    public HardwareConfig(LinearOpMode om, HardwareMap hwmap){
-        initrobot(hwmap, om);
+    public HardwareConfig(LinearOpMode om, HardwareMap hwmap,Boolean auto){
+        initrobot(hwmap, om,auto);
     }
 
-    void initrobot(HardwareMap hwmap, LinearOpMode om) {
+    void initrobot(HardwareMap hwmap, LinearOpMode om,Boolean auto) {
         opMode = om;
         telemetry = om.telemetry;
         clawsub = new ClawSub(hwmap);
-        armSub = new ArmSub(hwmap);
+        armSub = new ArmSub(hwmap,auto);
         frontLeftMotor = hwmap.dcMotor.get("frontLeftMotor");
         backLeftMotor = hwmap.dcMotor.get("backLeftMotor");
         frontRightMotor = hwmap.dcMotor.get("frontRightMotor");
@@ -48,7 +49,6 @@ public class HardwareConfig {
         armMotor1.setDirection(DcMotorSimple.Direction.REVERSE);
         elapsedTime = new ElapsedTime();
         loopTimeController = new LoopTimeController(elapsedTime,null);
-
     }
     public void buildtelemetry() {
         telemetry.addData("slowmode",slowmode);

@@ -61,7 +61,7 @@ public class AutoHardware extends HardwareConfig {
     static final double     P_DRIVE_GAIN           = 0.03;     // Larger is more responsive, but also less stable.
     public static final double     ARM_EXTEND             = 1.0;
     public AutoHardware(LinearOpMode om, HardwareMap hwmap) {
-        super(om, hwmap);
+        super(om, hwmap,true);
         RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.UP;
         RevHubOrientationOnRobot.UsbFacingDirection  usbDirection  = RevHubOrientationOnRobot.UsbFacingDirection.FORWARD;
         RevHubOrientationOnRobot orientationOnRobot = new RevHubOrientationOnRobot(logoDirection, usbDirection);
@@ -136,6 +136,10 @@ public class AutoHardware extends HardwareConfig {
             frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             backLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             backRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//            frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//            frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//            backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//            backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         }
     }
     public void turnToHeading(double maxTurnSpeed, double heading) {
@@ -161,6 +165,10 @@ public class AutoHardware extends HardwareConfig {
 
         // Stop all motion;
         moveRobot(0, 0);
+//        frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
 
     }
@@ -249,12 +257,12 @@ public class AutoHardware extends HardwareConfig {
         if (opMode.opModeIsActive()) {
             if (inches < 0) {
                 newFLTarget = frontLeftMotor.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH_Side);
-                newBLTarget = backLeftMotor.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH_Side);
+                newBLTarget = backLeftMotor.getCurrentPosition() - (int) (inches * COUNTS_PER_INCH_Side);
                 newFRTarget = frontRightMotor.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH_Side);
-                newBRTarget = backRightMotor.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH_Side);
+                newBRTarget = backRightMotor.getCurrentPosition() - (int) (inches * COUNTS_PER_INCH_Side);
                 frontLeftMotor.setTargetPosition(newFLTarget);//actually backleft
-                backLeftMotor.setTargetPosition(-newBLTarget);//actually frontleft
-                backRightMotor.setTargetPosition(-newBRTarget);
+                backLeftMotor.setTargetPosition(newBLTarget);//actually frontleft
+                backRightMotor.setTargetPosition(newBRTarget);
                 frontRightMotor.setTargetPosition(newFRTarget);
 
             }
@@ -286,13 +294,13 @@ public class AutoHardware extends HardwareConfig {
                 telemetry.addData("Running to", "%7d:%7d", frontLeftMotor.getCurrentPosition()
                         , backRightMotor.getCurrentPosition());
                 telemetry.addData("Running to", "%7d:%7d", backLeftMotor.getCurrentPosition()
-                        , frontLeftMotor.getCurrentPosition());
+                        , frontRightMotor.getCurrentPosition());
                 telemetry.addData("Currently at", "%7d:%7d",
                         frontLeftMotor.getCurrentPosition()
                         , backRightMotor.getCurrentPosition());
                 telemetry.addData("Currently at", "%7d:%7d",
-                        frontLeftMotor.getCurrentPosition()
-                        , backLeftMotor.getCurrentPosition());
+                        backLeftMotor.getCurrentPosition()
+                        , frontRightMotor.getCurrentPosition());
                 telemetry.update();
             }
 
@@ -307,10 +315,10 @@ public class AutoHardware extends HardwareConfig {
             backLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             backRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//            frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//            frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//            backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//            backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         }
     }
     public void armextend(double maxDriveSpeed,

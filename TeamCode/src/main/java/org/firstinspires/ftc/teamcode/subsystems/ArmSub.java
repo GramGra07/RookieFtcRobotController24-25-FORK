@@ -16,9 +16,10 @@ public class ArmSub {
     double power = 0;
     double uptarget = 0;
     PIDFController uppidf = new PIDFController(0,0,0,0);
-
+    boolean auto;
     //this is where you put all enums and variables
-    public ArmSub(HardwareMap hwMap) {
+    public ArmSub(HardwareMap hwMap,Boolean auto) {
+        this.auto = auto;
         hangmotor = hwMap.dcMotor.get("hangmotor");
         hangmotor1 = hwMap.dcMotor.get("hangmotor1");
 

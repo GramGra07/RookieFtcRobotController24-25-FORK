@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Hardware.AutoHardware;
+import org.firstinspires.ftc.teamcode.util.PIDVals;
 import org.gentrifiedApps.statemachineftc.StateMachine;
 
 @Autonomous
@@ -19,6 +20,7 @@ public class BestAuto extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
 
         robot = new AutoHardware(this, hardwareMap);
+
         StateMachine<autostates> machine = new StateMachine.Builder<autostates>()
                 .state(autostates.moveright)
                 .onEnter(autostates.moveright, () -> {
@@ -80,7 +82,7 @@ public class BestAuto extends LinearOpMode {
                 }).onExit(autostates.moveright3,()->{
                     robot.clawsub.setPrimeBOTTOM();
                     robot.sideWaysEncoderDrive(1, -32);//change inch val
-                    //robot.driveStraight(robot.DRIVE_SPEED,13,10);
+                    robot.driveStraight(robot.DRIVE_SPEED,13,10);
                     robot.clawsub.update();
                     //robot.driveStraight(robot.DRIVE_SPEED, 2,0);//change distance val
                 }).transition(autostates.moveright3, () -> {
@@ -193,6 +195,7 @@ public class BestAuto extends LinearOpMode {
         machine.start();
         while (machine.mainLoop(this)) {
             machine.update();
+            robot.armSub.update();
         }
     }
 }
