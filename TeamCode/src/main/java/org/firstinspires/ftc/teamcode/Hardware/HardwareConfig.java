@@ -129,7 +129,7 @@ public class HardwareConfig {
                 armSub.setUptarget(2100);
                 clawsub.setHangBOTTOM();
             }else if (opMode.gamepad2.dpad_down) {
-                armSub.setUptarget(125);//k
+                armSub.setUptarget(100);//k
             }
             if (opMode.gamepad2.dpad_right) {
                 armSub.setUptarget(900);

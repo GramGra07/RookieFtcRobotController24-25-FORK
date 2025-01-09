@@ -24,7 +24,8 @@ public class BestAuto extends LinearOpMode {
                 .onEnter(autostates.moveright, () -> {
 //                    robot.turnToHeading(robot.TURN_SPEED, 0);
 //                    robot.sideWaysEncoderDrive(1, 9);
-                    robot.clawsub.setUClawCLOSE();
+                    robot.clawsub.setUClawOPEN();
+                    robot.clawsub.setPrimeTOP();
                     robot.clawsub.update();
                 })
                 .whileState(autostates.moveright, () -> {
@@ -33,7 +34,7 @@ public class BestAuto extends LinearOpMode {
                     robot.sideWaysEncoderDrive(1, 10);
                     robot.driveStraight(robot.DRIVE_SPEED, 16,0);//change distance val
                 }).onExit(autostates.moveright,()->{
-                    robot.clawsub.setHangBOTTOM();
+                    robot.clawsub.setHangMIDDLE();
                     robot.clawsub.update();
                 })
                 .transition(autostates.moveright, () -> {
@@ -41,7 +42,7 @@ public class BestAuto extends LinearOpMode {
                 }, 1)
                 .state(autostates.armup)
                 .onEnter(autostates.armup, () -> {
-                    robot.armSub.setUptarget(325);
+                    robot.armSub.setUptarget(305);
                 }).whileState(autostates.armup, () -> {
                     return robot.armSub.isUpAtTarget(50);
                 }, () -> {
@@ -49,13 +50,14 @@ public class BestAuto extends LinearOpMode {
                     robot.armSub.telemetry(telemetry);
                     telemetry.update();
                 }).onExit(autostates.armup, () -> {
-                    robot.clawsub.setHangMIDDLE();
+                    robot.clawsub.setHangBOTTOM();
                     robot.clawsub.update();
                 }).transition(autostates.armup, () -> {
                     return true;
                 }, 2)
                 .state(autostates.openclaw)
                 .onEnter(autostates.openclaw, () -> {
+                    robot.driveStraight(AutoHardware.DRIVE_SPEED,-7,0);
                     robot.clawsub.setUClawCLOSE();
                     robot.clawsub.setHangTOP();
                     robot.clawsub.update();
@@ -66,9 +68,6 @@ public class BestAuto extends LinearOpMode {
                 .state(autostates.moveright3)
                 //Start of baskets
                 .onEnter(autostates.moveright3, () -> {
-//                    robot.turnToHeading(robot.TURN_SPEED, 0);
-//                    robot.sideWaysEncoderDrive(1, 9);
-                    robot.driveStraight(robot.DRIVE_SPEED, -2,0);
                     robot.clawsub.setPrimeMIDDLE();
                     robot.clawsub.setClawOPEN();
                     robot.clawsub.update();
@@ -80,13 +79,13 @@ public class BestAuto extends LinearOpMode {
 
                 }).onExit(autostates.moveright3,()->{
                     robot.clawsub.setPrimeBOTTOM();
-                    robot.sideWaysEncoderDrive(1, -20);//change inch val
-                    //robot.driveStraight(robot.DRIVE_SPEED,5,0);
+                    robot.sideWaysEncoderDrive(1, -32);//change inch val
+                    //robot.driveStraight(robot.DRIVE_SPEED,13,10);
                     robot.clawsub.update();
-                    robot.driveStraight(robot.DRIVE_SPEED, 5,0);//change distance val
+                    //robot.driveStraight(robot.DRIVE_SPEED, 2,0);//change distance val
                 }).transition(autostates.moveright3, () -> {
                     return true;
-                }, 1)
+                }, 10)
                 .state(autostates.moveright2)
                 //moves right and grabs sample
                 .onEnter(autostates.moveright2, () -> {
