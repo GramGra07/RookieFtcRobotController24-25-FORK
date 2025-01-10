@@ -267,10 +267,10 @@ public class AutoHardware extends HardwareConfig {
 
             }
             if (inches > 0) {
-                newFLTarget = frontLeftMotor.getCurrentPosition() - (int) (inches * COUNTS_PER_INCH_Side);
-                newBLTarget = backLeftMotor.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH_Side);
-                newFRTarget = frontRightMotor.getCurrentPosition() - (int) (inches * COUNTS_PER_INCH_Side);
-                newBRTarget = backRightMotor.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH_Side);
+                newFLTarget = frontLeftMotor.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH_Side);
+                newBLTarget = backLeftMotor.getCurrentPosition() - (int) (inches * COUNTS_PER_INCH_Side);
+                newFRTarget = frontRightMotor.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH_Side);
+                newBRTarget = backRightMotor.getCurrentPosition() - (int) (inches * COUNTS_PER_INCH_Side);
                 frontLeftMotor.setTargetPosition(newFLTarget);//actually backleft
                 backLeftMotor.setTargetPosition(newBLTarget);//actually frontleft
                 backRightMotor.setTargetPosition(newBRTarget);//makes go forward

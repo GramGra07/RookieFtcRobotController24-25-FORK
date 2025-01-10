@@ -21,24 +21,9 @@ public class Parkauto extends LinearOpMode {
 
         robot = new AutoHardware(this, hardwareMap);
 
-        StateMachine<autostates> machine = new StateMachine.Builder<autostates>()
-                .state(autostates.moveright)
-                .onEnter(autostates.moveright, () -> {
-//                    robot.turnToHeading(robot.TURN_SPEED, 0);
-//                    robot.sideWaysEncoderDrive(1, 9);
-                    robot.sideWaysEncoderDrive(1,56);
-                })
-                .onExit(autostates.moveright, () -> {
 
-                }).transition(autostates.moveright,()->{
-                    return true;
-                },1)
-                .stopRunning(autostates.stop).build();
-        waitForStart();
-        machine.start();
-        while (machine.mainLoop(this)) {
-            machine.update();
-            robot.armSub.update();
+        if (opModeIsActive()) {
+            robot.sideWaysEncoderDrive(1,56);
         }
     }
 }
