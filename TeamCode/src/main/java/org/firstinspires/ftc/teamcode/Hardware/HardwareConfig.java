@@ -55,6 +55,7 @@ public class HardwareConfig {
         telemetry.addData("claw",opMode.gamepad1.right_bumper);
         telemetry.addData("b",opMode.gamepad1.b);
         telemetry.addData("up", opMode.gamepad1.dpad_up);
+        telemetry.addData("armout",armMotor1.getCurrentPosition());
         armSub.telemetry(telemetry);
         loopTimeController.telemetry(telemetry);
         telemetry.update();
@@ -85,7 +86,8 @@ public class HardwareConfig {
 
             double armpower = 0;
             if (opMode.gamepad1.right_trigger > 0) {
-                armpower = opMode.gamepad1.right_trigger;
+                if (armMotor1.getCurrentPosition() < 2000)//
+                    armpower = opMode.gamepad1.right_trigger;
             } else if (opMode.gamepad1.left_trigger > 0) {
                 armpower = -opMode.gamepad1.left_trigger;
             }

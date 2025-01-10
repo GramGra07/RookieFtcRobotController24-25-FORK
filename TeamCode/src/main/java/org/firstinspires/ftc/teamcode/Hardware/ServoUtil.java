@@ -4,8 +4,8 @@ import com.acmerobotics.dashboard.config.Config;
 
 @Config
 public class ServoUtil {
-    public static double clawopen = 110;//good
-    public static double clawclose = 180;//good
+    public static double clawopen = 0;//good
+    public static double clawclose = 90;//good
     public static double primetop = 118;//good
     public static double primemiddle = 57.5;//good
     public static double primelow = 100;
