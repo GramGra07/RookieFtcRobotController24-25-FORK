@@ -34,7 +34,7 @@ public class BestAuto extends LinearOpMode {
                     return true;
                 }, () -> {
                     robot.sideWaysEncoderDrive(1, 10);
-                    robot.driveStraight(robot.DRIVE_SPEED, 16,0);//change distance val
+                    robot.driveStraight(robot.DRIVE_SPEED, 18,0);//change distance val
                 }).onExit(autostates.moveright,()->{
                     robot.clawsub.setHangMIDDLE();
                     robot.clawsub.update();
@@ -44,7 +44,7 @@ public class BestAuto extends LinearOpMode {
                 }, 1)
                 .state(autostates.armup)
                 .onEnter(autostates.armup, () -> {
-                    robot.armSub.setUptarget(300);
+                    robot.armSub.setUptarget(307);
                 }).whileState(autostates.armup, () -> {
                     return robot.armSub.isUpAtTarget(50);
                 }, () -> {
@@ -81,8 +81,8 @@ public class BestAuto extends LinearOpMode {
 
                 }).onExit(autostates.moveright3,()->{
                     robot.clawsub.setPrimeBOTTOM();
-                    robot.sideWaysEncoderDrive(1, -44);//change inch val
-                    robot.driveStraight(robot.DRIVE_SPEED,6,10);
+                    robot.sideWaysEncoderDrive(1, -45);//change inch val
+                    robot.driveStraight(robot.DRIVE_SPEED,5.5,10);
                     robot.clawsub.update();
                     //robot.driveStraight(robot.DRIVE_SPEED, 2,0);//change distance val
                 }).transition(autostates.moveright3, () -> {
