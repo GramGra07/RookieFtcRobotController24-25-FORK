@@ -4,11 +4,9 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Hardware.AutoHardware;
-import org.firstinspires.ftc.teamcode.util.PIDVals;
-import org.gentrifiedApps.statemachineftc.StateMachine;
 
 @Autonomous
-public class Parkauto extends LinearOpMode {
+public class parkautoleftside extends LinearOpMode {
     enum autostates {
         moveright,finish, armup,reset,clawf,resetarm, openclaw, stop,moveright2, moveright3,grab,armup2,transfer
 
