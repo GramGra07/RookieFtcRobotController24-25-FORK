@@ -263,7 +263,7 @@ public class AutoHardware extends HardwareConfig {
                 frontLeftMotor.setTargetPosition(newFLTarget);//actually backleft
                 backLeftMotor.setTargetPosition(newBLTarget);//actually frontleft
                 backRightMotor.setTargetPosition(newBRTarget);
-                frontRightMotor.setTargetPosition(newFRTarget);
+                frontRightMotor.setTargetPosition(newFRTarget);//
 
             }
             if (inches > 0) {
