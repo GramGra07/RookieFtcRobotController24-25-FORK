@@ -102,8 +102,8 @@ public class ClawSub {
         clawservo = hwMap.get(Servo.class, "clawServo");
         primeservo.setDirection(Servo.Direction.REVERSE);
         clawservo.setDirection(Servo.Direction.FORWARD);
-        hangservo1.setDirection(Servo.Direction.REVERSE);
-        hangservo.setDirection(Servo.Direction.FORWARD);
+        hangservo1.setDirection(Servo.Direction.FORWARD);
+        hangservo.setDirection(Servo.Direction.REVERSE);
         switchservo = hwMap.get(Servo.class, "switchServo");
         switchservo.setDirection(Servo.Direction.REVERSE);
         switchservo1 = hwMap.get(Servo.class, "switchServo1");
