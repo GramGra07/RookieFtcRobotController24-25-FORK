@@ -41,7 +41,7 @@ public class HardwareConfig {
         frontRightMotor = hwmap.dcMotor.get("frontRightMotor");
         backRightMotor = hwmap.dcMotor.get("backRightMotor");
         armMotor1 = hwmap.dcMotor.get("armMotor1");
-
+//
         frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);//actually frontleft
