@@ -44,9 +44,10 @@ public class HardwareConfig {
 
         frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        backLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        backLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);//actually frontleft
+        frontLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         armMotor1.setDirection(DcMotorSimple.Direction.REVERSE);
+
         elapsedTime = new ElapsedTime();
         loopTimeController = new LoopTimeController(elapsedTime,null);
     }
@@ -86,7 +87,7 @@ public class HardwareConfig {
 
             double armpower = 0;
             if (opMode.gamepad1.right_trigger > 0) {
-                if (armMotor1.getCurrentPosition() < 2000)//
+                if (armMotor1.getCurrentPosition() < 1500)//
                     armpower = opMode.gamepad1.right_trigger;
             } else if (opMode.gamepad1.left_trigger > 0) {
                 armpower = -opMode.gamepad1.left_trigger;
