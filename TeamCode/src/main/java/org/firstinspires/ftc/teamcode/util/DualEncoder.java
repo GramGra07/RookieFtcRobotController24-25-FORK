@@ -17,8 +17,8 @@ public DualEncoder (DcMotor enc, DcMotor enc1) {
 }
 public double getmost() {
 
-    if (-encoder1.getCurrentPosition() > encoder.getCurrentPosition()+80) {
-        return -encoder1.getCurrentPosition();
+    if (encoder1.getCurrentPosition() > encoder.getCurrentPosition()+80) {
+        return encoder1.getCurrentPosition();
     }else {
         return encoder.getCurrentPosition()+80;
     }
@@ -30,7 +30,7 @@ public double getmost() {
     }
     public void telemetry(Telemetry telemetry) {
     telemetry.addData("encoder",encoder.getCurrentPosition()+80);
-    telemetry.addData("encoder1", -encoder1.getCurrentPosition());
+    telemetry.addData("encoder1", encoder1.getCurrentPosition());
     }
 }
 
