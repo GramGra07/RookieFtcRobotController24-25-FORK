@@ -6,6 +6,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
+import org.gentrifiedApps.velocityvision.enums.Color;
+
 @Autonomous
 public class llauto extends LinearOpMode {
 
@@ -18,7 +20,7 @@ public class llauto extends LinearOpMode {
 
         telemetry.setMsTransmissionInterval(11);
 
-        limelight.pipelineSwitch(0);
+        limelight.pipelineSwitch(1);
 
         /*
          * Starts polling for data.
@@ -30,10 +32,25 @@ public class llauto extends LinearOpMode {
             LLResult result = limelight.getLatestResult();
             if (result != null) {
                 if (result.isValid()) {
-                    Pose3D botpose = result.getBotpose();
+                    double[] outputs = result.getPythonOutput();
+                    double angle = outputs[0];
+                    double cx = outputs[1];
+                    double cy = outputs[2];
+                    double c1 = outputs[3];
+                    double c2 = outputs[4];
+                    Color color;
+                    if (c1 == 1 && c2 == 1) {
+                        color = Color.YELLOW;
+                    } else if (c1 == 1 && c2 == 0) {
+                        color = Color.BLUE;
+                    } else if (c1 == 0 && c2 == 1) {
+                        color = Color.RED;
+                    } else {
+                        color = Color.NONE;
+                    }
                     telemetry.addData("tx", result.getTx());
                     telemetry.addData("ty", result.getTy());
-                    telemetry.addData("Botpose", botpose.toString());
+                    telemetry.addData("outputs", outputs.toString());
 
 
                 }

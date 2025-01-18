@@ -1,5 +1,11 @@
 package org.firstinspires.ftc.teamcode.Hardware;
 
+import androidx.annotation.NonNull;
+
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.ParallelAction;
+import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -31,6 +37,7 @@ public class AutoHardware extends HardwareConfig {
     private int     backrightTarget = 0;
     private int     backleftTarget  = 0;
     private double  armMotorTarget        = 0;
+    public boolean drivefinished = true;
 
     // Calculate the COUNTS_PER_INCH for your specific drive train.
     // Go to your motor vendor website to determine your motor's COUNTS_PER_MOTOR_REV
@@ -319,6 +326,22 @@ public class AutoHardware extends HardwareConfig {
 //            frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 //            backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 //            backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        }
+    }
+    public void scoresampke(){
+        Actions.runBlocking(ParallelAction(
+
+                )
+
+        );
+    }
+    class update implements Action {
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            clawsub.update();
+            armSub.update();
+            return !armSub.isUpAtTarget(50) || drivefinished;
         }
     }
     public void armextend(double maxDriveSpeed,

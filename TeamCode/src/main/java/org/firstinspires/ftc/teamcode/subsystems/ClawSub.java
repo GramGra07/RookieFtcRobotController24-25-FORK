@@ -2,10 +2,19 @@ package org.firstinspires.ftc.teamcode.subsystems;
 
 import static org.firstinspires.ftc.teamcode.util.util.setpose;
 
+import android.app.Notification;
+
+import androidx.annotation.NonNull;
+
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Hardware.ServoUtil;
+
+import java.util.List;
 
 public class ClawSub {
     private Servo upclaw;
@@ -190,5 +199,30 @@ public class ClawSub {
     // this is where you put your update functions to switch between states
     public void telemetry(Telemetry telemetry) {
         // add telemetry data here
+
+    }
+//    Actions.runBlocking(
+//    clawAction(
+//            List.of(
+//            () -> clawSub.openClaw();
+//                        )
+//                                )
+//                                );
+    public Action clawAction(List<Runnable> funcs){
+        return new ClawAction(funcs);
+    }
+    class ClawAction implements Action {
+        List<Runnable> funcs;
+        public ClawAction(List<Runnable> funcs){
+            this.funcs = funcs;
+        }
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            for (Runnable func : funcs) {
+                func.run();
+            }
+            return false;
+        }
     }
 }

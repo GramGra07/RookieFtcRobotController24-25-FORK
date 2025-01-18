@@ -33,6 +33,7 @@ dependencies {
     implementation 'com.acmerobotics.dashboard:dashboard:0.4.16'
     implementation 'com.github.GramGra07:GentrifiedAppsUtil:1.0.9'
     implementation 'com.github.GramGra07:StateMachineFTC:1.5.0'
+    implementation 'com.github.GramGra07:VelocityVision:1.1.1'
 }
 repositories {
     maven {

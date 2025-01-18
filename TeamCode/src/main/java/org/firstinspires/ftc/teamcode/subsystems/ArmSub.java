@@ -1,5 +1,10 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import androidx.annotation.NonNull;
+
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.ftc.Actions;
 import com.arcrobotics.ftclib.controller.PIDFController;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -9,6 +14,8 @@ import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.util.DualEncoder;
 import org.firstinspires.ftc.teamcode.util.PIDVals;
+
+import java.util.List;
 
 public class ArmSub {
     DcMotor hangmotor = null;
@@ -82,4 +89,22 @@ public class ArmSub {
         return (uptarget - tolerance < most) && (most < uptarget + tolerance);
     }
 
-}
+
+
+    public Action armAction(List<Runnable> funcs){
+        return new ArmSub.ArmAction(funcs);
+    }
+    class ArmAction implements Action {
+        List<Runnable> funcs;
+        public ArmAction(List<Runnable> funcs){
+            this.funcs = funcs;
+        }
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            for (Runnable func : funcs) {
+                func.run();
+            }
+            return false;
+        }
+    }}

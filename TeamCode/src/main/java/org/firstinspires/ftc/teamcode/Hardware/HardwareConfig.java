@@ -43,7 +43,8 @@ public class HardwareConfig {
         frontRightMotor = hwmap.dcMotor.get("frontRightMotor");
         backRightMotor = hwmap.dcMotor.get("backRightMotor");
         armMotor1 = hwmap.dcMotor.get("armMotor1");
-        //limelight = hwmap.("LL");
+        limelight = hwmap.get(Limelight3A.class, "limelight");
+
 //
         frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
