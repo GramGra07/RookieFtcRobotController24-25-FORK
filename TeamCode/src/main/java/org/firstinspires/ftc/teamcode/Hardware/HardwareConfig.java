@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Hardware;
 
+import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -23,6 +24,7 @@ public class HardwareConfig {
     DcMotor backLeftMotor = null;
     DcMotor frontRightMotor = null;
     DcMotor backRightMotor = null;
+    Limelight3A limelight = null;
     DcMotor armMotor1 = null;
     ElapsedTime elapsedTime = null;
     LoopTimeController loopTimeController = null;
@@ -41,6 +43,7 @@ public class HardwareConfig {
         frontRightMotor = hwmap.dcMotor.get("frontRightMotor");
         backRightMotor = hwmap.dcMotor.get("backRightMotor");
         armMotor1 = hwmap.dcMotor.get("armMotor1");
+        //limelight = hwmap.("LL");
 //
         frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
