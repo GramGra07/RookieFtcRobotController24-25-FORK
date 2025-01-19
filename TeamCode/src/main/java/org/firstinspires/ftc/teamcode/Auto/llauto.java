@@ -5,7 +5,6 @@ import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.gentrifiedApps.velocityvision.enums.Color;
 
 @Autonomous
@@ -14,8 +13,7 @@ public class llauto extends LinearOpMode {
     private Limelight3A limelight;
 
     @Override
-    public void runOpMode() throws InterruptedException
-    {
+    public void runOpMode() throws InterruptedException {
         limelight = hardwareMap.get(Limelight3A.class, "limelight");
 
         telemetry.setMsTransmissionInterval(11);
@@ -55,4 +53,6 @@ public class llauto extends LinearOpMode {
 
                 }
             }
-        }  }}
+        }
+    }
+}

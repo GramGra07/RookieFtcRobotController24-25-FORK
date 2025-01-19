@@ -1,10 +1,10 @@
 package org.firstinspires.ftc.teamcode.Auto;
 
+import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Hardware.AutoHardware;
-
 
 
 @Autonomous
@@ -18,7 +18,7 @@ public class goodauto extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        robot = new AutoHardware(this, hardwareMap);
+        robot = new AutoHardware(this, hardwareMap, new Pose2d(0,0,0));
 
         // Initialize the drive system variables.
         /* The next two lines define Hub orientation.
@@ -56,7 +56,7 @@ public class goodauto extends LinearOpMode {
 //        robot.clawsub.setPrimeTOP();
 //        robot.clawsub.update();
         sleep(500);
-        robot.turnToHeading(robot.TURN_SPEED, 0);
+        robot.turnToHeading(AutoHardware.TURN_SPEED, 0);
         robot.sideWaysEncoderDrive(1, 9);
         robot.clawsub.setUClawOPEN();
         robot.clawsub.update();
@@ -87,7 +87,7 @@ public class goodauto extends LinearOpMode {
         robot.clawsub.update();
         sleep(50000);
 
-        robot.driveStraight(robot.DRIVE_SPEED, 14, 0);
+        robot.driveStraight(AutoHardware.DRIVE_SPEED, 14, 0);
         sleep(1000);
         //robot.armextend(robot.ARM_EXTEND,3.99,0); // not in inches not final either
         //robot.clawsub.setClawCLOSE();
@@ -102,16 +102,16 @@ public class goodauto extends LinearOpMode {
         robot.clawsub.setClawOPEN();
         robot.clawsub.update();
 //        //parking code
-        robot.driveStraight(robot.DRIVE_SPEED, -5, 0);
+        robot.driveStraight(AutoHardware.DRIVE_SPEED, -5, 0);
         sleep(500);
-        robot.turnToHeading(robot.TURN_SPEED, 0);
+        robot.turnToHeading(AutoHardware.TURN_SPEED, 0);
         sleep(500);
         robot.sideWaysEncoderDrive(1, 51);
         sleep(500);
         //turnToHeading(TURN_SPEED,0);
-        robot.driveStraight(robot.DRIVE_SPEED, 14, 0);
+        robot.driveStraight(AutoHardware.DRIVE_SPEED, 14, 0);
         //turnToHeading(TURN_SPEED,15);
-        robot.armextend(robot.ARM_EXTEND, 1, 0);
+        robot.armextend(AutoHardware.ARM_EXTEND, 1, 0);
         sleep(500);
         robot.clawsub.setClawOPEN();
         robot.clawsub.update();
@@ -126,18 +126,18 @@ public class goodauto extends LinearOpMode {
         robot.clawsub.update();
 
         sleep(500);
-        robot.armextend(robot.ARM_EXTEND, -0.70, 0);
-        robot.turnToHeading(robot.TURN_SPEED, 180);
+        robot.armextend(AutoHardware.ARM_EXTEND, -0.70, 0);
+        robot.turnToHeading(AutoHardware.TURN_SPEED, 180);
         robot.clawsub.setPrimeMIDDLE();
         robot.clawsub.update();
         sleep(500);
         robot.clawsub.setClawOPEN();
         robot.clawsub.update();
         sleep(500);
-        robot.driveStraight(robot.DRIVE_SPEED, -10, 180);
+        robot.driveStraight(AutoHardware.DRIVE_SPEED, -10, 180);
         robot.sideWaysEncoderDrive(1, -5);
         sleep(10000);
-        robot.driveStraight(robot.DRIVE_SPEED, 10, 180);
+        robot.driveStraight(AutoHardware.DRIVE_SPEED, 10, 180);
         robot.clawsub.setPrimeBOTTOM();
         robot.clawsub.update();
         sleep(500);
@@ -147,7 +147,7 @@ public class goodauto extends LinearOpMode {
         robot.clawsub.setPrimeTOP();
         robot.clawsub.update();
         sleep(500);
-        robot.turnToHeading(robot.TURN_SPEED, 0);
+        robot.turnToHeading(AutoHardware.TURN_SPEED, 0);
         robot.sideWaysEncoderDrive(1, -64.5);
 
         robot.buildtelemetry();

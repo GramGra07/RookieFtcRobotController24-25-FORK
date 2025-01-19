@@ -1,16 +1,15 @@
 package org.firstinspires.ftc.teamcode.Auto;
 
+import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Hardware.AutoHardware;
-import org.firstinspires.ftc.teamcode.util.PIDVals;
-import org.gentrifiedApps.statemachineftc.StateMachine;
 
 @Autonomous
 public class parkautorightside extends LinearOpMode {
     enum autostates {
-        moveright,finish, armup,reset,clawf,resetarm, openclaw, stop,moveright2, moveright3,grab,armup2,transfer
+        moveright, finish, armup, reset, clawf, resetarm, openclaw, stop, moveright2, moveright3, grab, armup2, transfer
 
     }
 
@@ -19,11 +18,12 @@ public class parkautorightside extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        robot = new AutoHardware(this, hardwareMap);
+        robot = new AutoHardware(this, hardwareMap,new Pose2d(0,0,0));
 
 
         if (opModeIsActive()) {
-            robot.sideWaysEncoderDrive(1,56);
+            robot.sideWaysEncoderDrive(1, 56);
+            waitForStart();
         }
     }
 }

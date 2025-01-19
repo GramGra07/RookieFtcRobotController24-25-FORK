@@ -42,7 +42,6 @@ import com.acmerobotics.roadrunner.ftc.RawEncoder;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
@@ -193,7 +192,7 @@ public final class TankDrive {
             meanRightVel /= rightEncs.size();
 
             FlightRecorder.write("TANK_LOCALIZER_INPUTS",
-                     new TankLocalizerInputsMessage(leftReadings, rightReadings));
+                    new TankLocalizerInputsMessage(leftReadings, rightReadings));
 
             if (!initialized) {
                 initialized = true;
@@ -235,8 +234,8 @@ public final class TankDrive {
         // TODO: make sure your config has motors with these names (or change them)
         //   add additional motors on each side if you have them
         //   see https://ftc-docs.firstinspires.org/en/latest/hardware_and_software_configuration/configuring/index.html
-        leftMotors = Arrays.asList(hardwareMap.get(DcMotorEx.class, "left"));
-        rightMotors = Arrays.asList(hardwareMap.get(DcMotorEx.class, "right"));
+        leftMotors = Collections.singletonList(hardwareMap.get(DcMotorEx.class, "left"));
+        rightMotors = Collections.singletonList(hardwareMap.get(DcMotorEx.class, "right"));
 
         for (DcMotorEx m : leftMotors) {
             m.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -418,7 +417,7 @@ public final class TankDrive {
                     Vector2dDual.constant(new Vector2d(0, 0), 3),
                     txWorldTarget.heading.velocity().plus(
                             PARAMS.turnGain * localizer.getPose().heading.minus(txWorldTarget.heading.value()) +
-                            PARAMS.turnVelGain * (robotVelRobot.angVel - txWorldTarget.heading.velocity().value())
+                                    PARAMS.turnVelGain * (robotVelRobot.angVel - txWorldTarget.heading.velocity().value())
                     )
             );
             driveCommandWriter.write(new DriveCommandMessage(command));

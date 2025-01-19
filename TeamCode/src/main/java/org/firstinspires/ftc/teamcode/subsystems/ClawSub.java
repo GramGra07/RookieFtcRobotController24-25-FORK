@@ -2,28 +2,27 @@ package org.firstinspires.ftc.teamcode.subsystems;
 
 import static org.firstinspires.ftc.teamcode.util.util.setpose;
 
-import android.app.Notification;
-
 import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
-import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Hardware.ServoUtil;
 
 import java.util.List;
 
 public class ClawSub {
-    private Servo upclaw;
-    private Servo hangservo;
-    private Servo hangservo1;
-    private Servo primeservo;
-    private Servo clawservo;
-    private Servo switchservo;
-    private Servo switchservo1;
+    private final Servo upclaw;
+    private final Servo hangservo;
+    private final Servo hangservo1;
+    private final Servo primeservo;
+    private final Servo clawservo;
+    private final Servo switchservo;
+    private final Servo switchservo1;
+
     public enum ClawState {OPEN, CLOSE, IDLE}
 
     private ClawState ClawStateVar = ClawState.IDLE;
@@ -39,7 +38,8 @@ public class ClawSub {
     public void setClawIDLE() {
         ClawStateVar = ClawState.IDLE;
     }
-    public enum PrimeState {TOP, MIDDLE,LOW, BOTTOM, IDLE}
+
+    public enum PrimeState {TOP, MIDDLE, LOW, BOTTOM, IDLE}
 
     private PrimeState PrimeStateVar = PrimeState.IDLE;
 
@@ -51,7 +51,10 @@ public class ClawSub {
         PrimeStateVar = PrimeState.MIDDLE;
     }
 
-    public void setPrimeLOW(){PrimeStateVar = PrimeState.LOW;}
+    public void setPrimeLOW() {
+        PrimeStateVar = PrimeState.LOW;
+    }
+
     public void setPrimeBOTTOM() {
         PrimeStateVar = PrimeState.BOTTOM;
     }
@@ -59,6 +62,7 @@ public class ClawSub {
     public void setPrimeIDLE() {
         PrimeStateVar = PrimeState.IDLE;
     }
+
     public enum UpclawState {OPEN, CLOSE, IDLE}
 
     private UpclawState UpclawStateVar = UpclawState.IDLE;
@@ -74,7 +78,8 @@ public class ClawSub {
     public void setUClawIDLE() {
         UpclawStateVar = UpclawState.IDLE;
     }
-    public enum HangState {TOP, MIDDLE, BOTTOM, IDLE}
+
+    public enum HangState {TOP, MIDDLE,FREAK, BOTTOM, IDLE}
 
     private HangState HangStateVar = HangState.IDLE;
 
@@ -89,19 +94,28 @@ public class ClawSub {
     public void setHangBOTTOM() {
         HangStateVar = HangState.BOTTOM;
     }
+    public void setFREAKY(){HangStateVar = HangState.FREAK;}
 
     public void setHangIDLE() {
         HangStateVar = HangState.IDLE;
     }
 
     public enum SwitchState {PRIME, LOAD, IDLE}
+
     private SwitchState SwitchStateVar = SwitchState.IDLE;
 
-    public void setSwitchPrime(){SwitchStateVar = SwitchState.PRIME;}
+    public void setSwitchPrime() {
+        SwitchStateVar = SwitchState.PRIME;
+    }
 
-    public void setSwitchLoad(){SwitchStateVar = SwitchState.LOAD;}
+    public void setSwitchLoad() {
+        SwitchStateVar = SwitchState.LOAD;
+    }
 
-    public void setSwitchIdle(){SwitchStateVar = SwitchState.IDLE;}
+    public void setSwitchIdle() {
+        SwitchStateVar = SwitchState.IDLE;
+    }
+
     //this is where you put all enums and variables
     public ClawSub(HardwareMap hwMap) {
         upclaw = hwMap.get(Servo.class, "upclawservo");
@@ -130,7 +144,7 @@ public class ClawSub {
 
                 break;
             case CLOSE:
-                setpose(clawservo,ServoUtil.clawclose);//actually open decrease to open more
+                setpose(clawservo, ServoUtil.clawclose);//actually open decrease to open more
                 break;
             case IDLE:
 
@@ -138,18 +152,18 @@ public class ClawSub {
         }
         switch (SwitchStateVar) {
             case PRIME:
-                setpose(switchservo,ServoUtil.switchprime);
-                setpose(switchservo1,ServoUtil.switchprime1);
+                setpose(switchservo, ServoUtil.switchprime);
+                setpose(switchservo1, ServoUtil.switchprime1);
                 break;
             case LOAD:
-                setpose(switchservo,ServoUtil.switchload);
-                setpose(switchservo1,ServoUtil.switchload1);
+                setpose(switchservo, ServoUtil.switchload);
+                setpose(switchservo1, ServoUtil.switchload1);
                 break;
 
         }
         switch (PrimeStateVar) {
             case TOP:
-                setpose(primeservo,  ServoUtil.primetop);
+                setpose(primeservo, ServoUtil.primetop);
                 break;
             case MIDDLE:
                 setpose(primeservo, ServoUtil.primemiddle);
@@ -161,15 +175,15 @@ public class ClawSub {
 
                 break;
             case LOW:
-            setpose(primeservo, ServoUtil.primelow);
-            break;
+                setpose(primeservo, ServoUtil.primelow);
+                break;
         }
         switch (UpclawStateVar) {
             case OPEN:
                 setpose(upclaw, ServoUtil.upclawopen);
                 break;
             case CLOSE:
-                setpose(upclaw,ServoUtil.upclawclose);
+                setpose(upclaw, ServoUtil.upclawclose);
                 break;
             case IDLE:
 
@@ -177,16 +191,19 @@ public class ClawSub {
         }
         switch (HangStateVar) {
             case TOP:
-                setpose(hangservo,ServoUtil.hangtop);//keep
-                setpose(hangservo1,ServoUtil.hangtop1);
+                setpose(hangservo, ServoUtil.hangtop);//keep
+                setpose(hangservo1, ServoUtil.hangtop1);
                 break;
             case MIDDLE:
-                setpose(hangservo,ServoUtil.hangmiddle);
-                setpose(hangservo1,ServoUtil.hangmiddle1);//keep
+                setpose(hangservo, ServoUtil.hangmiddle);
+                setpose(hangservo1, ServoUtil.hangmiddle1);//keep
                 break;
+            case FREAK:
+                setpose(hangservo, ServoUtil.hangfreak);
+                setpose(hangservo1,ServoUtil.hangfreak1);
             case BOTTOM:
-                setpose(hangservo,ServoUtil.hangbottom);
-                setpose(hangservo1,ServoUtil.hangbottom1);
+                setpose(hangservo, ServoUtil.hangbottom);
+                setpose(hangservo1, ServoUtil.hangbottom1);
                 break;
             case IDLE:
 
@@ -201,19 +218,22 @@ public class ClawSub {
         // add telemetry data here
 
     }
-//    Actions.runBlocking(
+
+    //    Actions.runBlocking(
 //    clawAction(
 //            List.of(
 //            () -> clawSub.openClaw();
 //                        )
 //                                )
 //                                );
-    public Action clawAction(List<Runnable> funcs){
+    public Action clawAction(List<Runnable> funcs) {
         return new ClawAction(funcs);
     }
+
     class ClawAction implements Action {
         List<Runnable> funcs;
-        public ClawAction(List<Runnable> funcs){
+
+        public ClawAction(List<Runnable> funcs) {
             this.funcs = funcs;
         }
 

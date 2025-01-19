@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Auto;
 
+import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
@@ -9,7 +10,7 @@ import org.gentrifiedApps.statemachineftc.StateMachine;
 @Autonomous
 public class regautoleftside extends LinearOpMode {
     enum autostates {
-        moveright,finish, armup,reset,park, clawf,resetarm, openclaw, stop,moveright2, moveright3,grab,armup2,transfer
+        moveright, finish, armup, reset, park, clawf, resetarm, openclaw, stop, moveright2, moveright3, grab, armup2, transfer
 
     }
 
@@ -18,7 +19,7 @@ public class regautoleftside extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        robot = new AutoHardware(this, hardwareMap);
+        robot = new AutoHardware(this, hardwareMap,new Pose2d(0,0,0));
 
         StateMachine<autostates> machine = new StateMachine.Builder<autostates>()
                 .state(autostates.moveright)
@@ -26,6 +27,7 @@ public class regautoleftside extends LinearOpMode {
 //                    robot.turnToHeading(robot.TURN_SPEED, 0);
 //                    robot.sideWaysEncoderDrive(1, 9);
                     robot.clawsub.setUClawOPEN();
+                    robot.clawsub.setHangMIDDLE();
                     robot.clawsub.setPrimeTOP();
                     robot.clawsub.update();
                 })
@@ -33,8 +35,8 @@ public class regautoleftside extends LinearOpMode {
                     return true;
                 }, () -> {
                     robot.sideWaysEncoderDrive(1, 10);
-                    robot.driveStraight(robot.DRIVE_SPEED, 16,0);//change distance val
-                }).onExit(autostates.moveright,()->{
+                    robot.driveStraight(AutoHardware.DRIVE_SPEED, 16, 0);//change distance val
+                }).onExit(autostates.moveright, () -> {
                     robot.clawsub.setHangMIDDLE();
                     robot.clawsub.update();
                 })
@@ -58,7 +60,7 @@ public class regautoleftside extends LinearOpMode {
                 }, 2)
                 .state(autostates.openclaw)
                 .onEnter(autostates.openclaw, () -> {
-                    robot.driveStraight(AutoHardware.DRIVE_SPEED,-7,0);
+                    robot.driveStraight(AutoHardware.DRIVE_SPEED, -7, 0);
                     robot.clawsub.setUClawCLOSE();
                     robot.clawsub.setHangTOP();
                     robot.clawsub.update();
@@ -68,9 +70,11 @@ public class regautoleftside extends LinearOpMode {
                 }, 2)//
                 .state(autostates.park)
                 .onEnter(autostates.park, () -> {
-                    robot.driveStraight(AutoHardware.DRIVE_SPEED,-4,0);
-                    robot.sideWaysEncoderDrive(1,32);
-                })
+                    robot.driveStraight(AutoHardware.DRIVE_SPEED, -4, 0);
+                    robot.sideWaysEncoderDrive(1, 32);
+                }).transition(autostates.park, () -> {
+                    return true;
+                }, 1)
                 .stopRunning(autostates.stop).build();
         waitForStart();
         machine.start();
