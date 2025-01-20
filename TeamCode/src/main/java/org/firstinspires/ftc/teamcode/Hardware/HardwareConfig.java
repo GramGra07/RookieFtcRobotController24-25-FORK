@@ -48,7 +48,7 @@ public class HardwareConfig {
         frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);//actually frontleft
-        frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         armMotor1.setDirection(DcMotorSimple.Direction.REVERSE);
 
         elapsedTime = new ElapsedTime();
@@ -154,10 +154,10 @@ public class HardwareConfig {
             clawsub.setHangMIDDLE();
         }
         if (opMode.gamepad2.right_trigger > 0) {
-            clawsub.setSwitchPrime();
-        }
-        if (opMode.gamepad2.left_trigger > 0) {
             clawsub.setSwitchLoad();
+        }
+        if (opMode.gamepad2.left_trigger > 0 ) {
+            clawsub.setSwitchPrime();
         }
         if (opMode.gamepad2.x){
             clawsub.setFREAKY();
