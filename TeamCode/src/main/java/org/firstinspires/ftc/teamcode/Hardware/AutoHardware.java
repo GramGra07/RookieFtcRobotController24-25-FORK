@@ -4,7 +4,11 @@ import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.roadrunner.SequentialAction;
+import com.acmerobotics.roadrunner.Vector2d;
+import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -16,7 +20,10 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.firstinspires.ftc.teamcode.followers.roadrunner.MecanumDrive;
 
+import java.util.List;
+
 public class AutoHardware extends HardwareConfig {
+    Pose2d startPose = null;
     private IMU imu = null;      // Control/Expansion Hub IMU
     MecanumDrive drive = null;
 
@@ -71,6 +78,7 @@ public class AutoHardware extends HardwareConfig {
 
     public AutoHardware(LinearOpMode om, HardwareMap hwmap, Pose2d startPose) {
         super(om, hwmap, true);
+        this.startPose = startPose;
         RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.UP;
         RevHubOrientationOnRobot.UsbFacingDirection usbDirection = RevHubOrientationOnRobot.UsbFacingDirection.FORWARD;
         RevHubOrientationOnRobot orientationOnRobot = new RevHubOrientationOnRobot(logoDirection, usbDirection);
@@ -90,7 +98,72 @@ public class AutoHardware extends HardwareConfig {
         backRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         imu.resetYaw();
-        drive = new  MecanumDrive(hwmap, startPose);
+        drive = new MecanumDrive(hwmap, startPose);
+    }
+    public void placeYellowSample1() {
+        drivefinished = true;
+        Actions.runBlocking(
+                new SequentialAction(
+                        clawsub.clawAction(List.of(() -> clawsub.setHangBOTTOM())),
+                        new ParallelAction(
+                                armSub.armAction(List.of(() -> armSub.setUptarget(2100))),
+                                new SequentialAction(
+                                        drive.actionBuilder(startPose)
+                                                .splineToLinearHeading(new Pose2d(-56,-56,Math.toRadians(225.0)),Math.toRadians(225.0))
+                                                .build(),
+                                        armSub.armAction(List.of(() -> drivefinished = false))
+
+                                ),
+                                clawsub.clawAction(List.of(() -> clawsub.setFREAKY())),
+                                clawsub.clawAction(List.of(() -> clawsub.setUClawCLOSE())),
+                                Update()
+                        ),
+                        armSub.armAction(List.of(() -> armSub.setUptarget(100))),
+                        clawsub.clawAction(List.of(() -> clawsub.setHangTOP()))
+                )
+        );
+    }
+    public void grabSpikeSample() {
+        drivefinished = true;
+        Actions.runBlocking(
+                new SequentialAction(
+                        clawsub.clawAction(List.of(() -> clawsub.setHangTOP())),
+                        new ParallelAction(
+                                armSub.armAction(List.of(() -> armSub.setUptarget(100))),
+                                new SequentialAction(
+                                        drive.actionBuilder(startPose)
+                                                .setTangent(Math.toRadians(270))
+                                                .splineToConstantHeading(new Vector2d(-48,-39),Math.toRadians(90.0))
+                                                .build(),
+                                        armSub.armAction(List.of(() -> drivefinished = false))
+                                ),
+                                Update()
+                        ),
+                        clawsub.clawAction(List.of(() -> clawsub.setHangBOTTOM()))
+                )
+        );
+    }
+
+    public void placePreloadSpeciL() {
+        drivefinished = true;
+        Actions.runBlocking(
+                new SequentialAction(
+                        clawsub.clawAction(List.of(() -> clawsub.setHangMIDDLE())),
+                        new ParallelAction(
+                                armSub.armAction(List.of(() -> armSub.setUptarget(250))),
+                                new SequentialAction(
+                                        drive.actionBuilder(startPose)
+                                                .splineTo(new Vector2d(0, -34), Math.toRadians(90.0))
+
+                                                .build(),
+                                        armSub.armAction(List.of(() -> drivefinished = false))
+                                ),
+                                Update()
+                        ),
+                        armSub.armAction(List.of(() -> armSub.setUptarget(300))),
+                        clawsub.clawAction(List.of(() -> clawsub.setHangBOTTOM()))
+                )
+        );
     }
 
     public void driveStraight(double maxDriveSpeed,
@@ -353,6 +426,10 @@ public class AutoHardware extends HardwareConfig {
             armSub.update();
             return !armSub.isUpAtTarget(50) || drivefinished;
         }
+    }
+
+    Action Update() {
+        return new update();
     }
 
     public void armextend(double maxDriveSpeed,

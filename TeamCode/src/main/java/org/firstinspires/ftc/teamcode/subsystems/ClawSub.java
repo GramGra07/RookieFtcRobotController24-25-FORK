@@ -79,7 +79,7 @@ public class ClawSub {
         UpclawStateVar = UpclawState.IDLE;
     }
 
-    public enum HangState {TOP, MIDDLE,FREAK, BOTTOM, IDLE}
+    public enum HangState {TOP, MIDDLE, FREAK, BOTTOM, IDLE}
 
     private HangState HangStateVar = HangState.IDLE;
 
@@ -94,7 +94,10 @@ public class ClawSub {
     public void setHangBOTTOM() {
         HangStateVar = HangState.BOTTOM;
     }
-    public void setFREAKY(){HangStateVar = HangState.FREAK;}
+
+    public void setFREAKY() {
+        HangStateVar = HangState.FREAK;
+    }
 
     public void setHangIDLE() {
         HangStateVar = HangState.IDLE;
@@ -200,7 +203,7 @@ public class ClawSub {
                 break;
             case FREAK:
                 setpose(hangservo, ServoUtil.hangfreak);
-                setpose(hangservo1,ServoUtil.hangfreak1);
+                setpose(hangservo1, ServoUtil.hangfreak1);
             case BOTTOM:
                 setpose(hangservo, ServoUtil.hangbottom);
                 setpose(hangservo1, ServoUtil.hangbottom1);

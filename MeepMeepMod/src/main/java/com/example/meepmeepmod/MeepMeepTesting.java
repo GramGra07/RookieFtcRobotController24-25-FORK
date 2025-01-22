@@ -10,7 +10,7 @@ public class MeepMeepTesting {
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(800);
 
-        Pose2d startpose = new Pose2d(-14,-58,Math.toRadians(90.0));
+        Pose2d startpose = new Pose2d(-14,-63,Math.toRadians(90.0));
 
         RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep)
                 .setDimensions(18,18)

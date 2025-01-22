@@ -7,7 +7,8 @@ public class util {
         final double degreemult = 0.00555555554;
         servo.setPosition(degreemult * degrees);
     }
-    public static boolean inRange(double val1, double val2,double target) {
-        return (val1<target&&val2>target) || (val2<target&&val1>target);
+
+    public static boolean inRange(double val1, double val2, double target) {
+        return (val1 < target && val2 > target) || (val2 < target && val1 > target);
     }
 }

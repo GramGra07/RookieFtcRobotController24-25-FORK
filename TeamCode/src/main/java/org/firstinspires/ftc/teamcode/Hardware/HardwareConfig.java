@@ -1,4 +1,5 @@
 package org.firstinspires.ftc.teamcode.Hardware;
+
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -10,7 +11,6 @@ import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.subsystems.ArmSub;
 import org.firstinspires.ftc.teamcode.subsystems.ClawSub;
-import org.firstinspires.ftc.teamcode.util.util;
 import org.gentrifiedApps.gentrifiedAppsUtil.LoopTimeController;
 
 public class HardwareConfig {
@@ -156,10 +156,10 @@ public class HardwareConfig {
         if (opMode.gamepad2.right_trigger > 0) {
             clawsub.setSwitchLoad();
         }
-        if (opMode.gamepad2.left_trigger > 0 ) {
+        if (opMode.gamepad2.left_trigger > 0) {
             clawsub.setSwitchPrime();
         }
-        if (opMode.gamepad2.x){
+        if (opMode.gamepad2.x) {
             clawsub.setFREAKY();
         }
 

@@ -19,7 +19,7 @@ public class regautoleftside extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        robot = new AutoHardware(this, hardwareMap,new Pose2d(0,0,0));
+        robot = new AutoHardware(this, hardwareMap, new Pose2d(0, 0, 0));
 
         StateMachine<autostates> machine = new StateMachine.Builder<autostates>()
                 .state(autostates.moveright)

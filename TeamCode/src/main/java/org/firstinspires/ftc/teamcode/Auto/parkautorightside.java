@@ -18,7 +18,7 @@ public class parkautorightside extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        robot = new AutoHardware(this, hardwareMap,new Pose2d(0,0,0));
+        robot = new AutoHardware(this, hardwareMap, new Pose2d(0, 0, 0));
 
 
         if (opModeIsActive()) {
