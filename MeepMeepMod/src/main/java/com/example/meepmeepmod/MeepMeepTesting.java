@@ -44,10 +44,18 @@ public class MeepMeepTesting {
 
                 //start next movement to the basket
                 .splineToLinearHeading(new Pose2d(-56,-56,Math.toRadians(225.0)),Math.toRadians(225.0))
+                //
+                //start to third sample
+
+
 
 
                 //move to the parking zone
+
+                .splineTo(new Vector2d(-56,-56),Math.toRadians(225.0))
+                //.splineToLinearHeading(new Pose2d(-56,-56,Math.toRadians(225.0)))
                 .turnTo(Math.toRadians(90))
+
                 .strafeTo(new Vector2d(56,-56))
                 .build());
 
