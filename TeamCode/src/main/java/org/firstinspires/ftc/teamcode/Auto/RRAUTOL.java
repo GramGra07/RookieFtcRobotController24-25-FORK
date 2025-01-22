@@ -17,10 +17,9 @@ public class RRAUTOL extends LinearOpMode {
         waitForStart();
         if (opModeIsActive()){
             robot.placePreloadSpeciL();
-            robot.grabSpikeSample();
-            robot.grabSpikeSample2();
-            robot.grabSpikeSample3();
-            robot.parkclose();
+           // robot.placeYellowSample1();
+            //robot.placeYellowSample2();
+            //robot.parkclose();
         }
     }
 }

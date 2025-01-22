@@ -20,19 +20,20 @@ public class MeepMeepTesting {
                 .build();
 
         myBot.runAction(myBot.getDrive().actionBuilder(startpose)
+                //move to sub
                 .splineTo(new Vector2d(0,-34),Math.toRadians(90.0))
                 //Insert the code for top speci hang
 
-                //start next movement
+                //start next movement to the first sample
                 .setTangent(Math.toRadians(270))
                 .splineToConstantHeading(new Vector2d(-48,-39),Math.toRadians(90.0))
                 //insert code for the pickup, transfer, and deposit
 
-                //start next movement
+                //start next movement to the basket
                 .splineToLinearHeading(new Pose2d(-56,-56,Math.toRadians(225.0)),Math.toRadians(225.0))
                 //insert code for pickup, transfer, and deposit
 
-                //start next movement
+                //start next movement to the second sample
                 .turnTo(Math.toRadians(90.0))
                 .strafeToConstantHeading(new Vector2d(-57,-39))
                 //set the robot ready for the next steps(claw up and open)
@@ -41,8 +42,11 @@ public class MeepMeepTesting {
 //                .splineTo(new Vector2d(-57,-39),Math.toRadians(-45.0))
 
 
-
+                //start next movement to the basket
                 .splineToLinearHeading(new Pose2d(-56,-56,Math.toRadians(225.0)),Math.toRadians(225.0))
+
+
+                //move to the parking zone
                 .turnTo(Math.toRadians(90))
                 .strafeTo(new Vector2d(56,-56))
                 .build());
