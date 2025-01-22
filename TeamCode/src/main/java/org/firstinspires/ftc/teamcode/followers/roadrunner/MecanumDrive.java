@@ -50,6 +50,8 @@ import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
+import org.firstinspires.ftc.teamcode.Hardware.AutoHardware;
+import org.firstinspires.ftc.teamcode.Hardware.HardwareConfig;
 import org.firstinspires.ftc.teamcode.followers.roadrunner.messages.DriveCommandMessage;
 import org.firstinspires.ftc.teamcode.followers.roadrunner.messages.MecanumCommandMessage;
 import org.firstinspires.ftc.teamcode.followers.roadrunner.messages.MecanumLocalizerInputsMessage;
@@ -71,14 +73,14 @@ public final class MecanumDrive {
                 RevHubOrientationOnRobot.UsbFacingDirection.LEFT;
 
         // drive model parameters
-        public double inPerTick = 0.0355;
-        public double lateralInPerTick = 0.036;
-        public double trackWidthTicks = 324.3723065984086;
+        public double inPerTick = 0.0036;
+        public double lateralInPerTick = 0.0101;
+        public double trackWidthTicks = 5165.147956385125;
 
         // feedforward parameters (in tick units)
-        public double kS = 1.03221309871708402;
-        public double kV = 0.0044723016048651655;
-        public double kA = 0.0008;
+        public double kS = 1.0148898460064766;
+        public double kV = 0.0006153651375835033;
+        public double kA = 0.0001;
 
         // path profile parameters (in inches)
         public double maxWheelVel = 50;
@@ -92,7 +94,7 @@ public final class MecanumDrive {
         // path controller gains
         public double axialGain = 0.0;
         public double lateralGain = 0.0;
-        public double headingGain = 2.0; // shared with turn
+        public double headingGain = 3.0; // shared with turn
 
         public double axialVelGain = 0.0;
         public double lateralVelGain = 0.0;
@@ -258,7 +260,7 @@ public final class MecanumDrive {
 
         voltageSensor = hardwareMap.voltageSensor.iterator().next();
 
-        localizer = new DriveLocalizer(pose);
+        localizer = new TwoDeadWheelLocalizer(hardwareMap, lazyImu.get(),PARAMS.inPerTick,pose);
 
         FlightRecorder.write("MECANUM_PARAMS", PARAMS);
     }
