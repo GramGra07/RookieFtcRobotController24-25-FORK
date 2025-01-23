@@ -79,25 +79,7 @@ public class AutoHardware extends HardwareConfig {
     public AutoHardware(LinearOpMode om, HardwareMap hwmap, Pose2d startPose) {
         super(om, hwmap, true);
         this.startPose = startPose;
-        RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.UP;
-        RevHubOrientationOnRobot.UsbFacingDirection usbDirection = RevHubOrientationOnRobot.UsbFacingDirection.FORWARD;
-        RevHubOrientationOnRobot orientationOnRobot = new RevHubOrientationOnRobot(logoDirection, usbDirection);
 
-        // Now initialize the IMU with this mounting orientation
-        // This sample expects the IMU to be in a REV Hub and named "imu".
-        imu = hwmap.get(IMU.class, "imu");
-        imu.initialize(new IMU.Parameters(orientationOnRobot));
-
-        // Ensure the robot is stationary.  Reset the encoders and set the motors to BRAKE mode
-        frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        imu.resetYaw();
         drive = new MecanumDrive(hwmap, startPose);
     }
 
@@ -133,29 +115,37 @@ public class AutoHardware extends HardwareConfig {
                 new SequentialAction(
                         //set claw middle to insert
                         clawsub.clawAction(List.of(() -> clawsub.setHangMIDDLE())),
-                        new ParallelAction(
+                        //armSub.armAction(List.of(() -> armSub.setUptarget(300))),
+                       // clawsub.clawAction(List.of(() -> clawsub.setHangBOTTOM())),
+
+        new ParallelAction(
                                 //set arm at correct height
                                 armSub.armAction(List.of(() -> armSub.setUptarget(250))),
                                 new SequentialAction(
                                         //drive to sub
+                                        armSub.armAction(List.of(() -> armSub.setUptarget(300))),
+                                        clawsub.clawAction(List.of(() -> clawsub.setHangBOTTOM())),
+
                                         drive.actionBuilder(startPose)
-                                                .splineTo(new Vector2d(0, -34), Math.toRadians(90.0))
+                                                .strafeToLinearHeading(new Vector2d(0, -34), Math.toRadians(90.0))
 
                                                 .build(),
                                         armSub.armAction(List.of(() -> drivefinished = false))
+
                                 ),
                                 Update()
-                        ),
+                        )
                         //increase arm height when in sub
                         //set claw to top position
-                        armSub.armAction(List.of(() -> armSub.setUptarget(300))),
-                        clawsub.clawAction(List.of(() -> clawsub.setHangBOTTOM()))
-                ),
-                new ParallelAction(
-                        drive.actionBuilder(startPose)
-                                .lineToY(0)
-                                .build()
-                ))
+//                        armSub.armAction(List.of(() -> armSub.setUptarget(300))),
+//                        clawsub.clawAction(List.of(() -> clawsub.setHangBOTTOM()))
+                )
+                //new ParallelAction(
+                        //drive.actionBuilder(startPose)
+                                //.setTangent(90)
+                                //.lineToY(0)
+                                //.build()
+                )
         );
     }
 

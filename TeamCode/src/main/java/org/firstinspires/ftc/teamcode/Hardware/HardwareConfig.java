@@ -43,13 +43,11 @@ public class HardwareConfig {
         backRightMotor = hwmap.dcMotor.get("backRightMotor");
         armMotor1 = hwmap.dcMotor.get("armMotor1");
         // limelight = hwmap.get(Limelight3A.class, "limelight");
-
+        backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 //
-        frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        backLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);//actually frontleft
-        frontLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        armMotor1.setDirection(DcMotorSimple.Direction.REVERSE);
+//
+            armMotor1.setDirection(DcMotorSimple.Direction.REVERSE);
 
         elapsedTime = new ElapsedTime();
         loopTimeController = new LoopTimeController(elapsedTime, null);
@@ -71,9 +69,9 @@ public class HardwareConfig {
 
     public void dobulk() {
 
-        double y = -opMode.gamepad1.left_stick_y; // Remember, Y stick value is reversed
-        double x = opMode.gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
-        double rx = opMode.gamepad1.right_stick_x;
+        double y = opMode.gamepad1.left_stick_y; // Remember, Y stick value is reversed
+        double x = -opMode.gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
+        double rx = -opMode.gamepad1.right_stick_x;
         boolean touchpadpressed = opMode.gamepad1.touchpad;
         if (touchpadpressed && !touchpadwpressed) {
             slowmode = !slowmode;
@@ -90,8 +88,8 @@ public class HardwareConfig {
         if (slowmode) {
             multiplier = slowmodemultiplier;
         }
-        double frontLeftPower = ((y - x + rx) / denominator) * multiplier;
-        double backLeftPower = ((y + x + rx) / denominator) * multiplier;
+        double frontLeftPower = ((y + x + rx) / denominator) * multiplier;
+        double backLeftPower = ((y - x + rx) / denominator) * multiplier;
         double frontRightPower = ((y - x - rx) / denominator) * multiplier;
         double backRightPower = ((y + x - rx) / denominator) * multiplier;
 
