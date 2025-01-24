@@ -195,18 +195,19 @@ public class ClawSub {
         switch (HangStateVar) {
             case TOP:
                 setpose(hangservo, ServoUtil.hangtop);//keep
-                setpose(hangservo1, ServoUtil.hangtop1);
+                setpose(hangservo1, ServoUtil.hangtop);
                 break;
             case MIDDLE:
                 setpose(hangservo, ServoUtil.hangmiddle);
-                setpose(hangservo1, ServoUtil.hangmiddle1);//keep
+                setpose(hangservo1, ServoUtil.hangmiddle);//keep
                 break;
             case FREAK:
                 setpose(hangservo, ServoUtil.hangfreak);
-                setpose(hangservo1, ServoUtil.hangfreak1);
+                setpose(hangservo1, ServoUtil.hangfreak);
+                break;
             case BOTTOM:
                 setpose(hangservo, ServoUtil.hangbottom);
-                setpose(hangservo1, ServoUtil.hangbottom1);
+                setpose(hangservo1, ServoUtil.hangbottom);
                 break;
             case IDLE:
 
