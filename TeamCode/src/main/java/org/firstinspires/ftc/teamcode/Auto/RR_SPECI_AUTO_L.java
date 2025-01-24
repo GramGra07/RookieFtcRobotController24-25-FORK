@@ -8,17 +8,20 @@ import org.firstinspires.ftc.teamcode.Hardware.AutoHardware;
 
 
 @Autonomous
-public class RRAUTOL extends LinearOpMode {
+public class RR_SPECI_AUTO_L extends LinearOpMode {
     AutoHardware robot = null;
-
+    ///ALL SPECIMEN AUTONOMOUS
+    /// TRAIN GRIFFEN BEFORE USE
     @Override
     public void runOpMode() throws InterruptedException {
         robot = new AutoHardware(this, hardwareMap, new Pose2d(-14,-63,Math.toRadians(90.0)));
         waitForStart();
         if (opModeIsActive()){
-            robot.placePreloadSpeciL();
-           // robot.placeYellowSample1();
-            //robot.placeYellowSample2();
+            robot.placePreloadSpeci();
+            robot.placeSpeciCycle();
+            robot.placeSpeciCycle();
+            robot.placeSpeciCycle();
+
             //robot.parkclose();
         }
     }
