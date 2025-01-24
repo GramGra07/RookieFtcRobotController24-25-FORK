@@ -227,7 +227,7 @@ public class AutoHardware extends HardwareConfig {
                                 clawsub.clawAction(List.of(() -> clawsub.setUClawOPEN())),
                                 clawsub.clawAction(List.of(() -> clawsub.setClawOPEN())),
                                 clawsub.clawAction(List.of(() -> clawsub.setPrimeBOTTOM())
-                                ),
+                                ),//
                                 new SequentialAction(
                                         //set top claw up
                                         clawsub.clawAction(List.of(() -> clawsub.setHangBOTTOM())),
