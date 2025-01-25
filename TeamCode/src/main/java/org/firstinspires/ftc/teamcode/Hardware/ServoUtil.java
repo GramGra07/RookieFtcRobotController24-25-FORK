@@ -14,7 +14,7 @@ public class ServoUtil {
     public static double upclawclose = 100;//good
     public static double hangtop = 35;//no
 
-    public static double hangfreak = 65;
+    public static double hangfreak = 85;
    //good
     public static double hangmiddle = 115;//good
     //good

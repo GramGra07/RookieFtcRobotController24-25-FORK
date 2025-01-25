@@ -32,8 +32,8 @@ public class ArmSub {
         this.auto = auto;
         hangmotor = hwMap.dcMotor.get("hangmotor");
         hangmotor1 = hwMap.dcMotor.get("hangmotor1");
-        hangmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        hangmotor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        hangmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        hangmotor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         dualEncoder = new DualEncoder(hangmotor, hangmotor1);
 
 //        hangmotor1.setDirection(DcMotorSimple.Direction.REVERSE);

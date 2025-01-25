@@ -18,9 +18,7 @@ public class RR_SPECI_AUTO_R extends LinearOpMode {
         waitForStart();
         if (opModeIsActive()){
             robot.placePreloadSpeci();
-            robot.placeSpeciCycle();
-            robot.placeSpeciCycle();
-            robot.placeSpeciCycle();
+
 
             //robot.parkclose();
         }
