@@ -230,15 +230,17 @@ public class ClawSub {
 //                        )
 //                                )
 //                                );
-    public Action clawAction(List<Runnable> funcs) {
-        return new ClawAction(funcs);
+    public Action clawAction(ClawSub clawSub,List<Runnable> funcs) {
+        return new ClawAction(clawSub,funcs);
     }
 
     class ClawAction implements Action {
         List<Runnable> funcs;
+        private ClawSub clawSub;
 
-        public ClawAction(List<Runnable> funcs) {
+        public ClawAction(ClawSub clawSub,List<Runnable> funcs) {
             this.funcs = funcs;
+            this.clawSub = clawSub;
         }
 
         @Override
@@ -246,6 +248,8 @@ public class ClawSub {
             for (Runnable func : funcs) {
                 func.run();
             }
+            clawSub.update();// removes the need for the update to be run after simply updating a claw
+
             return false;
         }
     }
