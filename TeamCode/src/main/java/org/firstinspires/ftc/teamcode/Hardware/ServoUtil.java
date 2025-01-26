@@ -12,11 +12,11 @@ public class ServoUtil {
     public static double primebottom = 0;//good
     public static double upclawopen = 200;//good
     public static double upclawclose = 100;//good
-    public static double hangtop = 35;//no
+    public static double hangtop = 45;//no
 
-    public static double hangfreak = 85;
+    public static double hangfreak = 75;
    //good
-    public static double hangmiddle = 115;//good
+    public static double hangmiddle = 105;//good
     //good
     public static double hangbottom = 170;
     //noo

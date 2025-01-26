@@ -33,7 +33,7 @@ public class MeepMeepTesting {
                                // .strafeTo(new Vector2d(-56,-56))
                 //
 
-                .strafeTo(new Vector2d(-48,-39))
+                .strafeTo(new Vector2d(-58,-39))
 //                .turnTo(Math.toRadians(225.0))
 //                //
 //                .strafeTo(new Vector2d(-48,-39))
