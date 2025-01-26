@@ -97,8 +97,7 @@ public class HardwareConfig {
         if (opMode.gamepad1.right_trigger > 0) {
             if (armMotor1.getCurrentPosition() < 1500)//
                 armpower = opMode.gamepad1.right_trigger;
-        } else if (opMode.gamepad1.left_trigger > 0) {
-            if (armMotor1.getCurrentPosition() > 0)//
+        } else if (opMode.gamepad1.left_trigger > 0) {//
                 armpower = -opMode.gamepad1.left_trigger;
         }
         armpower = Range.clip(armpower, -0.5, 0.5);
@@ -138,7 +137,7 @@ public class HardwareConfig {
         }
 
         if (opMode.gamepad2.dpad_up) {
-            armSub.setUptarget(2100);
+            armSub.setUptarget(2200);
         } else if (opMode.gamepad2.dpad_down) {
             armSub.setUptarget(100);//k
         }

@@ -18,7 +18,7 @@ import java.util.List;
 public class ArmSub {
     DcMotor hangmotor = null;
     DcMotor hangmotor1 = null;
-    DualEncoder dualEncoder = null;
+    public static DualEncoder dualEncoder = null;
     double power = 0;
     double power1 = 0;
     double uptarget = 0;

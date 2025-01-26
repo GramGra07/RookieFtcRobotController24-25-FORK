@@ -93,25 +93,25 @@ public class AutoHardware extends HardwareConfig {
         Actions.runBlocking(
                 //!this needs help
                 new SequentialAction(
-                new ParallelAction(
-                        new SequentialAction(
+                        new ParallelAction(
+                                new SequentialAction(
 
-                        // no update action here
-                        new SequentialAction(
-                                drive.actionBuilder(startPose)
-                                        .turnTo(Math.toRadians(90))
-                                        .strafeTo(new Vector2d(56, -56))
-                                        .build(),
-                                endAction()
-                        ),
-                        //ready everything for op
-                        armSub.armAction(List.of(() -> armSub.setUptarget(100))),
-                        clawsub.clawAction(clawsub,List.of(() -> clawsub.setUClawCLOSE())),
-                        clawsub.clawAction(clawsub,List.of(() -> clawsub.setHangTOP())),
-                        clawsub.clawAction(clawsub,List.of(() -> clawsub.setPrimeTOP())),
-                        clawsub.clawAction(clawsub,List.of(() -> clawsub.setClawOPEN()))
-                )
-                ))
+                                        // no update action here
+                                        new SequentialAction(
+                                                drive.actionBuilder(startPose)
+                                                        .turnTo(Math.toRadians(90))
+                                                        .strafeTo(new Vector2d(56, -56))
+                                                        .build(),
+                                                endAction()
+                                        ),
+                                        //ready everything for op
+                                        armSub.armAction(List.of(() -> armSub.setUptarget(100))),
+                                        clawsub.clawAction(clawsub, List.of(() -> clawsub.setUClawCLOSE())),
+                                        clawsub.clawAction(clawsub, List.of(() -> clawsub.setHangTOP())),
+                                        clawsub.clawAction(clawsub, List.of(() -> clawsub.setPrimeTOP())),
+                                        clawsub.clawAction(clawsub, List.of(() -> clawsub.setClawOPEN()))
+                                )
+                        ))
         );
     }
 
@@ -124,48 +124,50 @@ public class AutoHardware extends HardwareConfig {
 
                 new SequentialAction(  //unnecessary
                         //?
-                                new SequentialAction(
-                                        clawsub.clawAction(clawsub,List.of(() -> clawsub.setUClawOPEN())),
-                                        clawsub.clawAction(clawsub,List.of(() -> clawsub.setHangBOTTOM())),
-                                        //drive to the basket
-                                        drive.actionBuilder(lastPose)
-                                                //.splineToLinearHeading(new Pose2d(-56, -56, Math.toRadians(225.0)), Math.toRadians(225.0))
-                                                .strafeTo(new Vector2d(-50,-50))
-                                                .turnTo(Math.toRadians(225.0))//
-                                                .build(),
-                                        endAction()
+                        new SequentialAction(
+                                clawsub.clawAction(clawsub, List.of(() -> clawsub.setUClawOPEN())),
+                                clawsub.clawAction(clawsub, List.of(() -> clawsub.setHangBOTTOM())),
+                                //drive to the basket
+                                drive.actionBuilder(lastPose)
+                                        //.splineToLinearHeading(new Pose2d(-56, -56, Math.toRadians(225.0)), Math.toRadians(225.0))
+                                        .strafeTo(new Vector2d(-50, -50))
+                                        .turnTo(Math.toRadians(225.0))//
+                                        .build(),
+                                endAction()
 
-                                ),
+                        ),
                         new InstantAction(() -> drivefinished = false),
                         new ParallelAction(
                                 armSub.armAction(List.of(() -> armSub.setUptarget(500))),
                                 Update()
                         ),
                         new InstantAction(() -> drivefinished = true),
-                                new SequentialAction(
+                        new SequentialAction(
 
 
-                                clawsub.clawAction(clawsub,List.of(() -> clawsub.setFREAKY())),
+                                clawsub.clawAction(clawsub, List.of(() -> clawsub.setFREAKY())),
                                 new SleepAction(1),
-                                clawsub.clawAction(clawsub,List.of(() -> clawsub.setUClawCLOSE()))
-                                        ),
-                                new SleepAction(1),
-                                //reset the claw in order to grab next sample
-                                new SequentialAction(
-                                        clawsub.clawAction(clawsub,List.of(() -> clawsub.setHangTOP())),
-                                        clawsub.clawAction(clawsub,List.of(() -> clawsub.setUClawCLOSE())),
-                                        armSub.armAction(List.of(() -> armSub.setUptarget(100)))
-                                ), new SleepAction(1)
+                                clawsub.clawAction(clawsub, List.of(() -> clawsub.setUClawCLOSE()))
+                        ),
+                        new SleepAction(1),
+                        //reset the claw in order to grab next sample
+                        new SequentialAction(
+                                clawsub.clawAction(clawsub, List.of(() -> clawsub.setHangTOP())),
+                                clawsub.clawAction(clawsub, List.of(() -> clawsub.setUClawCLOSE())),
+                                armSub.armAction(List.of(() -> armSub.setUptarget(100)))
+                        ), new SleepAction(1)
 
 
                 )
         );
-    }public void placepreloadsample() {
+    }
+
+    public void placepreloadsample() {
         drivefinished = true;
         Actions.runBlocking(
                 new SequentialAction(
-                        clawsub.clawAction(clawsub,List.of(() -> clawsub.setUClawOPEN())),
-                        clawsub.clawAction(clawsub,List.of(() -> clawsub.setHangBOTTOM())),
+                        clawsub.clawAction(clawsub, List.of(() -> clawsub.setUClawOPEN())),
+                        clawsub.clawAction(clawsub, List.of(() -> clawsub.setHangBOTTOM())),
 
                         new InstantAction(() -> drivefinished = false),
                         new ParallelAction(
@@ -175,48 +177,35 @@ public class AutoHardware extends HardwareConfig {
                         new InstantAction(() -> drivefinished = true),
                         //set arm at correct height
                         new ParallelAction(
+                                armSub.armAction(List.of(() -> armSub.setUptarget(2000))),
+                                clawsub.clawAction(clawsub, List.of(() -> clawsub.setFREAKY())),
                                 new SequentialAction(
-
                                         drive.actionBuilder(lastPose)
                                                 //.splineToLinearHeading(new Pose2d(-56, -56, Math.toRadians(225.0)), Math.toRadians(225.0))
-                                                .strafeTo(new Vector2d(-56.5,-56.5))
+                                                .strafeTo(new Vector2d(-56.5, -56.5))
                                                 .turnTo(Math.toRadians(225.0))//
                                                 .build(),
-                                        endAction(),
-                new InstantAction(() -> drivefinished = false),
-                new ParallelAction(
-                        armSub.armAction(List.of(() -> armSub.setUptarget(2050))),
-                        Update()
-                ),
-                new InstantAction(() -> drivefinished = true)
-
+                                        endAction()
                                 ),
                                 Update()
                         ),
-                        new SequentialAction(
-
-
-                        clawsub.clawAction(clawsub,List.of(() -> clawsub.setFREAKY())),
-                        new SleepAction(1),
-                        clawsub.clawAction(clawsub,List.of(() -> clawsub.setUClawCLOSE()))
-                ),
+                        clawsub.clawAction(clawsub, List.of(() -> clawsub.setUClawCLOSE())),
                         //new SleepAction(1),
                         //reset the claw in order to grab next sample
                         new SequentialAction(
                                 new InstantAction(() -> drivefinished = false),
                                 new ParallelAction(
                                         armSub.armAction(List.of(() -> armSub.setUptarget(100))),
+                                        armSub.armAction(List.of(() -> armSub.isUpAtTarget(50))),
                                         Update()
                                 ),
                                 new InstantAction(() -> drivefinished = true),
-                                clawsub.clawAction(clawsub,List.of(() -> clawsub.setHangTOP())),
-                                clawsub.clawAction(clawsub,List.of(() -> clawsub.setUClawCLOSE()))
+                                clawsub.clawAction(clawsub, List.of(() -> clawsub.setHangTOP())),
+                                clawsub.clawAction(clawsub, List.of(() -> clawsub.setUClawCLOSE()))
 
                         ), new SleepAction(1)
                         //increase arm height when in sub
                         //set claw to top position
-
-
                 )
         );
     }
@@ -227,7 +216,7 @@ public class AutoHardware extends HardwareConfig {
         Actions.runBlocking(
                 new SequentialAction(
                         //set claw middle to insert
-                        clawsub.clawAction(clawsub,List.of(() -> clawsub.setHangMIDDLE())),
+                        clawsub.clawAction(clawsub, List.of(() -> clawsub.setHangMIDDLE())),
                         //armSub.armAction(List.of(() -> armSub.setUptarget(300))),
                         // clawsub.clawAction(clawsub,List.of(() -> clawsub.setHangBOTTOM())),
 
@@ -252,7 +241,7 @@ public class AutoHardware extends HardwareConfig {
                         //increase arm height when in sub
                         //set claw to top position
 
-                        clawsub.clawAction(clawsub,List.of(() -> clawsub.setHangBOTTOM())),
+                        clawsub.clawAction(clawsub, List.of(() -> clawsub.setHangBOTTOM())),
                         new SleepAction(1.0)
                 )
         );
@@ -320,68 +309,124 @@ public class AutoHardware extends HardwareConfig {
 //
 //    }
 
+    public void sample1() {
+        drivefinished = true;
+        Actions.runBlocking(
+                new SequentialAction(
+                        new SequentialAction(
+                                drive.actionBuilder(lastPose)
+//!                                        .turnTo(Math.toRadians(90.0))
+                                        .strafeTo(new Vector2d(-48, -39))
+                                        .build(),
+
+                                endAction()
+                        ),
+                        clawsub.clawAction(clawsub, List.of(() -> clawsub.setPrimeBOTTOM())),
+                        new SleepAction(2),
+                        clawsub.clawAction(clawsub, List.of(() -> clawsub.setClawCLOSE())),
+                        new SleepAction(1),
+                        clawsub.clawAction(clawsub, List.of(() -> clawsub.setPrimeTOP())),
+                        new SleepAction(1),
+                        clawsub.clawAction(clawsub, List.of(() -> clawsub.setUClawOPEN())),
+                        clawsub.clawAction(clawsub, List.of(() -> clawsub.setClawOPEN())),
+                        new InstantAction(() -> drivefinished = true),
+                        new ParallelAction(
+                                armSub.armAction(List.of(() -> armSub.setUptarget(2000))),
+                                clawsub.clawAction(clawsub, List.of(() -> clawsub.setFREAKY())),
+
+                                new SequentialAction(
+                                        drive.actionBuilder(lastPose)
+                                                //.splineToLinearHeading(new Pose2d(-56, -56, Math.toRadians(225.0)), Math.toRadians(225.0))
+                                                .strafeTo(new Vector2d(-56.5, -56.5))
+                                                .turnTo(Math.toRadians(225.0))//
+                                                .build(),
+                                        endAction()
+                                ),
+                                Update()
+                        ),
+                        clawsub.clawAction(clawsub, List.of(() -> clawsub.setUClawCLOSE())),
+                        //new SleepAction(1),
+                        //reset the claw in order to grab next sample
+                        new SequentialAction(
+                                new InstantAction(() -> drivefinished = false),
+                                new ParallelAction(
+                                        armSub.armAction(List.of(() -> armSub.setUptarget(100))),
+                                        armSub.armAction(List.of(() -> armSub.isUpAtTarget(50))),
+                                        Update()
+                                ),
+                                new InstantAction(() -> drivefinished = true),
+                                clawsub.clawAction(clawsub, List.of(() -> clawsub.setHangTOP())),
+                                clawsub.clawAction(clawsub, List.of(() -> clawsub.setUClawCLOSE()))
+
+                        ), new SleepAction(1)
+
+                )
+
+
+        );
+    }
 
     public void placeYellowSample1() {
         drivefinished = true;
         Actions.runBlocking(
                 new SequentialAction(
-                new ParallelAction(
-                        //drive to first sample
-                        new InstantAction(() -> drivefinished = true),
-                        drive.actionBuilder(lastPose) // this needs a sequential and a parallel??
-                                .strafeTo(new Vector2d(-48,-39))
-                                .turnTo(Math.toRadians(90.0))
-                                .lineToY(-37).build(),// end action?
-                        endAction(),
-                        //get ready for when over the sample
-                        clawsub.clawAction(clawsub,List.of(() -> clawsub.setPrimeBOTTOM())),
-                        clawsub.clawAction(clawsub,List.of(() -> clawsub.setHangTOP())),
-                        clawsub.clawAction(clawsub,List.of(() -> clawsub.setUClawCLOSE())),
-                        new InstantAction(() -> drivefinished = false),
                         new ParallelAction(
-                                armSub.armAction(List.of(() -> armSub.setUptarget(100))),
-                                Update()
-                        ),
-                        new InstantAction(() -> drivefinished = true),
-                        clawsub.clawAction(clawsub,List.of(()-> clawsub.setClawOPEN())),
-                        new SequentialAction(
-                                //start transfer
-                                clawsub.clawAction(clawsub,List.of(() -> clawsub.setClawCLOSE())),
-                                clawsub.clawAction(clawsub,List.of(() -> clawsub.setPrimeTOP())),
-                                clawsub.clawAction(clawsub,List.of(() -> clawsub.setUClawOPEN())),
-                                clawsub.clawAction(clawsub,List.of(() -> clawsub.setClawOPEN())),
-                                clawsub.clawAction(clawsub,List.of(() -> clawsub.setPrimeBOTTOM()))
-                                //update?
-                        ),
-                        new SequentialAction(
-                                //set the top claw up
-                                clawsub.clawAction(clawsub,List.of(() -> clawsub.setHangBOTTOM())),
-                                new ParallelAction(
-                                        //set the arm up to the basket
-                                        armSub.armAction(List.of(() -> armSub.setUptarget(2050))),
-                                        new SequentialAction(
-                                                //drive to basket
-                                                new InstantAction(() -> drivefinished = true), //move this up to line 281
-                                                drive.actionBuilder(startPose)
-                                                        .splineToLinearHeading(new Pose2d(-56, -56, Math.toRadians(225.0)), Math.toRadians(225.0))
-                                                        .build(),
-                                                endAction()
-
-                                        ),
-                                        //score the sample in the basket
-                                        clawsub.clawAction(clawsub,List.of(() -> clawsub.setFREAKY())),// could these two be auth that first claw action
-                                        clawsub.clawAction(clawsub,List.of(() -> clawsub.setUClawCLOSE()))
-                                ),
-                                //reset the claw to grab next sample
+                                //drive to first sample
+                                new InstantAction(() -> drivefinished = true),
+                                drive.actionBuilder(lastPose) // this needs a sequential and a parallel??
+                                        .strafeTo(new Vector2d(-48, -39))
+                                        .turnTo(Math.toRadians(90.0))
+                                        .lineToY(-37).build(),// end action?
+                                endAction(),
+                                //get ready for when over the sample
+                                clawsub.clawAction(clawsub, List.of(() -> clawsub.setPrimeBOTTOM())),
+                                clawsub.clawAction(clawsub, List.of(() -> clawsub.setHangTOP())),
+                                clawsub.clawAction(clawsub, List.of(() -> clawsub.setUClawCLOSE())),
                                 new InstantAction(() -> drivefinished = false),
                                 new ParallelAction(
-                                        armSub.armAction(List.of(() -> armSub.setUptarget(300))),
+                                        armSub.armAction(List.of(() -> armSub.setUptarget(100))),
                                         Update()
                                 ),
-                                new InstantAction(() -> drivefinished = true),// if this needs to wait, it should be paired with a paralllel and update
-                                clawsub.clawAction(clawsub,List.of(() -> clawsub.setHangTOP()))
-                        )
-                ))
+                                new InstantAction(() -> drivefinished = true),
+                                clawsub.clawAction(clawsub, List.of(() -> clawsub.setClawOPEN())),
+                                new SequentialAction(
+                                        //start transfer
+                                        clawsub.clawAction(clawsub, List.of(() -> clawsub.setClawCLOSE())),
+                                        clawsub.clawAction(clawsub, List.of(() -> clawsub.setPrimeTOP())),
+                                        clawsub.clawAction(clawsub, List.of(() -> clawsub.setUClawOPEN())),
+                                        clawsub.clawAction(clawsub, List.of(() -> clawsub.setClawOPEN())),
+                                        clawsub.clawAction(clawsub, List.of(() -> clawsub.setPrimeBOTTOM()))
+                                        //update?
+                                ),
+                                new SequentialAction(
+                                        //set the top claw up
+                                        clawsub.clawAction(clawsub, List.of(() -> clawsub.setHangBOTTOM())),
+                                        new ParallelAction(
+                                                //set the arm up to the basket
+                                                armSub.armAction(List.of(() -> armSub.setUptarget(2050))),
+                                                new SequentialAction(
+                                                        //drive to basket
+                                                        new InstantAction(() -> drivefinished = true), //move this up to line 281
+                                                        drive.actionBuilder(startPose)
+                                                                .splineToLinearHeading(new Pose2d(-56, -56, Math.toRadians(225.0)), Math.toRadians(225.0))
+                                                                .build(),
+                                                        endAction()
+
+                                                ),
+                                                //score the sample in the basket
+                                                clawsub.clawAction(clawsub, List.of(() -> clawsub.setFREAKY())),// could these two be auth that first claw action
+                                                clawsub.clawAction(clawsub, List.of(() -> clawsub.setUClawCLOSE()))
+                                        ),
+                                        //reset the claw to grab next sample
+                                        new InstantAction(() -> drivefinished = false),
+                                        new ParallelAction(
+                                                armSub.armAction(List.of(() -> armSub.setUptarget(300))),
+                                                Update()
+                                        ),
+                                        new InstantAction(() -> drivefinished = true),// if this needs to wait, it should be paired with a paralllel and update
+                                        clawsub.clawAction(clawsub, List.of(() -> clawsub.setHangTOP()))
+                                )
+                        ))
         );
     }
 
@@ -404,22 +449,22 @@ public class AutoHardware extends HardwareConfig {
                                 //set Bottom claw down
                                 //set the claw closed to grab sample
                                 //set the Bottom claw up
-                                clawsub.clawAction(clawsub,List.of(() -> clawsub.setPrimeBOTTOM())),
-                                clawsub.clawAction(clawsub,List.of(() -> clawsub.setClawCLOSE())),
-                                clawsub.clawAction(clawsub,List.of(() -> clawsub.setPrimeTOP()))
+                                clawsub.clawAction(clawsub, List.of(() -> clawsub.setPrimeBOTTOM())),
+                                clawsub.clawAction(clawsub, List.of(() -> clawsub.setClawCLOSE())),
+                                clawsub.clawAction(clawsub, List.of(() -> clawsub.setPrimeTOP()))
                         ),
                         new SequentialAction( // same as a couple lines up
                                 //set the top claw down
                                 //grab the sample with top
                                 //let go of the sample on bottom
-                                clawsub.clawAction(clawsub,List.of(() -> clawsub.setHangTOP())),
-                                clawsub.clawAction(clawsub,List.of(() -> clawsub.setUClawOPEN())),
-                                clawsub.clawAction(clawsub,List.of(() -> clawsub.setClawOPEN())),
-                                clawsub.clawAction(clawsub,List.of(() -> clawsub.setPrimeBOTTOM())),//
+                                clawsub.clawAction(clawsub, List.of(() -> clawsub.setHangTOP())),
+                                clawsub.clawAction(clawsub, List.of(() -> clawsub.setUClawOPEN())),
+                                clawsub.clawAction(clawsub, List.of(() -> clawsub.setClawOPEN())),
+                                clawsub.clawAction(clawsub, List.of(() -> clawsub.setPrimeBOTTOM())),//
                                 new SequentialAction(
                                         //set top claw up
                                         new InstantAction(() -> drivefinished = true),
-                                        clawsub.clawAction(clawsub,List.of(() -> clawsub.setHangBOTTOM())),
+                                        clawsub.clawAction(clawsub, List.of(() -> clawsub.setHangBOTTOM())),
                                         new ParallelAction(
                                                 //set arm up to basket
                                                 armSub.armAction(List.of(() -> armSub.setUptarget(2100))),
@@ -433,9 +478,9 @@ public class AutoHardware extends HardwareConfig {
                                                 //set the top claw to score the sample
                                                 //open top claw to do that
                                                 //set back to top position to avoid from hitting basket
-                                                clawsub.clawAction(clawsub,List.of(() -> clawsub.setFREAKY())),// this should go higher correct? itll run at the same time as that drive
-                                                clawsub.clawAction(clawsub,List.of(() -> clawsub.setUClawCLOSE())),
-                                                clawsub.clawAction(clawsub,List.of(() -> clawsub.setHangBOTTOM()))
+                                                clawsub.clawAction(clawsub, List.of(() -> clawsub.setFREAKY())),// this should go higher correct? itll run at the same time as that drive
+                                                clawsub.clawAction(clawsub, List.of(() -> clawsub.setUClawCLOSE())),
+                                                clawsub.clawAction(clawsub, List.of(() -> clawsub.setHangBOTTOM()))
 
                                                 //
                                                 //backup??????
@@ -444,7 +489,7 @@ public class AutoHardware extends HardwareConfig {
                                         //set arm back down
                                         //set the top position down
                                         armSub.armAction(List.of(() -> armSub.setUptarget(100))),// if this needs to wait, it should be paired with a paralllel and update
-                                        clawsub.clawAction(clawsub,List.of(() -> clawsub.setHangTOP()))
+                                        clawsub.clawAction(clawsub, List.of(() -> clawsub.setHangTOP()))
                                 )
                         )
                 ));
@@ -469,22 +514,22 @@ public class AutoHardware extends HardwareConfig {
                                 //set Bottom claw down
                                 //set the claw closed to grab sample
                                 //set the Bottom claw up
-                                clawsub.clawAction(clawsub,List.of(() -> clawsub.setPrimeBOTTOM())),
-                                clawsub.clawAction(clawsub,List.of(() -> clawsub.setClawCLOSE())),
-                                clawsub.clawAction(clawsub,List.of(() -> clawsub.setPrimeTOP()))
+                                clawsub.clawAction(clawsub, List.of(() -> clawsub.setPrimeBOTTOM())),
+                                clawsub.clawAction(clawsub, List.of(() -> clawsub.setClawCLOSE())),
+                                clawsub.clawAction(clawsub, List.of(() -> clawsub.setPrimeTOP()))
                         ),
                         new SequentialAction(
                                 //set the top claw down
                                 //grab the sample with top
                                 //let go of the sample on bottom
-                                clawsub.clawAction(clawsub,List.of(() -> clawsub.setHangTOP())),
-                                clawsub.clawAction(clawsub,List.of(() -> clawsub.setUClawOPEN())),
-                                clawsub.clawAction(clawsub,List.of(() -> clawsub.setClawOPEN())),
-                                clawsub.clawAction(clawsub,List.of(() -> clawsub.setPrimeBOTTOM())
+                                clawsub.clawAction(clawsub, List.of(() -> clawsub.setHangTOP())),
+                                clawsub.clawAction(clawsub, List.of(() -> clawsub.setUClawOPEN())),
+                                clawsub.clawAction(clawsub, List.of(() -> clawsub.setClawOPEN())),
+                                clawsub.clawAction(clawsub, List.of(() -> clawsub.setPrimeBOTTOM())
                                 ),
                                 new SequentialAction(
                                         //set top claw up
-                                        clawsub.clawAction(clawsub,List.of(() -> clawsub.setHangBOTTOM())),
+                                        clawsub.clawAction(clawsub, List.of(() -> clawsub.setHangBOTTOM())),
                                         new ParallelAction(
                                                 //set arm up to basket
                                                 armSub.armAction(List.of(() -> armSub.setUptarget(2100))),
@@ -500,9 +545,9 @@ public class AutoHardware extends HardwareConfig {
                                                 //set the top claw to score the sample
                                                 //open top claw to do that
                                                 //set back to top position to avoid from hitting basket
-                                                clawsub.clawAction(clawsub,List.of(() -> clawsub.setFREAKY())),
-                                                clawsub.clawAction(clawsub,List.of(() -> clawsub.setUClawCLOSE())),
-                                                clawsub.clawAction(clawsub,List.of(() -> clawsub.setHangBOTTOM()))
+                                                clawsub.clawAction(clawsub, List.of(() -> clawsub.setFREAKY())),
+                                                clawsub.clawAction(clawsub, List.of(() -> clawsub.setUClawCLOSE())),
+                                                clawsub.clawAction(clawsub, List.of(() -> clawsub.setHangBOTTOM()))
                                                 //
                                                 //backup??????
                                                 //
@@ -510,7 +555,7 @@ public class AutoHardware extends HardwareConfig {
                                         //set arm back down
                                         //set the top position down
                                         armSub.armAction(List.of(() -> armSub.setUptarget(100))),// if this needs to wait, it should be paired with a paralllel and update
-                                        clawsub.clawAction(clawsub,List.of(() -> clawsub.setHangTOP()))
+                                        clawsub.clawAction(clawsub, List.of(() -> clawsub.setHangTOP()))
                                 )
 
                         )
@@ -526,7 +571,7 @@ public class AutoHardware extends HardwareConfig {
         drivefinished = true;
         Actions.runBlocking(
                 new SequentialAction(
-                        clawsub.clawAction(clawsub,List.of(() -> clawsub.setHangTOP())),
+                        clawsub.clawAction(clawsub, List.of(() -> clawsub.setHangTOP())),
                         new ParallelAction(
                                 armSub.armAction(List.of(() -> armSub.setUptarget(100))),
                                 new SequentialAction(
@@ -538,7 +583,7 @@ public class AutoHardware extends HardwareConfig {
                                 ),
                                 Update()
                         ),
-                        clawsub.clawAction(clawsub,List.of(() -> clawsub.setHangBOTTOM()))
+                        clawsub.clawAction(clawsub, List.of(() -> clawsub.setHangBOTTOM()))
                 )
         );
     }
@@ -547,8 +592,8 @@ public class AutoHardware extends HardwareConfig {
         drivefinished = true;
         Actions.runBlocking(
                 new SequentialAction(
-                        clawsub.clawAction(clawsub,List.of(() -> clawsub.setHangTOP())),
-                        clawsub.clawAction(clawsub,List.of(() -> clawsub.setUClawCLOSE())),
+                        clawsub.clawAction(clawsub, List.of(() -> clawsub.setHangTOP())),
+                        clawsub.clawAction(clawsub, List.of(() -> clawsub.setUClawCLOSE())),
                         new ParallelAction(
                                 armSub.armAction(List.of(() -> armSub.setUptarget(100))),
                                 new SequentialAction(
@@ -560,7 +605,7 @@ public class AutoHardware extends HardwareConfig {
                                 ),
                                 Update()
                         ),
-                        clawsub.clawAction(clawsub,List.of(() -> clawsub.setHangBOTTOM()))
+                        clawsub.clawAction(clawsub, List.of(() -> clawsub.setHangBOTTOM()))
                 )
         );
     }
@@ -569,7 +614,7 @@ public class AutoHardware extends HardwareConfig {
         drivefinished = true;
         Actions.runBlocking(
                 new SequentialAction(
-                        clawsub.clawAction(clawsub,List.of(() -> clawsub.setHangTOP())),
+                        clawsub.clawAction(clawsub, List.of(() -> clawsub.setHangTOP())),
                         new ParallelAction(
                                 armSub.armAction(List.of(() -> armSub.setUptarget(100))),
                                 new SequentialAction(
@@ -580,14 +625,14 @@ public class AutoHardware extends HardwareConfig {
                                 ),
                                 Update()
                         ),
-                        clawsub.clawAction(clawsub,List.of(() -> clawsub.setHangBOTTOM()))
+                        clawsub.clawAction(clawsub, List.of(() -> clawsub.setHangBOTTOM()))
                 )
         );
     }
     //theoretical ^
     //            |
 
-//you can delete the next couple of funcs
+    //you can delete the next couple of funcs
     public void driveStraight(double maxDriveSpeed,
                               double distance,
                               double heading) {
@@ -846,12 +891,15 @@ public class AutoHardware extends HardwareConfig {
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             clawsub.update();
             armSub.update();
-            return !armSub.isUpAtTarget(100) || drivefinished;
+            telemetryPacket.put("encoder1", armSub.dualEncoder.getmost());
+            return !armSub.isUpAtTarget(150) || drivefinished;
+
         }
     }
 
     Action Update() {
         return new update();
+
     }
 
     class end implements Action {
