@@ -316,7 +316,7 @@ public class AutoHardware extends HardwareConfig {
                         new SequentialAction(
                                 drive.actionBuilder(lastPose)
                                         .turnTo(Math.toRadians(90.0))
-                                        .strafeTo(new Vector2d(-48, -39))
+                                        .strafeTo(new Vector2d(-48, -35.5))
                                         .build(),
 
                                 endAction()
@@ -339,7 +339,10 @@ public class AutoHardware extends HardwareConfig {
                                 new SequentialAction(
                                         drive.actionBuilder(lastPose)
                                                 //.splineToLinearHeading(new Pose2d(-56, -56, Math.toRadians(225.0)), Math.toRadians(225.0))
-                                                .strafeToLinearHeading(new Vector2d(-56.5, -56.5),Math.toRadians(225.0))
+                                                //.strafeTo(new Vector2d(-56.5, -56.5))
+                                                .lineToY(-55)
+                                                .lineToX(-55)
+                                                .turnTo(Math.toRadians(225.0))//
                                                 .build(),
                                         endAction()
                                 ),
@@ -369,10 +372,12 @@ public class AutoHardware extends HardwareConfig {
         drivefinished = true;
         Actions.runBlocking(
                 new SequentialAction(
+
                         new SequentialAction(
                                 drive.actionBuilder(lastPose)
                                         .turnTo(Math.toRadians(90.0))
-                                        .strafeTo(new Vector2d(-58, -39))
+                                        .strafeTo(new Vector2d(-60, -40))//
+                                        .lineToY(-30)
                                         .build(),
 
                                 endAction()
@@ -408,7 +413,7 @@ public class AutoHardware extends HardwareConfig {
                         new SequentialAction(
                                 new InstantAction(() -> drivefinished = false),
                                 new ParallelAction(
-                                        armSub.armAction(List.of(() -> armSub.setUptarget(100))),
+                                        armSub.armAction(List.of(() -> armSub.setUptarget(0))),
                                         armSub.armAction(List.of(() -> armSub.isUpAtTarget(50))),
                                         Update()
                                 ),
