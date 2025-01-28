@@ -31,12 +31,15 @@ public class MeepMeepTesting {
 //                .splineToConstantHeading(new Vector2d(0,-34),Math.toRadians(90.0))
 //                .splineToLinearHeading(new Pose2d(-56, -56, Math.toRadians(225.0)), Math.toRadians(225.0))
                                // .strafeTo(new Vector2d(-56,-56))
-                //
-                .strafeTo(new Vector2d(-56.5,-56.5))
-                .strafeTo(new Vector2d(-48,-39))
-                .strafeTo(new Vector2d(-56.5,-56.5))
-                .strafeTo(new Vector2d(-58,-39))
-                .strafeTo(new Vector2d(-56.5,-56.5))
+                //.turnTo(Math.toRadians(90.0))
+                .strafeTo(new Vector2d(-50, -35))
+                .splineToConstantHeading(new Vector2d(-50,-50),Math.toRadians(225))
+                                .turnTo(Math.toRadians(225.0))
+//
+                // .splineTo(new Vector2d(-50,-50))
+//                .strafeTo(new Vector2d(-56.5,-56.5))
+//                .strafeTo(new Vector2d(-58,-39))
+//                .strafeTo(new Vector2d(-56.5,-56.5))
 //                .turnTo(Math.toRadians(225.0))
 //                //
 //                .strafeTo(new Vector2d(-48,-39))
