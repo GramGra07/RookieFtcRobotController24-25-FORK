@@ -28,8 +28,10 @@ public class AUTOTESTING extends LinearOpMode {
         waitForStart();
         if (opModeIsActive()){
             robot.placepreloadsample();
-            robot.sample2();
+            robot.spacer();
+            robot.sample1bad();
             robot.sample1();
+            robot.sample2();
         }
     }
 }
