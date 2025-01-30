@@ -16,7 +16,7 @@ public class RR_SAMPLE_AUTO_R extends LinearOpMode {
         robot = new AutoHardware(this, hardwareMap, new Pose2d(14,-63,Math.toRadians(90.0)));
         waitForStart();
         if (opModeIsActive()){
-            robot.placepreloadsamplegood();
+            robot.preloadsample();
             robot.sample1R();
             robot.sample2R();
 
