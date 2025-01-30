@@ -216,7 +216,7 @@ public class AutoHardware extends HardwareConfig {
                 new SequentialAction(
                         clawsub.clawAction(clawsub, List.of(() -> clawsub.setClawOPEN()))
                 )
-        );
+        );//
     }
 
     public void placepreloadsamplegood() {
