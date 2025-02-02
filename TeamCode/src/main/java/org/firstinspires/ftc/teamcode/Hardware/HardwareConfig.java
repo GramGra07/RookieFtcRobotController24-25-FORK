@@ -33,7 +33,7 @@ public class HardwareConfig {
     }
 
     void initrobot(HardwareMap hwmap, LinearOpMode om, Boolean auto) {
-        opMode = om;
+        opMode = om;//
         telemetry = om.telemetry;
         clawsub = new ClawSub(hwmap);
         armSub = new ArmSub(hwmap, auto);
