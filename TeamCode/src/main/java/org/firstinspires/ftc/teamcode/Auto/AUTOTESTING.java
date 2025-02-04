@@ -24,12 +24,11 @@ public class AUTOTESTING extends LinearOpMode {
     ///
     @Override//
     public void runOpMode() throws InterruptedException {
-        robot = new AutoHardware(this, hardwareMap, new Pose2d(-14,-63,Math.toRadians(90.0)));
+        robot = new AutoHardware(this, hardwareMap, new Pose2d(-36,-63,Math.toRadians(90.0)));
         waitForStart();
         if (opModeIsActive()){
             robot.preloadsample();
-            robot.sample2();
-            robot.sample1();
+            robot.sample();
         }
     }
 }
