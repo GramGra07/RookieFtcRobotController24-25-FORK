@@ -6,23 +6,21 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Hardware.AutoHardware;
 
+
 @Autonomous
-public class parkautoleftside extends LinearOpMode {
-    enum autostates {
-        moveright, finish, armup, reset, clawf, resetarm, openclaw, stop, moveright2, moveright3, grab, armup2, transfer
-
-    }
-
+public class RR_AUTO_L extends LinearOpMode {
     AutoHardware robot = null;
 
     @Override
     public void runOpMode() throws InterruptedException {
-
-        robot = new AutoHardware(this, hardwareMap, new Pose2d(0, 0, 0));
-
-
-        if (opModeIsActive()) {
-            robot.sideWaysEncoderDrive(1, 56);
+        robot = new AutoHardware(this, hardwareMap, new Pose2d(-14,-63,Math.toRadians(90.0)));
+        waitForStart();
+        if (opModeIsActive()){
+            robot.placePreloadSpeci();
+           // robot.placeYellowSample1();
+            //robot.placeYellowSample2();
+            //robot.parkclose();
         }
     }
 }
+

@@ -18,7 +18,7 @@ import java.util.List;
 public class ArmSub {
     DcMotor hangmotor = null;
     DcMotor hangmotor1 = null;
-    DualEncoder dualEncoder = null;
+    public static DualEncoder dualEncoder = null;
     double power = 0;
     double power1 = 0;
     double uptarget = 0;
@@ -32,8 +32,8 @@ public class ArmSub {
         this.auto = auto;
         hangmotor = hwMap.dcMotor.get("hangmotor");
         hangmotor1 = hwMap.dcMotor.get("hangmotor1");
-        hangmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        hangmotor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        hangmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        hangmotor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         dualEncoder = new DualEncoder(hangmotor, hangmotor1);
 
 //        hangmotor1.setDirection(DcMotorSimple.Direction.REVERSE);

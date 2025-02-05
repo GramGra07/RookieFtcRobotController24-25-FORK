@@ -20,8 +20,8 @@ public class ClawSub {
     private final Servo hangservo1;
     private final Servo primeservo;
     private final Servo clawservo;
-    private final Servo switchservo;
-    private final Servo switchservo1;
+//    private final Servo switchservo;
+//    private final Servo switchservo1;
 
     public enum ClawState {OPEN, CLOSE, IDLE}
 
@@ -130,10 +130,10 @@ public class ClawSub {
         clawservo.setDirection(Servo.Direction.FORWARD);
         hangservo1.setDirection(Servo.Direction.FORWARD);
         hangservo.setDirection(Servo.Direction.REVERSE);
-        switchservo = hwMap.get(Servo.class, "switchServo");
-        switchservo.setDirection(Servo.Direction.REVERSE);
-        switchservo1 = hwMap.get(Servo.class, "switchServo1");
-        switchservo1.setDirection(Servo.Direction.FORWARD);
+//        switchservo = hwMap.get(Servo.class, "switchServo");
+//        switchservo.setDirection(Servo.Direction.REVERSE);
+//        switchservo1 = hwMap.get(Servo.class, "switchServo1");
+//        switchservo1.setDirection(Servo.Direction.FORWARD);
 
     }
 
@@ -153,17 +153,17 @@ public class ClawSub {
 
                 break;
         }
-        switch (SwitchStateVar) {
-            case PRIME:
-                setpose(switchservo, ServoUtil.switchprime);
-                setpose(switchservo1, ServoUtil.switchprime1);
-                break;
-            case LOAD:
-                setpose(switchservo, ServoUtil.switchload);
-                setpose(switchservo1, ServoUtil.switchload1);
-                break;
-
-        }
+//        switch (SwitchStateVar) {
+//            case PRIME:
+//                setpose(switchservo, ServoUtil.switchprime);
+//                setpose(switchservo1, ServoUtil.switchprime1);
+//                break;
+//            case LOAD:
+//                setpose(switchservo, ServoUtil.switchload);
+//                setpose(switchservo1, ServoUtil.switchload1);
+//                break;
+//
+//        }
         switch (PrimeStateVar) {
             case TOP:
                 setpose(primeservo, ServoUtil.primetop);
@@ -230,15 +230,17 @@ public class ClawSub {
 //                        )
 //                                )
 //                                );
-    public Action clawAction(List<Runnable> funcs) {
-        return new ClawAction(funcs);
+    public Action clawAction(ClawSub clawSub,List<Runnable> funcs) {
+        return new ClawAction(clawSub,funcs);
     }
 
     class ClawAction implements Action {
         List<Runnable> funcs;
+        private ClawSub clawSub;
 
-        public ClawAction(List<Runnable> funcs) {
+        public ClawAction(ClawSub clawSub,List<Runnable> funcs) {
             this.funcs = funcs;
+            this.clawSub = clawSub;
         }
 
         @Override
@@ -246,6 +248,8 @@ public class ClawSub {
             for (Runnable func : funcs) {
                 func.run();
             }
+            clawSub.update();// removes the need for the update to be run after simply updating a claw
+
             return false;
         }
     }

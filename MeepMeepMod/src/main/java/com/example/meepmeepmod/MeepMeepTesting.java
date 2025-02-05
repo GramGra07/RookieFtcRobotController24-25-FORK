@@ -21,42 +21,72 @@ public class MeepMeepTesting {
 
         myBot.runAction(myBot.getDrive().actionBuilder(startpose)
                 //move to sub
-                .splineTo(new Vector2d(0,-34),Math.toRadians(90.0))
-                //Insert the code for top speci hang
-
-                //start next movement to the first sample
-                .setTangent(Math.toRadians(270))
-                .splineToConstantHeading(new Vector2d(-48,-39),Math.toRadians(90.0))
-                //insert code for the pickup, transfer, and deposit
-
-                //start next movement to the basket
-                .splineToLinearHeading(new Pose2d(-56,-56,Math.toRadians(225.0)),Math.toRadians(225.0))
-                //insert code for pickup, transfer, and deposit
-
-                //start next movement to the second sample
-                .turnTo(Math.toRadians(90.0))
-                .strafeToConstantHeading(new Vector2d(-57,-39))
-                //set the robot ready for the next steps(claw up and open)
-
-//                .setTangent(Math.toRadians(90))
-//                .splineTo(new Vector2d(-57,-39),Math.toRadians(-45.0))
-
-
-                //start next movement to the basket
-                .splineToLinearHeading(new Pose2d(-56,-56,Math.toRadians(225.0)),Math.toRadians(225.0))
-                //
-                //start to third sample
-
+//                .splineToConstantHeading(new Vector2d(0,-34),Math.toRadians(90.0))
+//                .setTangent(Math.toRadians(270))
+//                .splineToConstantHeading(new Vector2d(56, -39), Math.toRadians(90.0))
+//                        .turnTo(Math.toRadians(270.0))
+//
+//                        .turnTo(Math.toRadians(90.0))
+//                .setTangent(Math.toRadians(270.0))
+//                .splineToConstantHeading(new Vector2d(0,-34),Math.toRadians(90.0))
+//                .splineToLinearHeading(new Pose2d(-56, -56, Math.toRadians(225.0)), Math.toRadians(225.0))
+                               // .strafeTo(new Vector2d(-56,-56))
+                //.turnTo(Math.toRadians(90.0))
+                .strafeTo(new Vector2d(-50, -35))
+                .splineToConstantHeading(new Vector2d(-50,-50),Math.toRadians(225))
+                                .turnTo(Math.toRadians(225.0))
+//
+                // .splineTo(new Vector2d(-50,-50))
+//                .strafeTo(new Vector2d(-56.5,-56.5))
+//                .strafeTo(new Vector2d(-58,-39))
+//                .strafeTo(new Vector2d(-56.5,-56.5))
+//                .turnTo(Math.toRadians(225.0))
+//                //
+//                .strafeTo(new Vector2d(-48,-39))
+//                                .turnTo(Math.toRadians(90.0))
+//                                .lineToY(-37)
 
 
 
-                //move to the parking zone
+                // .splineToLinearHeading(new Pose2d(-56, -56, Math.toRadians(225.0)), Math.toRadians(225.0))
 
-                .splineTo(new Vector2d(-56,-56),Math.toRadians(225.0))
-                //.splineToLinearHeading(new Pose2d(-56,-56,Math.toRadians(225.0)))
-                .turnTo(Math.toRadians(90))
 
-                .strafeTo(new Vector2d(56,-56))
+//                .splineTo(new Vector2d(0,-34),Math.toRadians(90.0))
+//                //Insert the code for top speci hang
+//
+//                //start next movement to the first sample
+//                //.setTangent(Math.toRadians(270))
+//                //.splineToConstantHeading(new Vector2d(-48,-39),Math.toRadians(90.0))
+//                //insert code for the pickup, transfer, and deposit
+//
+//                //start next movement to the basket
+//                //.splineToLinearHeading(new Pose2d(-56,-56,Math.toRadians(225.0)),Math.toRadians(225.0))
+//                //insert code for pickup, transfer, and deposit
+//
+//                //start next movement to the second sample
+//                //.turnTo(Math.toRadians(90.0))
+//                //.strafeToConstantHeading(new Vector2d(-57,-39))
+//                //set the robot ready for the next steps(claw up and open)
+//
+////                .setTangent(Math.toRadians(90))
+////                .splineTo(new Vector2d(-57,-39),Math.toRadians(-45.0))
+//
+//
+//                //start next movement to the basket
+//                //.splineToLinearHeading(new Pose2d(-56,-56,Math.toRadians(225.0)),Math.toRadians(225.0))
+//                //
+//                //start to third sample
+//
+//
+//
+//
+//                //move to the parking zone
+//
+//                //.splineTo(new Vector2d(-56,-56),Math.toRadians(225.0))
+//                //.splineToLinearHeading(new Pose2d(-56,-56,Math.toRadians(225.0)))
+//                //.turnTo(Math.toRadians(90))
+//
+//                .strafeTo(new Vector2d(56,-56))
                 .build());
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_INTO_THE_DEEP_JUICE_DARK)

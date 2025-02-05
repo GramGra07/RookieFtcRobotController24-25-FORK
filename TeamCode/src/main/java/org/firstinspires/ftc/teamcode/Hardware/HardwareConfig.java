@@ -33,7 +33,7 @@ public class HardwareConfig {
     }
 
     void initrobot(HardwareMap hwmap, LinearOpMode om, Boolean auto) {
-        opMode = om;
+        opMode = om;//
         telemetry = om.telemetry;
         clawsub = new ClawSub(hwmap);
         armSub = new ArmSub(hwmap, auto);
@@ -97,8 +97,7 @@ public class HardwareConfig {
         if (opMode.gamepad1.right_trigger > 0) {
             if (armMotor1.getCurrentPosition() < 1500)//
                 armpower = opMode.gamepad1.right_trigger;
-        } else if (opMode.gamepad1.left_trigger > 0) {
-            if (armMotor1.getCurrentPosition() > 60)//
+        } else if (opMode.gamepad1.left_trigger > 0) {//
                 armpower = -opMode.gamepad1.left_trigger;
         }
         armpower = Range.clip(armpower, -0.5, 0.5);
@@ -121,14 +120,14 @@ public class HardwareConfig {
 
         }
         if (opMode.gamepad2.a) {
-            clawsub.setHangTOP();
+            clawsub.setHangBOTTOM();
 
         }
         if (opMode.gamepad2.b) {
             clawsub.setHangMIDDLE();
         }
         if (opMode.gamepad2.y) {
-            clawsub.setHangBOTTOM();
+            clawsub.setHangTOP();
         }
         if (opMode.gamepad2.right_bumper) {
             clawsub.setUClawOPEN();
@@ -138,8 +137,7 @@ public class HardwareConfig {
         }
 
         if (opMode.gamepad2.dpad_up) {
-            armSub.setUptarget(2100);
-            clawsub.setHangBOTTOM();
+            armSub.setUptarget(2200);
         } else if (opMode.gamepad2.dpad_down) {
             armSub.setUptarget(100);//k
         }

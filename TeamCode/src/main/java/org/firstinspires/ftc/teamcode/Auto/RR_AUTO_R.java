@@ -8,16 +8,16 @@ import org.firstinspires.ftc.teamcode.Hardware.AutoHardware;
 
 
 @Autonomous
-public class RRAUTOL extends LinearOpMode {
+public class RR_AUTO_R extends LinearOpMode {
     AutoHardware robot = null;
-
+///this auto is to be an excact copy of RR_AUTO_L but for the right side of the field.
     @Override
     public void runOpMode() throws InterruptedException {
-        robot = new AutoHardware(this, hardwareMap, new Pose2d(-14,-63,Math.toRadians(90.0)));
+        robot = new AutoHardware(this, hardwareMap, new Pose2d(14,-63,Math.toRadians(90.0)));
         waitForStart();
         if (opModeIsActive()){
-            robot.placePreloadSpeciL();
-           // robot.placeYellowSample1();
+            robot.placePreloadSpeci();
+            // robot.placeYellowSample1();
             //robot.placeYellowSample2();
             //robot.parkclose();
         }
