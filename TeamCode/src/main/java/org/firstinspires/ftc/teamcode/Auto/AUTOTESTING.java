@@ -27,8 +27,7 @@ public class AUTOTESTING extends LinearOpMode {
         robot = new AutoHardware(this, hardwareMap, new Pose2d(-36,-63,Math.toRadians(90.0)));
         waitForStart();
         if (opModeIsActive()){
-            robot.preloadsample();
-            robot.sample();
+            robot.twopre();
         }
     }
 }
