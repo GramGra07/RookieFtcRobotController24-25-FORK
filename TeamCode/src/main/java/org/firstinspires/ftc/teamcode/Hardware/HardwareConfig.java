@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.subsystems.ArmSub;
 import org.firstinspires.ftc.teamcode.subsystems.ClawSub;
-import org.gentrifiedApps.gentrifiedAppsUtil.LoopTimeController;
+import org.gentrifiedApps.gentrifiedAppsUtil.looptime.LoopTimeController;
 
 public class HardwareConfig {
     boolean slowmode = false;
@@ -50,7 +50,7 @@ public class HardwareConfig {
             armMotor1.setDirection(DcMotorSimple.Direction.REVERSE);
 
         elapsedTime = new ElapsedTime();
-        loopTimeController = new LoopTimeController(elapsedTime, null);
+        loopTimeController = new LoopTimeController();
     }
 
     public void buildtelemetry() {

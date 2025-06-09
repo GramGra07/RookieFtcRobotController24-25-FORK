@@ -27,17 +27,11 @@ public class ArmSub {
 
     boolean auto;
 
-    //this is where you put all enums and variables
     public ArmSub(HardwareMap hwMap, Boolean auto) {
         this.auto = auto;
         hangmotor = hwMap.dcMotor.get("hangmotor");
         hangmotor1 = hwMap.dcMotor.get("hangmotor1");
-//        hangmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//        hangmotor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         dualEncoder = new DualEncoder(hangmotor, hangmotor1);
-
-//        hangmotor1.setDirection(DcMotorSimple.Direction.REVERSE);
-//        hangmotor.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     public void update() {
@@ -86,7 +80,7 @@ public class ArmSub {
 
     private void setPowerup(double target) {
         power = calculatePID(uppidf, hangmotor.getCurrentPosition(), target);
-        power1 = calculatePID(uppidf1, -hangmotor1.getCurrentPosition(), target);//getmost?
+        power1 = calculatePID(uppidf1, -hangmotor1.getCurrentPosition(), target);
     }
 
     public boolean isUpAtTarget(double tolerance) {
@@ -95,10 +89,10 @@ public class ArmSub {
     }
 
 
+    // custom rr implementation
     public Action armAction(List<Runnable> funcs) {
         return new ArmSub.ArmAction(funcs);
     }
-
     class ArmAction implements Action {
         List<Runnable> funcs;
 
