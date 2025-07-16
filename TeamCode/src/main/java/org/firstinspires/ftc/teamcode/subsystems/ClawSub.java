@@ -95,7 +95,7 @@ public class ClawSub {
         HangStateVar = HangState.BOTTOM;
     }
 
-    public void setFREAKY() {
+    public void setStrange() {
         HangStateVar = HangState.FREAK;
     }
 

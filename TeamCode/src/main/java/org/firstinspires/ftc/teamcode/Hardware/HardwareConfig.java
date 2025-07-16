@@ -11,18 +11,27 @@ import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.subsystems.ArmSub;
 import org.firstinspires.ftc.teamcode.subsystems.ClawSub;
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.DrivePowerCoefficients;
+import org.gentrifiedApps.gentrifiedAppsUtil.controllers.SlowMode;
+import org.gentrifiedApps.gentrifiedAppsUtil.controllers.SlowModeDefaults;
+import org.gentrifiedApps.gentrifiedAppsUtil.controllers.SlowModeManager;
+import org.gentrifiedApps.gentrifiedAppsUtil.controllers.SlowModeMulti;
+import org.gentrifiedApps.gentrifiedAppsUtil.drive.MecanumDriver;
+import org.gentrifiedApps.gentrifiedAppsUtil.hardware.gamepad.Button;
+import org.gentrifiedApps.gentrifiedAppsUtil.hardware.gamepad.GamepadPlus;
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.Driver;
 import org.gentrifiedApps.gentrifiedAppsUtil.looptime.LoopTimeController;
 
+import java.util.HashMap;
+
 public class HardwareConfig {
-    boolean slowmode = false;
+    SlowModeManager slowModeManager = null;
     Telemetry telemetry = null;
     LinearOpMode opMode = null;
     public ClawSub clawsub = null;
     public ArmSub armSub = null;
-    DcMotor frontLeftMotor = null;
-    DcMotor backLeftMotor = null;
-    DcMotor frontRightMotor = null;
-    DcMotor backRightMotor = null;
+    Driver driver = null;
+
     Limelight3A limelight = null;
     DcMotor armMotor1 = null;
     ElapsedTime elapsedTime = null;
@@ -37,16 +46,15 @@ public class HardwareConfig {
         telemetry = om.telemetry;
         clawsub = new ClawSub(hwmap);
         armSub = new ArmSub(hwmap, auto);
-        frontLeftMotor = hwmap.dcMotor.get("frontLeftMotor");
-        backLeftMotor = hwmap.dcMotor.get("backLeftMotor");
-        frontRightMotor = hwmap.dcMotor.get("frontRightMotor");
-        backRightMotor = hwmap.dcMotor.get("backRightMotor");
+        driver = new Driver(om, "frontLeftMotor","frontRightMotor", "backLeftMotor", "backRightMotor", DcMotorSimple.Direction.REVERSE, DcMotorSimple.Direction.FORWARD, DcMotorSimple.Direction.REVERSE);
+        HashMap<Enum<?>, SlowModeMulti> slowModeMap = new HashMap<>();
+        slowModeMap.put(SlowModeDefaults.NORMAL, new SlowModeMulti(SlowMode.of(2.0), Button.TOUCHPAD));
+        GamepadPlus gamepadPlus = new GamepadPlus(om.gamepad1);
+        SlowModeManager slowModeManager = SlowModeManager.newInstance(slowModeMap,om.gamepad1);
+
         armMotor1 = hwmap.dcMotor.get("armMotor1");
         // limelight = hwmap.get(Limelight3A.class, "limelight");
-        backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-//
-//
+
             armMotor1.setDirection(DcMotorSimple.Direction.REVERSE);
 
         elapsedTime = new ElapsedTime();
@@ -54,7 +62,6 @@ public class HardwareConfig {
     }
 
     public void buildtelemetry() {
-        telemetry.addData("slowmode", slowmode);
         telemetry.addData("claw", opMode.gamepad1.right_bumper);
         telemetry.addData("b", opMode.gamepad1.b);
         telemetry.addData("up", opMode.gamepad1.dpad_up);
@@ -65,33 +72,9 @@ public class HardwareConfig {
         telemetry.update();
     }
 
-    boolean touchpadwpressed = false;
-
     public void dobulk() {
-
-        double y = opMode.gamepad1.left_stick_y; // Remember, Y stick value is reversed
-        double x = -opMode.gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
-        double rx = -opMode.gamepad1.right_stick_x;
-        boolean touchpadpressed = opMode.gamepad1.touchpad;
-        if (touchpadpressed && !touchpadwpressed) {
-            slowmode = !slowmode;
-        }
-        touchpadwpressed = touchpadpressed;
-        double slowmodemultiplier = 0.5;
-
-
-        // Denominator is the largest motor power (absolute value) or 1
-        // This ensures all the powers maintain the same ratio,
-        // but only if at least one is out of the range [-1, 1]
-        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
-        double multiplier = 1;
-        if (slowmode) {
-            multiplier = slowmodemultiplier;
-        }
-        double frontLeftPower = ((y + x + rx) / denominator) * multiplier;
-        double backLeftPower = ((y - x + rx) / denominator) * multiplier;
-        double frontRightPower = ((y - x - rx) / denominator) * multiplier;
-        double backRightPower = ((y + x - rx) / denominator) * multiplier;
+        DrivePowerCoefficients powers = MecanumDriver.driveMecanum(-opMode.gamepad1.left_stick_y, -opMode.gamepad1.left_stick_x, -opMode.gamepad1.right_stick_x);
+        powers.applySlowMode(slowModeManager);
 
         double armpower = 0;
         if (opMode.gamepad1.right_trigger > 0) {
@@ -156,14 +139,11 @@ public class HardwareConfig {
             clawsub.setSwitchPrime();
         }
         if (opMode.gamepad2.x) {
-            clawsub.setFREAKY();
+            clawsub.setStrange();
         }
 
 
-        frontLeftMotor.setPower(frontLeftPower);
-        backLeftMotor.setPower(backLeftPower);
-        frontRightMotor.setPower(frontRightPower);
-        backRightMotor.setPower(backRightPower);
+       driver.setWheelPower(powers);
 
         armMotor1.setPower(armpower);
         clawsub.update();
